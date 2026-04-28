@@ -1,3 +1,5 @@
+'use client';
+
 export default function Footer() {
   return (
     <footer className="bg-pietra text-avorio/80 pt-20 pb-8">
@@ -60,10 +62,20 @@ export default function Footer() {
           <div>
             © {new Date().getFullYear()} Impresa Funebre Coppola · Tutti i diritti riservati
           </div>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-avorio transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-avorio transition-colors">Cookie Policy</a>
-            <a href="#" className="hover:text-avorio transition-colors">Codice Etico</a>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <a href="/privacy-policy" className="hover:text-avorio transition-colors">Privacy Policy</a>
+            <a href="/cookie-policy" className="hover:text-avorio transition-colors">Cookie Policy</a>
+            <a href="/codice-etico" className="hover:text-avorio transition-colors">Codice Etico</a>
+            <button
+              type="button"
+              onClick={() => {
+                try { localStorage.removeItem('coppola-cookie-consent'); } catch {}
+                window.location.reload();
+              }}
+              className="hover:text-avorio transition-colors cursor-pointer"
+            >
+              Gestisci cookie
+            </button>
           </div>
         </div>
       </div>
