@@ -19,12 +19,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Impresa Funebre Coppola — Onoranze Funebri a Napoli',
   description:
-    'Oltre un secolo accanto alle famiglie. Impresa Funebre Coppola: casa funeraria, servizi funebri 24h, previdenza funebre. 8 sedi in provincia di Napoli.',
+    'Oltre un secolo accanto alle famiglie. Impresa Funebre Coppola: casa funeraria, servizi funebri 24h, previdenza funebre.',
   keywords: [
-    'onoranze funebri Napoli',
+    'onoranze funebri',
     'impresa funebre Coppola',
-    'casa funeraria Mugnano',
-    'servizi funebri Giugliano',
+    'casa funeraria',
+    'servizi funebri',
     'previdenza funebre',
   ],
   openGraph: {

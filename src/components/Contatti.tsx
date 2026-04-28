@@ -15,8 +15,8 @@ export default function Contatti() {
 
   const contacts = [
     { Icon: Phone, label: 'Reperibilità 24h', value: '081 571 3888', href: 'tel:0815713888', primary: true },
-    { Icon: MessageCircle, label: 'WhatsApp', value: '+39 349 335 6728', href: 'https://wa.me/393493356728' },
-    { Icon: Mail, label: 'Email', value: 'info@impresacoppola.it', href: 'mailto:info@impresacoppola.it' },
+    { Icon: MessageCircle, label: 'WhatsApp', value: '081 571 3888', href: 'https://wa.me/390815713888' },
+    { Icon: Mail, label: 'Email', value: 'info@eredicoppola.com', href: 'mailto:info@eredicoppola.com' },
   ];
 
   return (

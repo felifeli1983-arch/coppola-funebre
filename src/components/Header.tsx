@@ -8,7 +8,6 @@ const nav = [
   { href: '#servizi', label: 'Servizi' },
   { href: '#casa-funeraria', label: 'Casa Funeraria' },
   { href: '#previdenza', label: 'Previdenza' },
-  { href: '#sedi', label: 'Sedi' },
   { href: '#contatti', label: 'Contatti' },
 ];
 

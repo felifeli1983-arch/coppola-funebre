@@ -10,8 +10,8 @@ export default function Storia() {
         <div className="md:col-span-5">
           <div className="relative">
             <RevealImage
-              src="/img/new/sede-esterno.jpg"
-              alt="Sede Impresa Coppola"
+              src="/img/new/reception.jpg"
+              alt="Impresa Funebre Coppola"
               className="w-full aspect-[4/5]"
             />
             <Reveal delay={0.8}>
@@ -52,7 +52,7 @@ export default function Storia() {
               <p>
                 A conduzione familiare, custodiamo tradizioni antiche unite a un
                 servizio contemporaneo. La nostra Casa Funeraria, la flotta di
-                prestigio e le otto sedi sul territorio rispondono a un unico
+                prestigio e ogni dettaglio del nostro lavoro rispondono a un unico
                 principio: <em className="text-bordeaux not-italic font-medium">un servizio
                 esclusivo alla portata di tutti</em>.
               </p>
@@ -71,10 +71,10 @@ export default function Storia() {
               </div>
               <div>
                 <div className="font-serif text-3xl md:text-4xl text-bordeaux">
-                  <Counter to={8} />
+                  <Counter to={4} />
                 </div>
                 <div className="text-xs tracking-widest uppercase text-pietra-chiaro mt-2">
-                  Sedi territoriali
+                  Generazioni di famiglia
                 </div>
               </div>
               <div>

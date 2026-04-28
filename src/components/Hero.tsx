@@ -2,20 +2,30 @@
 
 import { Phone, MessageCircle } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { RevealWords } from './motion/Reveal';
 import MagneticButton from './motion/MagneticButton';
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const y = useTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['0%', '20%']);
+  const scale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : [1, 1.08]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <section ref={ref} className="relative h-screen min-h-[680px] w-full overflow-hidden">
-      <motion.div style={{ y, scale }} className="absolute inset-0 w-full h-full">
+      <motion.div style={{ y, scale }} className="absolute inset-0 w-full h-full gpu">
         <img
           src="/img/new/sala-warhol.jpg"
           alt=""
@@ -63,7 +73,7 @@ export default function Hero() {
             className="text-base md:text-lg text-avorio/80 max-w-xl leading-relaxed font-light mb-8"
           >
             Un servizio esclusivo alla portata di tutti. Disponibili 24 ore su 24,
-            365 giorni l&apos;anno in tutta la provincia di Napoli.
+            365 giorni l&apos;anno.
           </motion.p>
 
           <motion.div
@@ -80,7 +90,7 @@ export default function Hero() {
               Chiama ora · 081 571 3888
             </MagneticButton>
             <MagneticButton
-              href="https://wa.me/393493356728"
+              href="https://wa.me/390815713888"
               target="_blank"
               rel="noopener"
               className="inline-flex items-center gap-2 px-8 py-4 border border-avorio/40 text-avorio tracking-wider uppercase text-sm font-medium hover:bg-avorio hover:text-pietra transition-colors"
@@ -97,7 +107,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 2.5 }}
           className="absolute bottom-10 left-0 right-0 container-custom flex items-end justify-between text-avorio/60 text-[10px] md:text-xs tracking-widest uppercase"
         >
-          <span>Napoli · Mugnano · Giugliano · Villaricca · Qualiano</span>
+          <span>Servizi funebri · Casa funeraria · Previdenza</span>
           <div className="hidden md:flex items-center gap-3">
             <span>Scorri</span>
             <motion.div

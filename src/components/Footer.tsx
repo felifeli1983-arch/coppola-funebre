@@ -15,7 +15,7 @@ export default function Footer() {
             </div>
             <p className="font-light leading-relaxed max-w-md">
               Un servizio esclusivo alla portata di tutti. Oltre un secolo accanto
-              alle famiglie della provincia di Napoli, con rispetto e discrezione.
+              alle famiglie, con rispetto e discrezione.
             </p>
           </div>
 
@@ -28,7 +28,6 @@ export default function Footer() {
               <li><a href="#servizi" className="hover:text-avorio transition-colors">Servizi</a></li>
               <li><a href="#casa-funeraria" className="hover:text-avorio transition-colors">Casa Funeraria</a></li>
               <li><a href="#previdenza" className="hover:text-avorio transition-colors">Previdenza</a></li>
-              <li><a href="#sedi" className="hover:text-avorio transition-colors">Sedi</a></li>
               <li><a href="#contatti" className="hover:text-avorio transition-colors">Contatti</a></li>
             </ul>
           </div>
@@ -44,18 +43,14 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/393493356728" className="hover:text-avorio transition-colors">
-                  WhatsApp · +39 349 335 6728
+                <a href="https://wa.me/390815713888" className="hover:text-avorio transition-colors">
+                  WhatsApp · 081 571 3888
                 </a>
               </li>
               <li>
-                <a href="mailto:info@impresacoppola.it" className="hover:text-avorio transition-colors">
-                  info@impresacoppola.it
+                <a href="mailto:info@eredicoppola.com" className="hover:text-avorio transition-colors">
+                  info@eredicoppola.com
                 </a>
-              </li>
-              <li className="pt-3 text-avorio/60">
-                Sede principale<br />
-                Via Pietro Nenni, 10 · 80018 Mugnano di Napoli
               </li>
             </ul>
           </div>
@@ -63,8 +58,7 @@ export default function Footer() {
 
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-avorio/50">
           <div>
-            © {new Date().getFullYear()} Impresa Funebre Coppola · P.IVA 08378311214 ·
-            Tutti i diritti riservati
+            © {new Date().getFullYear()} Impresa Funebre Coppola · Tutti i diritti riservati
           </div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-avorio transition-colors">Privacy Policy</a>

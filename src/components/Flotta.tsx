@@ -29,7 +29,7 @@ export default function Flotta() {
     <section ref={section} className="py-24 md:py-32 bg-avorio overflow-hidden">
       <motion.div
         style={{ x: headX }}
-        className="pointer-events-none absolute left-0 right-0 text-[20vw] font-serif italic text-pietra/[0.035] leading-none whitespace-nowrap select-none hidden md:block"
+        className="pointer-events-none absolute left-0 right-0 text-[20vw] font-serif italic text-pietra/[0.035] leading-none whitespace-nowrap select-none hidden md:block gpu"
       >
         flotta · flotta · flotta
       </motion.div>

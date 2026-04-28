@@ -2,7 +2,7 @@
 
 import { ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Reveal, { RevealWords } from './motion/Reveal';
 
 const gallery = [
@@ -15,14 +15,24 @@ const gallery = [
 
 export default function CasaFuneraria() {
   const ref = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const bgY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  const bgY = useTransform(scrollYProgress, [0, 1], isMobile ? ['0%', '0%'] : ['-8%', '8%']);
 
   return (
     <section ref={ref} id="casa-funeraria" className="relative py-24 md:py-32 bg-pietra text-avorio overflow-hidden">
       <motion.div
         style={{ y: bgY }}
-        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        className="absolute inset-0 opacity-[0.08] pointer-events-none gpu"
       >
         <div className="absolute inset-0 bg-[url('/img/new/dettaglio-1.jpg')] bg-cover bg-center" />
       </motion.div>

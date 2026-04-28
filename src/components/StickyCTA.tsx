@@ -14,7 +14,7 @@ export default function StickyCTA() {
           Chiama 24h
         </a>
         <a
-          href="https://wa.me/393493356728"
+          href="https://wa.me/390815713888"
           className="flex items-center justify-center gap-2 py-4 text-pietra text-xs tracking-widest uppercase font-medium"
         >
           <MessageCircle size={16} />
@@ -23,7 +23,7 @@ export default function StickyCTA() {
       </div>
 
       <a
-        href="https://wa.me/393493356728"
+        href="https://wa.me/390815713888"
         target="_blank"
         rel="noopener"
         className="hidden md:flex fixed bottom-6 right-6 z-40 w-14 h-14 bg-bordeaux text-avorio rounded-full items-center justify-center shadow-lg hover:bg-bordeaux-dark transition-colors"
