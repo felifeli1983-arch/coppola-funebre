@@ -35,6 +35,7 @@ export default function CookieBanner() {
     const consent: Consent = { necessary: true, ...c, ts: Date.now() };
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
+      window.dispatchEvent(new CustomEvent('coppola-consent-updated'));
     } catch {}
     setVisible(false);
   };
