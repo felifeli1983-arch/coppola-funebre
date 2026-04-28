@@ -30,6 +30,7 @@ export default function Footer() {
               <li><a href="#servizi" className="hover:text-avorio transition-colors">Servizi</a></li>
               <li><a href="#casa-funeraria" className="hover:text-avorio transition-colors">Casa Funeraria</a></li>
               <li><a href="#previdenza" className="hover:text-avorio transition-colors">Previdenza</a></li>
+              <li><a href="#faq" className="hover:text-avorio transition-colors">FAQ</a></li>
               <li><a href="#contatti" className="hover:text-avorio transition-colors">Contatti</a></li>
             </ul>
           </div>

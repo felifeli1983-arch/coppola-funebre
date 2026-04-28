@@ -6,6 +6,7 @@ import CasaFuneraria from '@/components/CasaFuneraria';
 import Flotta from '@/components/Flotta';
 import Previdenza from '@/components/Previdenza';
 import CosaFare from '@/components/CosaFare';
+import Faq from '@/components/Faq';
 import Contatti from '@/components/Contatti';
 import Footer from '@/components/Footer';
 import StickyCTA from '@/components/StickyCTA';
@@ -26,6 +27,7 @@ export default function Home() {
         <Flotta />
         <Previdenza />
         <CosaFare />
+        <Faq />
         <Contatti />
       </main>
       <Footer />
