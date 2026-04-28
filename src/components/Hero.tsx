@@ -11,7 +11,7 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
+    const mq = window.matchMedia('(max-width: 1023px), (hover: none)');
     const update = () => setIsMobile(mq.matches);
     update();
     mq.addEventListener('change', update);

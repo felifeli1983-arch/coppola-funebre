@@ -5,13 +5,18 @@ import Lenis from 'lenis';
 
 export default function SmoothScroll() {
   useEffect(() => {
+    // Disable Lenis on touch devices — native scroll is smoother on iOS/Android
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (isTouch) return;
+
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 1.5,
-      lerp: 0.1,
+      touchMultiplier: 0,
+      syncTouch: false,
+      lerp: 0.085,
     });
 
     function raf(time: number) {
