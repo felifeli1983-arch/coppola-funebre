@@ -38,7 +38,7 @@ export default function CosaFare() {
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section className="py-24 md:py-32 bg-avorio-scuro">
+    <section id="cosa-fare" className="py-24 md:py-32 bg-avorio">
       <div className="container-custom">
         <div className="max-w-3xl mb-16">
           <Reveal>
@@ -76,7 +76,7 @@ export default function CosaFare() {
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: i * 0.12 + 0.3 }}
-                  className="hidden md:block absolute left-0 top-2 w-6 h-6 rounded-full bg-bordeaux ring-4 ring-avorio-scuro"
+                  className="hidden md:block absolute left-0 top-2 w-6 h-6 rounded-full bg-bordeaux ring-4 ring-avorio"
                 />
                 <div className="md:col-span-3 font-serif text-4xl md:text-5xl text-oro">
                   {s.n}

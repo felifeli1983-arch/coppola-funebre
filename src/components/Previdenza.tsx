@@ -13,7 +13,7 @@ const benefici = [
 
 export default function Previdenza() {
   return (
-    <section id="previdenza" className="py-24 md:py-32 bg-avorio">
+    <section id="previdenza" className="py-24 md:py-32 bg-avorio-scuro">
       <div className="container-custom grid md:grid-cols-12 gap-10 md:gap-16 items-center">
         <div className="md:col-span-5 order-2 md:order-1">
           <Reveal>

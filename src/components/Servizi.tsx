@@ -32,7 +32,7 @@ function Card({ s, i }: { s: typeof servizi[0]; i: number }) {
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.9, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-avorio-scuro p-8 md:p-10 overflow-hidden cursor-default"
+      className="group relative bg-avorio p-8 md:p-10 overflow-hidden cursor-default"
     >
       <div className="absolute inset-0 bg-bordeaux origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" />
       <div className="absolute top-0 left-0 right-0 h-px bg-oro scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out origin-left" />
@@ -56,7 +56,7 @@ function Card({ s, i }: { s: typeof servizi[0]; i: number }) {
 
 export default function Servizi() {
   return (
-    <section id="servizi" className="py-24 md:py-32 bg-avorio-scuro">
+    <section id="servizi" className="py-24 md:py-32 bg-avorio">
       <div className="container-custom">
         <div className="max-w-3xl mb-16 md:mb-20">
           <Reveal>
