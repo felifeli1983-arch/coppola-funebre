@@ -16,8 +16,8 @@ export default function Contatti() {
   const contacts = [
     { Icon: Phone, label: 'Reperibilità 24h', value: '081 571 3888', href: 'tel:0815713888', primary: true },
     { Icon: MessageCircle, label: 'WhatsApp', value: '081 571 3888', href: 'https://wa.me/390815713888' },
-    { Icon: Mail, label: 'Email', value: 'info@eredicoppola.com', href: 'mailto:info@eredicoppola.com' },
     { Icon: Flower2, label: 'Arte Sacra · Trigesimi (WhatsApp)', value: '350 930 6272', href: 'https://wa.me/393509306272' },
+    { Icon: Mail, label: 'Email', value: 'info@eredicoppola.com', href: 'mailto:info@eredicoppola.com' },
   ];
 
   return (
