@@ -1,9 +1,7 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-import Storia from '@/components/Storia';
 import Servizi from '@/components/Servizi';
 import CasaFuneraria from '@/components/CasaFuneraria';
-import Flotta from '@/components/Flotta';
 import Previdenza from '@/components/Previdenza';
 import CosaFare from '@/components/CosaFare';
 import Faq from '@/components/Faq';
@@ -21,12 +19,10 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Storia />
         <Servizi />
         <CasaFuneraria />
-        <Flotta />
-        <Previdenza />
         <CosaFare />
+        <Previdenza />
         <Faq />
         <Contatti />
       </main>

@@ -6,11 +6,11 @@ import { useEffect, useRef, useState } from 'react';
 import Reveal, { RevealWords } from './motion/Reveal';
 
 const gallery = [
-  '/img/new/reception.jpg',
+  '/img/new/interno-8.jpg',
+  '/img/new/interno-6.jpg',
+  '/img/new/interno-7.jpg',
   '/img/new/croce-onice.jpg',
-  '/img/new/meeting-room.jpg',
-  '/img/new/interno-3.jpg',
-  '/img/new/interno-5.jpg',
+  '/img/new/dettaglio-1.jpg',
 ];
 
 export default function CasaFuneraria() {
@@ -44,7 +44,7 @@ export default function CasaFuneraria() {
               <div className="flex items-center gap-3 mb-4">
                 <span className="divider-line bg-oro" />
                 <span className="text-xs tracking-widest uppercase text-oro font-medium">
-                  La Casa Funeraria
+                  La Sala del Commiato
                 </span>
               </div>
             </Reveal>
@@ -57,10 +57,11 @@ export default function CasaFuneraria() {
           <div className="md:col-span-7 md:pt-8">
             <Reveal delay={0.4}>
               <p className="text-lg text-avorio/80 font-light leading-relaxed mb-6">
-                La nostra Casa Funeraria accoglie le famiglie in un ambiente curato e
-                riservato. Sala del Commiato con zona living, camera ardente
-                personalizzabile e meeting room dedicata: ogni dettaglio è pensato
-                per offrire un luogo di dignità e quiete.
+                La nostra Sala del Commiato accoglie le famiglie in un ambiente
+                curato e riservato. Pareti in onice illuminate, sedute eleganti,
+                dettagli sacri e zona di raccoglimento: ogni elemento è pensato
+                per offrire un luogo di dignità e quiete in cui salutare i propri
+                cari.
               </p>
               <a
                 href="#contatti"

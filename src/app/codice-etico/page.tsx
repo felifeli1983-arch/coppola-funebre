@@ -2,7 +2,7 @@ import LegalLayout from '@/components/LegalLayout';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Codice Etico — Impresa Funebre Coppola',
+  title: 'Codice Etico — Onoranze Funebre Coppola',
   description: 'Il codice etico che guida ogni nostra azione: rispetto, dignità, professionalità, discrezione.',
 };
 
@@ -14,7 +14,7 @@ export default function CodiceEtico() {
     >
       <h2>Valore fondamentale</h2>
       <p>
-        L&apos;etica professionale è il pilastro dell&apos;attività dell&apos;Impresa
+        L&apos;etica professionale è il pilastro dell&apos;attività delle Onoranze
         Funebre Coppola. L&apos;obiettivo è tutelare il dolente e permettergli
         di onorare i defunti nella maniera più serena possibile, con rispetto,
         dignità e discrezione.
@@ -24,7 +24,7 @@ export default function CodiceEtico() {
 
       <h3>Soluzioni congrue</h3>
       <p>
-        L&apos;impresa non propone servizi senza prima aver compreso le
+        L&apos;azienda non propone servizi senza prima aver compreso le
         necessità e i desideri dei familiari, interpretando le loro volontà in
         un momento spesso contraddistinto da debolezza, confusione e fragilità.
         Ogni proposta è calibrata sulle reali esigenze, mai sul profitto.

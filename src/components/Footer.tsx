@@ -9,7 +9,7 @@ export default function Footer() {
             <div className="flex items-center gap-4 mb-6">
               <img src="/img/new/logo-hd.jpg" alt="Coppola" className="h-20 w-auto" />
               <div>
-                <div className="font-serif text-xl text-avorio">Impresa Funebre Coppola</div>
+                <div className="font-serif text-xl text-avorio">Onoranze Funebre Coppola</div>
                 <div className="text-xs tracking-widest uppercase text-oro-chiaro mt-1">
                   Oltre un secolo di servizio
                 </div>
@@ -61,7 +61,7 @@ export default function Footer() {
 
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-avorio/50">
           <div>
-            © {new Date().getFullYear()} Impresa Funebre Coppola · Tutti i diritti riservati
+            © {new Date().getFullYear()} Onoranze Funebre Coppola · Tutti i diritti riservati
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <a href="/privacy-policy" className="hover:text-avorio transition-colors">Privacy Policy</a>

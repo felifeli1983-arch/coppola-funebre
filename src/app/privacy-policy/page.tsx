@@ -2,7 +2,7 @@ import LegalLayout from '@/components/LegalLayout';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Impresa Funebre Coppola',
+  title: 'Privacy Policy — Onoranze Funebre Coppola',
   description: 'Informativa sul trattamento dei dati personali ai sensi del GDPR Reg. UE 2016/679.',
 };
 
@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
     >
       <h2>1. Titolare del trattamento</h2>
       <p>
-        Il Titolare del trattamento dei dati personali è <strong>Impresa Funebre
+        Il Titolare del trattamento dei dati personali è <strong>Onoranze Funebre
         Coppola</strong>, contattabile ai seguenti recapiti:
       </p>
       <ul>

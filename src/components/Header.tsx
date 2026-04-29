@@ -1,14 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Phone, Menu, X } from 'lucide-react';
+import { Phone, Menu, X, MapPin } from 'lucide-react';
 
 const nav = [
-  { href: '#storia', label: 'La Storia' },
   { href: '#servizi', label: 'Servizi' },
   { href: '#casa-funeraria', label: 'Casa Funeraria' },
-  { href: '#previdenza', label: 'Previdenza' },
-  { href: '#faq', label: 'FAQ' },
+  { href: '#cosa-fare', label: 'Cosa Fare' },
   { href: '#contatti', label: 'Contatti' },
 ];
 
@@ -35,7 +33,7 @@ export default function Header() {
         <a href="#" className="flex items-center group">
           <img
             src="/img/new/logo-hd.jpg"
-            alt="Impresa Funebre Coppola"
+            alt="Onoranze Funebre Coppola"
             className="h-12 md:h-14 w-auto transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </a>
@@ -53,14 +51,20 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <a
-            href="tel:0815713888"
-            className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-bordeaux text-avorio text-xs tracking-widest uppercase font-medium hover:bg-bordeaux-dark transition-colors"
-          >
-            <Phone size={14} />
-            24h · 081 571 3888
-          </a>
+        <div className="flex items-center gap-4">
+          <div className="hidden md:flex flex-col items-end leading-tight">
+            <a
+              href="tel:0815713888"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-bordeaux text-avorio text-xs tracking-widest uppercase font-medium hover:bg-bordeaux-dark transition-colors"
+            >
+              <Phone size={14} />
+              24h · 081 571 3888
+            </a>
+            <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] tracking-wider uppercase text-pietra-chiaro">
+              <MapPin size={10} strokeWidth={2} className="text-bordeaux" />
+              Operiamo in tutto il territorio Nazionale
+            </span>
+          </div>
           <button
             onClick={() => setOpen(!open)}
             className="lg:hidden p-2 text-pietra"
@@ -91,6 +95,9 @@ export default function Header() {
               <Phone size={14} />
               Chiama 24h · 081 571 3888
             </a>
+            <div className="text-center text-[10px] tracking-wider uppercase text-pietra-chiaro mt-2">
+              Operiamo in tutto il territorio Nazionale
+            </div>
           </div>
         </div>
       )}

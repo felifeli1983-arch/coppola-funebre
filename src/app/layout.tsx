@@ -20,23 +20,23 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.eredicoppola.com'),
-  title: 'Impresa Funebre Coppola — Onoranze Funebri',
+  title: 'Onoranze Funebre Coppola — Onoranze Funebri',
   description:
-    'Oltre un secolo accanto alle famiglie. Impresa Funebre Coppola: casa funeraria, servizi funebri 24h, previdenza funebre.',
+    'Oltre un secolo accanto alle famiglie. Onoranze Funebre Coppola: casa funeraria, servizi funebri 24h, previdenza funebre.',
   keywords: [
     'onoranze funebri',
-    'impresa funebre Coppola',
+    'Onoranze Funebre Coppola',
     'casa funeraria',
     'servizi funebri',
     'previdenza funebre',
   ],
   openGraph: {
-    title: 'Impresa Funebre Coppola',
+    title: 'Onoranze Funebre Coppola',
     description: 'Un servizio esclusivo alla portata di tutti. 24h su 24, 365 giorni l\'anno.',
     type: 'website',
     locale: 'it_IT',
     url: 'https://www.eredicoppola.com',
-    siteName: 'Impresa Funebre Coppola',
+    siteName: 'Onoranze Funebre Coppola',
   },
   robots: {
     index: true,

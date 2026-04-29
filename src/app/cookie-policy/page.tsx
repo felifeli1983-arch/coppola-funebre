@@ -2,7 +2,7 @@ import LegalLayout from '@/components/LegalLayout';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy — Impresa Funebre Coppola',
+  title: 'Cookie Policy — Onoranze Funebre Coppola',
   description: 'Informativa estesa sull\'utilizzo dei cookie ai sensi del Provvedimento del Garante e del GDPR.',
 };
 
@@ -109,7 +109,7 @@ export default function CookiePolicy() {
 
       <h2>7. Titolare e contatti</h2>
       <p>
-        Il Titolare del trattamento è <strong>Impresa Funebre Coppola</strong>.
+        Il Titolare del trattamento è <strong>Onoranze Funebre Coppola</strong>.
         Per qualsiasi richiesta relativa ai cookie:
       </p>
       <ul>
