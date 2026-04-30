@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Phone, Menu, X, MapPin } from 'lucide-react';
+import WhatsAppIcon from './icons/WhatsAppIcon';
 
 const nav = [
   { href: '#servizi', label: 'Servizi' },
@@ -59,6 +60,7 @@ export default function Header() {
             >
               <Phone size={14} />
               24h · 081 571 3888
+              <WhatsAppIcon size={14} className="text-oro-chiaro" />
             </a>
             <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] tracking-wider uppercase text-pietra-chiaro">
               <MapPin size={10} strokeWidth={2} className="text-bordeaux" />
@@ -94,6 +96,7 @@ export default function Header() {
             >
               <Phone size={14} />
               Chiama 24h · 081 571 3888
+              <WhatsAppIcon size={14} className="text-oro-chiaro" />
             </a>
             <div className="text-center text-[10px] tracking-wider uppercase text-pietra-chiaro mt-2">
               Operiamo in tutto il territorio Nazionale

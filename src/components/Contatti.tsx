@@ -25,9 +25,9 @@ export default function Contatti() {
   };
 
   const contacts: Contact[] = [
-    { Icon: Phone, label: 'Reperibilità 24h', value: '081 571 3888', href: 'tel:0815713888', primary: true },
-    { Icon: WhatsAppIcon, label: 'WhatsApp', value: '081 571 3888', href: 'https://wa.me/390815713888', iconBrandColor: '#25D366' },
-    { Icon: WhatsAppIcon, label: 'Arte Sacra · Trigesimi', value: '350 930 6272', href: 'https://wa.me/393509306272', iconBrandColor: '#25D366' },
+    { Icon: Phone, label: 'Reperibilità 24h · Anche WhatsApp', value: '081 571 3888', href: 'tel:0815713888', primary: true },
+    { Icon: WhatsAppIcon, label: 'WhatsApp', value: '081 571 3888', href: 'https://wa.me/390815713888', iconBrandColor: '#B8935A' },
+    { Icon: WhatsAppIcon, label: 'Arte Sacra · Trigesimi', value: '350 930 6272', href: 'https://wa.me/393509306272', iconBrandColor: '#B8935A' },
     { Icon: Mail, label: 'Email', value: 'info@eredicoppola.com', href: 'mailto:info@eredicoppola.com' },
   ];
 
@@ -71,7 +71,7 @@ export default function Contatti() {
                     c.primary
                       ? 'bg-bordeaux text-avorio group-hover:bg-bordeaux-dark'
                       : c.iconBrandColor
-                      ? 'border border-pietra/20 group-hover:border-[#25D366]'
+                      ? 'border border-pietra/20 group-hover:border-oro'
                       : 'border border-pietra/30 text-pietra group-hover:border-bordeaux group-hover:text-bordeaux'
                   }`}
                   style={c.iconBrandColor ? { color: c.iconBrandColor } : undefined}

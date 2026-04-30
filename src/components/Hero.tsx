@@ -1,6 +1,7 @@
 'use client';
 
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone } from 'lucide-react';
+import WhatsAppIcon from './icons/WhatsAppIcon';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { RevealWords } from './motion/Reveal';
@@ -88,6 +89,7 @@ export default function Hero() {
             >
               <Phone size={16} />
               Chiama ora · 081 571 3888
+              <WhatsAppIcon size={16} className="text-oro-chiaro" />
             </MagneticButton>
             <MagneticButton
               href="https://wa.me/390815713888"
@@ -95,7 +97,7 @@ export default function Hero() {
               rel="noopener"
               className="inline-flex items-center gap-2 px-8 py-4 border border-avorio/40 text-avorio tracking-wider uppercase text-sm font-medium hover:bg-avorio hover:text-pietra transition-colors"
             >
-              <MessageCircle size={16} />
+              <WhatsAppIcon size={16} />
               Scrivici su WhatsApp
             </MagneticButton>
           </motion.div>

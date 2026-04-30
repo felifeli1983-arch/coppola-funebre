@@ -1,6 +1,7 @@
 'use client';
 
 import { Phone } from 'lucide-react';
+import WhatsAppIcon from './icons/WhatsAppIcon';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Reveal, { RevealWords } from './motion/Reveal';
@@ -113,6 +114,7 @@ export default function CosaFare() {
             >
               <Phone size={18} />
               081 571 3888
+              <WhatsAppIcon size={18} className="text-oro" />
             </MagneticButton>
           </div>
         </Reveal>

@@ -61,13 +61,16 @@ export default function Footer() {
                   <Phone size={14} strokeWidth={1.5} className="flex-none text-oro" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">24h</span>
-                    <span className="font-medium text-avorio">081 571 3888</span>
+                    <span className="font-medium text-avorio inline-flex items-center gap-1.5">
+                      081 571 3888
+                      <WhatsAppIcon size={12} className="text-oro" />
+                    </span>
                   </span>
                 </a>
               </li>
               <li>
                 <a href="https://wa.me/390815713888" target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-avorio transition-colors">
-                  <WhatsAppIcon size={14} className="flex-none text-[#25D366]" />
+                  <WhatsAppIcon size={14} className="flex-none text-oro" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">WhatsApp</span>
                     <span className="font-medium text-avorio">081 571 3888</span>
@@ -76,7 +79,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="https://wa.me/393509306272" target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-avorio transition-colors">
-                  <WhatsAppIcon size={14} className="flex-none text-[#25D366]" />
+                  <WhatsAppIcon size={14} className="flex-none text-oro" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">Arte Sacra · Trigesimi</span>
                     <span className="font-medium text-avorio">350 930 6272</span>
