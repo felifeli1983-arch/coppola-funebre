@@ -7,7 +7,7 @@ import Reveal, { RevealWords } from './motion/Reveal';
 
 const gallery = [
   '/img/new/interno-8.jpg',
-  '/img/new/meeting-room.jpg',
+  '/img/new/sala-warhol.jpg',
   '/img/new/interno-7.jpg',
 ];
 
