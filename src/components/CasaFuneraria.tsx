@@ -32,7 +32,7 @@ export default function CasaFuneraria() {
         style={{ y: bgY }}
         className="absolute inset-0 opacity-[0.08] pointer-events-none gpu"
       >
-        <div className="absolute inset-0 bg-[url('/img/new/dettaglio-1.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-[url('/img/new/interno-7.jpg')] bg-cover bg-center" />
       </motion.div>
 
       <div className="relative container-custom">
