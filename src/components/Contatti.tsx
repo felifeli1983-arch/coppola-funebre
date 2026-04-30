@@ -71,11 +71,12 @@ export default function Contatti() {
                     c.primary
                       ? 'bg-bordeaux text-avorio group-hover:bg-bordeaux-dark'
                       : c.iconBrandColor
-                      ? 'bg-[#25D366] text-white group-hover:opacity-90'
+                      ? 'border border-pietra/20 group-hover:border-[#25D366]'
                       : 'border border-pietra/30 text-pietra group-hover:border-bordeaux group-hover:text-bordeaux'
                   }`}
+                  style={c.iconBrandColor ? { color: c.iconBrandColor } : undefined}
                 >
-                  <c.Icon size={18} />
+                  <c.Icon size={20} />
                 </div>
                 <div className="min-w-0">
                   <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-1 font-medium">
