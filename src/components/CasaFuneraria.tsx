@@ -6,9 +6,9 @@ import { useEffect, useRef, useState } from 'react';
 import Reveal, { RevealWords } from './motion/Reveal';
 
 const gallery = [
-  '/img/new/interno-8.jpg',
-  '/img/new/sala-warhol.jpg',
   '/img/new/interno-7.jpg',
+  '/img/new/interno-8.jpg',
+  '/img/hero-2.jpg',
 ];
 
 export default function CasaFuneraria() {
@@ -85,7 +85,7 @@ export default function CasaFuneraria() {
               <img
                 src={src}
                 alt=""
-                className="w-full h-full object-cover photo-warm group-hover:scale-110 transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                className="w-full h-full object-cover object-center photo-warm group-hover:scale-110 transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
               />
               <div className="absolute inset-0 bg-pietra/0 group-hover:bg-pietra/20 transition-colors duration-700" />
             </motion.div>
