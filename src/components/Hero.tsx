@@ -87,9 +87,10 @@ export default function Hero() {
               href="tel:0815713888"
               className="inline-flex items-center gap-2 px-8 py-4 bg-bordeaux text-avorio tracking-wider uppercase text-sm font-medium hover:bg-bordeaux-dark transition-colors"
             >
-              <Phone size={16} />
+              <WhatsAppIcon size={16} className="text-avorio md:hidden" />
+              <Phone size={16} className="hidden md:inline-block" />
               Chiama ora · 081 571 3888
-              <WhatsAppIcon size={16} className="text-oro-chiaro" />
+              <WhatsAppIcon size={16} className="text-oro-chiaro hidden md:inline-block" />
             </MagneticButton>
             <MagneticButton
               href="https://wa.me/390815713888"
