@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '@/components/CookieBanner';
 import Analytics from '@/components/Analytics';
+import StructuredData from '@/components/StructuredData';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it" className={`${cormorant.variable} ${inter.variable}`}>
       <body>
+        <StructuredData />
         <Analytics />
         {children}
         <CookieBanner />
