@@ -27,7 +27,7 @@ export default function Hero() {
     <section ref={ref} className="relative h-screen min-h-[680px] w-full overflow-hidden">
       <motion.div style={{ y, scale }} className="absolute inset-0 w-full h-full gpu">
         <img
-          src="/img/new/sede-esterno.jpg"
+          src="/img/new/sede-cancello.png"
           alt="Sede Onoranze Funebri Coppola"
           className="absolute inset-0 w-full h-full object-cover object-[58%_60%] md:object-center photo-warm"
         />

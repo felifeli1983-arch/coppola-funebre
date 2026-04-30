@@ -43,9 +43,9 @@ export const metadata: Metadata = {
     siteName: 'Onoranze Funebri Coppola',
     images: [
       {
-        url: '/img/new/sede-esterno.jpg',
-        width: 1800,
-        height: 1013,
+        url: '/img/new/sede-cancello.png',
+        width: 1672,
+        height: 941,
         alt: 'Onoranze Funebri Coppola — Sede Mugnano di Napoli',
       },
     ],
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Onoranze Funebri Coppola',
     description: 'Casa funeraria, servizi funebri 24h, previdenza funebre. Operiamo in tutta Italia.',
-    images: ['/img/new/sede-esterno.jpg'],
+    images: ['/img/new/sede-cancello.png'],
   },
   robots: {
     index: true,
