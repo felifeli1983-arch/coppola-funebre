@@ -33,7 +33,7 @@ export default function Header() {
         <a href="#" className="flex items-center group">
           <img
             src="/img/new/logo-hd.jpg"
-            alt="Onoranze Funebre Coppola"
+            alt="Onoranze Funebri Coppola"
             className="h-12 md:h-14 w-auto transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </a>

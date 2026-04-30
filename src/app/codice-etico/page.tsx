@@ -2,7 +2,7 @@ import LegalLayout from '@/components/LegalLayout';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Codice Etico — Onoranze Funebre Coppola',
+  title: 'Codice Etico — Onoranze Funebri Coppola',
   description: 'Il codice etico che guida ogni nostra azione: rispetto, dignità, professionalità, discrezione.',
 };
 

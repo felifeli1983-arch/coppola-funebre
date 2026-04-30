@@ -9,8 +9,6 @@ const gallery = [
   '/img/new/interno-8.jpg',
   '/img/new/interno-6.jpg',
   '/img/new/interno-7.jpg',
-  '/img/new/croce-onice.jpg',
-  '/img/new/dettaglio-1.jpg',
 ];
 
 export default function CasaFuneraria() {
@@ -74,7 +72,7 @@ export default function CasaFuneraria() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           {gallery.map((src, i) => (
             <motion.div
               key={i}
@@ -82,9 +80,7 @@ export default function CasaFuneraria() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px' }}
               transition={{ duration: 1, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={`group relative overflow-hidden ${
-                i === 0 ? 'col-span-2 row-span-2 aspect-square md:aspect-auto' : 'aspect-square'
-              }`}
+              className="group relative overflow-hidden aspect-[4/3]"
             >
               <img
                 src={src}

@@ -1,9 +1,20 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
-import { Phone, Mail, MessageCircle, Send, Flower2 } from 'lucide-react';
+import { Phone, Mail, Send, Flower2, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Reveal, { RevealWords } from './motion/Reveal';
+import WhatsAppIcon from './icons/WhatsAppIcon';
+
+type Contact = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon: React.ComponentType<any>;
+  label: string;
+  value: string;
+  href: string;
+  primary?: boolean;
+  iconBrandColor?: string;
+};
 
 export default function Contatti() {
   const [sent, setSent] = useState(false);
@@ -13,10 +24,10 @@ export default function Contatti() {
     setSent(true);
   };
 
-  const contacts = [
+  const contacts: Contact[] = [
     { Icon: Phone, label: 'Reperibilità 24h', value: '081 571 3888', href: 'tel:0815713888', primary: true },
-    { Icon: MessageCircle, label: 'WhatsApp', value: '081 571 3888', href: 'https://wa.me/390815713888' },
-    { Icon: Flower2, label: 'Arte Sacra · Trigesimi (WhatsApp)', value: '350 930 6272', href: 'https://wa.me/393509306272' },
+    { Icon: WhatsAppIcon, label: 'WhatsApp', value: '081 571 3888', href: 'https://wa.me/390815713888', iconBrandColor: '#25D366' },
+    { Icon: WhatsAppIcon, label: 'Arte Sacra · Trigesimi', value: '350 930 6272', href: 'https://wa.me/393509306272', iconBrandColor: '#25D366' },
     { Icon: Mail, label: 'Email', value: 'info@eredicoppola.com', href: 'mailto:info@eredicoppola.com' },
   ];
 
@@ -35,14 +46,14 @@ export default function Contatti() {
             <RevealWords text="con calma." delay={0.2} wordClassName="italic text-bordeaux" />
           </h2>
           <Reveal delay={0.4}>
-            <p className="text-lg text-pietra-chiaro font-light leading-relaxed mb-10">
+            <p className="text-base md:text-lg text-pietra leading-relaxed mb-10">
               Per assistenza immediata chiamate il numero 24h. Per informazioni,
               consulenze sulla previdenza o richieste di preventivo potete
               scriverci: vi risponderemo al più presto.
             </p>
           </Reveal>
 
-          <div className="space-y-5">
+          <div className="space-y-4">
             {contacts.map((c, i) => (
               <motion.a
                 key={c.label}
@@ -53,27 +64,55 @@ export default function Contatti() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-10% 0px' }}
                 transition={{ duration: 0.8, delay: 0.5 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-start gap-4 group"
+                className="flex items-center gap-4 group"
               >
                 <div
                   className={`w-12 h-12 flex items-center justify-center flex-none transition-colors duration-500 ${
                     c.primary
                       ? 'bg-bordeaux text-avorio group-hover:bg-bordeaux-dark'
-                      : 'border border-pietra/20 text-pietra group-hover:border-bordeaux group-hover:text-bordeaux'
+                      : c.iconBrandColor
+                      ? 'bg-[#25D366] text-white group-hover:opacity-90'
+                      : 'border border-pietra/30 text-pietra group-hover:border-bordeaux group-hover:text-bordeaux'
                   }`}
                 >
                   <c.Icon size={18} />
                 </div>
-                <div>
-                  <div className="text-xs tracking-widest uppercase text-pietra-chiaro mb-1">
+                <div className="min-w-0">
+                  <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-0.5 font-medium">
                     {c.label}
                   </div>
-                  <div className="font-serif text-lg md:text-xl text-pietra group-hover:text-bordeaux transition-colors break-all">
+                  <div className="font-sans text-base md:text-lg text-pietra group-hover:text-bordeaux transition-colors font-semibold tracking-tight break-words">
                     {c.value}
                   </div>
                 </div>
               </motion.a>
             ))}
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-start gap-4 pt-2"
+            >
+              <div className="w-12 h-12 flex items-center justify-center flex-none border border-pietra/30 text-pietra">
+                <MapPin size={18} />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-0.5 font-medium">
+                  Sede centrale
+                </div>
+                <div className="font-sans text-base md:text-lg text-pietra font-semibold tracking-tight leading-snug">
+                  Via Pietro Nenni 10
+                  <br />
+                  <span className="text-sm text-pietra/80 font-normal">
+                    (Circumvallazione Esterna)
+                  </span>
+                  <br />
+                  80018 Mugnano di Napoli
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
 
@@ -137,7 +176,7 @@ export default function Contatti() {
                       <option>Richiesta informazioni</option>
                       <option>Previdenza funebre</option>
                       <option>Casa funeraria</option>
-                      <option>Condoglianze</option>
+                      <option>Arte sacra / Trigesimi</option>
                       <option>Altro</option>
                     </select>
                   </label>

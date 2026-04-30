@@ -52,7 +52,7 @@ export default function Hero() {
               className="block w-16 h-px bg-oro"
             />
             <span className="text-[11px] md:text-xs tracking-[0.25em] uppercase text-oro-chiaro font-medium">
-              Onoranze Funebre Coppola · Oltre un secolo di servizio
+              Onoranze Funebri Coppola · Operiamo in tutta Italia
             </span>
           </motion.div>
 

@@ -14,7 +14,7 @@ export default function Logo({
       viewBox="0 0 200 220"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      aria-label="Onoranze Funebre Coppola"
+      aria-label="Onoranze Funebri Coppola"
     >
       <rect x="0" y="0" width="200" height="220" fill={bg} />
 

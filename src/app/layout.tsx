@@ -20,23 +20,40 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.eredicoppola.com'),
-  title: 'Onoranze Funebre Coppola — Onoranze Funebri',
+  title: 'Onoranze Funebri Coppola',
   description:
-    'Oltre un secolo accanto alle famiglie. Onoranze Funebre Coppola: casa funeraria, servizi funebri 24h, previdenza funebre.',
+    'Onoranze Funebri Coppola: casa funeraria, servizi funebri 24h, previdenza funebre. Operiamo in tutta Italia.',
   keywords: [
     'onoranze funebri',
-    'Onoranze Funebre Coppola',
+    'Onoranze Funebri Coppola',
     'casa funeraria',
+    'sala del commiato',
     'servizi funebri',
     'previdenza funebre',
+    'arte sacra',
+    'trigesimi',
   ],
   openGraph: {
-    title: 'Onoranze Funebre Coppola',
-    description: 'Un servizio esclusivo alla portata di tutti. 24h su 24, 365 giorni l\'anno.',
+    title: 'Onoranze Funebri Coppola',
+    description: 'Un servizio esclusivo alla portata di tutti. 24h su 24, 365 giorni l\'anno. Operiamo in tutta Italia.',
     type: 'website',
     locale: 'it_IT',
     url: 'https://www.eredicoppola.com',
-    siteName: 'Onoranze Funebre Coppola',
+    siteName: 'Onoranze Funebri Coppola',
+    images: [
+      {
+        url: '/img/new/reception.jpg',
+        width: 1500,
+        height: 1000,
+        alt: 'Onoranze Funebri Coppola — Casa Funeraria',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Onoranze Funebri Coppola',
+    description: 'Casa funeraria, servizi funebri 24h, previdenza funebre. Operiamo in tutta Italia.',
+    images: ['/img/new/reception.jpg'],
   },
   robots: {
     index: true,

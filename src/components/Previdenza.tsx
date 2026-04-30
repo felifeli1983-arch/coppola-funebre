@@ -64,7 +64,7 @@ export default function Previdenza() {
         <div className="md:col-span-7 order-1 md:order-2">
           <RevealImage
             src="/img/locandina-previdenza.jpg"
-            alt="Contratto di Previdenza Onoranze Funebre Coppola"
+            alt="Contratto di Previdenza Onoranze Funebri Coppola"
             className="w-full shadow-2xl"
           />
         </div>
