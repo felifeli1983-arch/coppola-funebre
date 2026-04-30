@@ -78,10 +78,10 @@ export default function Contatti() {
                   <c.Icon size={18} />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-0.5 font-medium">
+                  <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-1 font-medium">
                     {c.label}
                   </div>
-                  <div className="font-sans text-base md:text-lg text-pietra group-hover:text-bordeaux transition-colors font-semibold tracking-tight break-words">
+                  <div className="font-serif text-xl md:text-2xl text-pietra group-hover:text-bordeaux transition-colors font-medium leading-tight break-words">
                     {c.value}
                   </div>
                 </div>
@@ -99,13 +99,13 @@ export default function Contatti() {
                 <MapPin size={18} />
               </div>
               <div className="min-w-0">
-                <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-0.5 font-medium">
+                <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-1 font-medium">
                   Sede centrale
                 </div>
-                <div className="font-sans text-base md:text-lg text-pietra font-semibold tracking-tight leading-snug">
+                <div className="font-serif text-xl md:text-2xl text-pietra font-medium leading-tight">
                   Via Pietro Nenni 10
                   <br />
-                  <span className="text-sm text-pietra/80 font-normal">
+                  <span className="text-base text-pietra/75 font-normal italic">
                     (Circumvallazione Esterna)
                   </span>
                   <br />
