@@ -29,7 +29,7 @@ export default function Hero() {
         <img
           src="/img/new/sede-esterno.jpg"
           alt="Sede Onoranze Funebri Coppola"
-          className="absolute inset-0 w-full h-full object-cover object-center photo-warm"
+          className="absolute inset-0 w-full h-full object-cover object-[58%_60%] md:object-center photo-warm"
         />
         <div className="absolute inset-0 bg-pietra/40" />
         <div className="absolute inset-0 bg-gradient-to-b from-pietra/70 via-pietra/50 to-pietra/90" />

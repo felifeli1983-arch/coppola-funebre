@@ -67,7 +67,7 @@ export default function Contatti() {
                 className="flex items-center gap-4 group"
               >
                 <div
-                  className={`w-12 h-12 flex items-center justify-center flex-none transition-colors duration-500 ${
+                  className={`w-10 h-10 flex items-center justify-center flex-none transition-colors duration-500 ${
                     c.primary
                       ? 'bg-bordeaux text-avorio group-hover:bg-bordeaux-dark'
                       : c.iconBrandColor
@@ -76,13 +76,13 @@ export default function Contatti() {
                   }`}
                   style={c.iconBrandColor ? { color: c.iconBrandColor } : undefined}
                 >
-                  <c.Icon size={20} />
+                  <c.Icon size={16} />
                 </div>
                 <div className="min-w-0">
                   <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-1 font-medium">
                     {c.label}
                   </div>
-                  <div className="font-serif text-xl md:text-2xl text-pietra group-hover:text-bordeaux transition-colors font-medium leading-tight break-words">
+                  <div className="font-sans text-base text-pietra group-hover:text-bordeaux transition-colors font-medium leading-tight break-words tracking-tight">
                     {c.value}
                   </div>
                 </div>
@@ -96,21 +96,19 @@ export default function Contatti() {
               transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-start gap-4 pt-2"
             >
-              <div className="w-12 h-12 flex items-center justify-center flex-none border border-pietra/30 text-pietra">
-                <MapPin size={18} />
+              <div className="w-10 h-10 flex items-center justify-center flex-none border border-pietra/30 text-pietra">
+                <MapPin size={16} />
               </div>
               <div className="min-w-0">
                 <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-1 font-medium">
                   Sede centrale
                 </div>
-                <div className="font-serif text-xl md:text-2xl text-pietra font-medium leading-tight">
+                <div className="font-sans text-base text-pietra font-medium leading-snug tracking-tight">
                   Via Pietro Nenni 10
-                  <br />
-                  <span className="text-base text-pietra/75 font-normal italic">
+                  <span className="block text-sm text-pietra/65 font-normal">
                     (Circumvallazione Esterna)
                   </span>
-                  <br />
-                  80018 Mugnano di Napoli
+                  <span className="block">80018 Mugnano di Napoli</span>
                 </div>
               </div>
             </motion.div>

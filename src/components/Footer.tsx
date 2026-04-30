@@ -61,7 +61,7 @@ export default function Footer() {
                   <Phone size={14} strokeWidth={1.5} className="flex-none text-oro" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">24h</span>
-                    <span className="font-semibold text-avorio">081 571 3888</span>
+                    <span className="font-medium text-avorio">081 571 3888</span>
                   </span>
                 </a>
               </li>
@@ -70,7 +70,7 @@ export default function Footer() {
                   <WhatsAppIcon size={14} className="flex-none text-[#25D366]" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">WhatsApp</span>
-                    <span className="font-semibold text-avorio">081 571 3888</span>
+                    <span className="font-medium text-avorio">081 571 3888</span>
                   </span>
                 </a>
               </li>
@@ -79,7 +79,7 @@ export default function Footer() {
                   <WhatsAppIcon size={14} className="flex-none text-[#25D366]" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">Arte Sacra · Trigesimi</span>
-                    <span className="font-semibold text-avorio">350 930 6272</span>
+                    <span className="font-medium text-avorio">350 930 6272</span>
                   </span>
                 </a>
               </li>
@@ -88,7 +88,7 @@ export default function Footer() {
                   <Mail size={14} strokeWidth={1.5} className="flex-none text-oro" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">Email</span>
-                    <span className="font-semibold text-avorio">info@eredicoppola.com</span>
+                    <span className="font-medium text-avorio">info@eredicoppola.com</span>
                   </span>
                 </a>
               </li>
