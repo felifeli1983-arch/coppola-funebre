@@ -55,14 +55,6 @@ export default function StructuredData() {
         areaServed: 'IT',
         contactOption: 'TollFree',
       },
-      {
-        '@type': 'ContactPoint',
-        telephone: '+39 350 930 6272',
-        contactType: 'sales',
-        availableLanguage: ['Italian'],
-        areaServed: 'IT',
-        description: 'Arte Sacra · Trigesimi (WhatsApp)',
-      },
     ],
   };
 

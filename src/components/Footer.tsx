@@ -78,15 +78,6 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/393509306272" target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-avorio transition-colors">
-                  <WhatsAppIcon size={14} className="flex-none text-oro" />
-                  <span>
-                    <span className="block text-[10px] tracking-widest uppercase text-avorio/50">Arte Sacra · Trigesimi</span>
-                    <span className="font-medium text-avorio">350 930 6272</span>
-                  </span>
-                </a>
-              </li>
-              <li>
                 <a href="mailto:info@eredicoppola.com" className="flex items-center gap-3 hover:text-avorio transition-colors">
                   <Mail size={14} strokeWidth={1.5} className="flex-none text-oro" />
                   <span>
