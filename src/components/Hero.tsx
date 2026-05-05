@@ -108,10 +108,10 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2.5 }}
-          className="absolute bottom-10 left-0 right-0 container-custom flex items-end justify-between text-avorio/60 text-[10px] md:text-xs tracking-widest uppercase"
+          className="absolute bottom-10 left-0 right-0 container-custom hidden md:flex items-end justify-between text-avorio/60 text-[10px] md:text-xs tracking-widest uppercase"
         >
           <span>Servizi funebri · Casa funeraria · Previdenza</span>
-          <div className="hidden md:flex items-center gap-3">
+          <div className="flex items-center gap-3">
             <span>Scorri</span>
             <motion.div
               animate={{ y: [0, 8, 0] }}
