@@ -179,7 +179,7 @@ export default function Contatti() {
                         name="nome"
                         type="text"
                         autoComplete="name"
-                        className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg transition-colors"
+                        className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-sans text-base text-pietra placeholder:text-pietra/40 transition-colors"
                       />
                     </label>
                     <label className="block">
@@ -191,7 +191,7 @@ export default function Contatti() {
                         name="telefono"
                         type="tel"
                         autoComplete="tel"
-                        className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg transition-colors"
+                        className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-sans text-base text-pietra placeholder:text-pietra/40 transition-colors"
                       />
                     </label>
                   </div>
@@ -204,7 +204,7 @@ export default function Contatti() {
                       name="email"
                       type="email"
                       autoComplete="email"
-                      className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg transition-colors"
+                      className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-sans text-base text-pietra placeholder:text-pietra/40 transition-colors"
                     />
                   </label>
                   <label className="block mt-5">
@@ -213,7 +213,7 @@ export default function Contatti() {
                     </span>
                     <select
                       name="oggetto"
-                      className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg transition-colors"
+                      className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-sans text-base text-pietra placeholder:text-pietra/40 transition-colors"
                       defaultValue=""
                     >
                       <option value="" disabled>Scegli un oggetto</option>
@@ -231,7 +231,7 @@ export default function Contatti() {
                     <textarea
                       name="messaggio"
                       rows={4}
-                      className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg resize-none transition-colors"
+                      className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-sans text-base text-pietra placeholder:text-pietra/40 resize-none transition-colors"
                     />
                   </label>
 
