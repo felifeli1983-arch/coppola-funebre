@@ -18,10 +18,41 @@ type Contact = {
 
 export default function Contatti() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
+    if (sending) return;
+    setError(null);
+    setSending(true);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      nome: String(formData.get('nome') ?? ''),
+      telefono: String(formData.get('telefono') ?? ''),
+      email: String(formData.get('email') ?? ''),
+      oggetto: String(formData.get('oggetto') ?? ''),
+      messaggio: String(formData.get('messaggio') ?? ''),
+      website: String(formData.get('website') ?? ''), // honeypot
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data.error || 'Errore di invio.');
+      }
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Errore di invio. Riprova o chiamaci.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const contacts: Contact[] = [
@@ -130,6 +161,14 @@ export default function Contatti() {
                 </motion.div>
               ) : (
                 <>
+                  {/* Honeypot anti-spam: campo nascosto, gli umani non lo vedono, i bot lo riempiono */}
+                  <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', top: 'auto', width: '1px', height: '1px', overflow: 'hidden' }}>
+                    <label>
+                      Lascia vuoto questo campo
+                      <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+                    </label>
+                  </div>
+
                   <div className="grid sm:grid-cols-2 gap-5">
                     <label className="block">
                       <span className="text-xs tracking-widest uppercase text-pietra-chiaro">
@@ -137,7 +176,9 @@ export default function Contatti() {
                       </span>
                       <input
                         required
+                        name="nome"
                         type="text"
+                        autoComplete="name"
                         className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg transition-colors"
                       />
                     </label>
@@ -147,7 +188,9 @@ export default function Contatti() {
                       </span>
                       <input
                         required
+                        name="telefono"
                         type="tel"
+                        autoComplete="tel"
                         className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg transition-colors"
                       />
                     </label>
@@ -158,7 +201,9 @@ export default function Contatti() {
                     </span>
                     <input
                       required
+                      name="email"
                       type="email"
+                      autoComplete="email"
                       className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg transition-colors"
                     />
                   </label>
@@ -167,6 +212,7 @@ export default function Contatti() {
                       Oggetto
                     </span>
                     <select
+                      name="oggetto"
                       className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg transition-colors"
                       defaultValue=""
                     >
@@ -183,6 +229,7 @@ export default function Contatti() {
                       Messaggio
                     </span>
                     <textarea
+                      name="messaggio"
                       rows={4}
                       className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-serif text-lg resize-none transition-colors"
                     />
@@ -196,13 +243,20 @@ export default function Contatti() {
                     </span>
                   </label>
 
+                  {error && (
+                    <div role="alert" className="mt-6 text-sm text-bordeaux bg-bordeaux/5 border border-bordeaux/20 px-4 py-3">
+                      {error}
+                    </div>
+                  )}
+
                   <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: sending ? 1 : 1.02 }}
+                    whileTap={{ scale: sending ? 1 : 0.98 }}
                     type="submit"
-                    className="btn-primary mt-8 group"
+                    disabled={sending}
+                    className="btn-primary mt-8 group disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Invia messaggio
+                    {sending ? 'Invio in corso…' : 'Invia messaggio'}
                     <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </motion.button>
                 </>
