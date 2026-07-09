@@ -45,6 +45,29 @@ export const LANG_HEADER = 'x-coppola-lang';
 
 export const SITE_URL = 'https://www.eredicoppola.com';
 
+// Phone number shown across the site. For non-Italian locales we prepend the
+// Italy country code (+39) so foreign visitors can dial internationally;
+// Italian keeps the plain national format.
+export const PHONE_DISPLAY = '081 571 3888';
+const PHONE_TEL_NATIONAL = 'tel:0815713888';
+const PHONE_TEL_INTL = 'tel:+390815713888';
+
+/** Standalone phone number for display (adds +39 for non-Italian locales). */
+export function phoneDisplay(locale: LocaleCode): string {
+  return locale === DEFAULT_LOCALE ? PHONE_DISPLAY : `+39 ${PHONE_DISPLAY}`;
+}
+
+/** Add the +39 prefix to any occurrence of the number inside a translated string. */
+export function withItalyPhonePrefix(text: string, locale: LocaleCode): string {
+  if (locale === DEFAULT_LOCALE) return text;
+  return text.split(PHONE_DISPLAY).join(`+39 ${PHONE_DISPLAY}`);
+}
+
+/** tel: href — international (+39) for non-Italian locales so the dialed number works abroad. */
+export function phoneTelHref(locale: LocaleCode): string {
+  return locale === DEFAULT_LOCALE ? PHONE_TEL_NATIONAL : PHONE_TEL_INTL;
+}
+
 export const LOCALES: LocaleMeta[] = [
   { code: 'it', label: 'Italiano', englishName: 'Italian', hreflang: 'it-IT', flag: '🇮🇹', dir: 'ltr' },
   { code: 'en', label: 'English', englishName: 'English', hreflang: 'en', flag: '🇬🇧', dir: 'ltr' },

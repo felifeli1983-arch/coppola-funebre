@@ -7,9 +7,10 @@ import { useEffect, useRef, useState } from 'react';
 import { RevealWords } from './motion/Reveal';
 import MagneticButton from './motion/MagneticButton';
 import { useT } from '@/i18n/LanguageProvider';
+import { withItalyPhonePrefix, phoneTelHref } from '@/i18n/config';
 
 export default function Hero() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const ref = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -85,12 +86,12 @@ export default function Hero() {
             className="flex flex-col sm:flex-row gap-4"
           >
             <MagneticButton
-              href="tel:0815713888"
+              href={phoneTelHref(locale)}
               className="inline-flex items-center gap-2 px-8 py-4 bg-bordeaux text-avorio tracking-wider uppercase text-sm font-medium hover:bg-bordeaux-dark transition-colors"
             >
               <WhatsAppIcon size={16} className="text-avorio md:hidden" />
               <Phone size={16} className="hidden md:inline-block" />
-              {t.hero.callCta}
+              {withItalyPhonePrefix(t.hero.callCta, locale)}
               <WhatsAppIcon size={16} className="text-oro-chiaro hidden md:inline-block" />
             </MagneticButton>
             <MagneticButton

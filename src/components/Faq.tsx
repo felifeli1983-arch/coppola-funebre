@@ -6,9 +6,10 @@ import { Plus, MessageCircle } from 'lucide-react';
 import Reveal, { RevealWords } from './motion/Reveal';
 import { useT } from '@/i18n/LanguageProvider';
 import it from '@/i18n/dictionaries/it';
+import { withItalyPhonePrefix, phoneTelHref } from '@/i18n/config';
 
 export default function Faq() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const faqs = t.faq.items;
   const [open, setOpen] = useState<number[]>([]);
 
@@ -58,7 +59,7 @@ export default function Faq() {
           </Reveal>
           <Reveal delay={0.7}>
             <a
-              href="tel:0815713888"
+              href={phoneTelHref(locale)}
               className="btn-primary group"
             >
               <MessageCircle size={16} />
@@ -108,7 +109,7 @@ export default function Faq() {
                         className="overflow-hidden"
                       >
                         <p className="pb-7 pr-12 text-base md:text-lg text-pietra-chiaro font-light leading-relaxed">
-                          {f.a}
+                          {withItalyPhonePrefix(f.a, locale)}
                         </p>
                       </motion.div>
                     )}

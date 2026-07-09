@@ -3,9 +3,10 @@
 import { Phone, MapPin, Mail } from 'lucide-react';
 import WhatsAppIcon from './icons/WhatsAppIcon';
 import { useT } from '@/i18n/LanguageProvider';
+import { phoneDisplay, phoneTelHref } from '@/i18n/config';
 
 export default function Footer() {
-  const { t } = useT();
+  const { t, locale } = useT();
   return (
     <footer className="bg-pietra text-avorio/80 pt-20 pb-8">
       <div className="container-custom">
@@ -58,12 +59,12 @@ export default function Footer() {
             </div>
             <ul className="space-y-3 text-sm">
               <li>
-                <a href="tel:0815713888" className="flex items-center gap-3 hover:text-avorio transition-colors group">
+                <a href={phoneTelHref(locale)} className="flex items-center gap-3 hover:text-avorio transition-colors group">
                   <Phone size={14} strokeWidth={1.5} className="flex-none text-oro" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">24h</span>
                     <span className="font-medium text-avorio inline-flex items-center gap-1.5">
-                      081 571 3888
+                      {phoneDisplay(locale)}
                       <WhatsAppIcon size={12} className="text-oro" />
                     </span>
                   </span>
@@ -74,7 +75,7 @@ export default function Footer() {
                   <WhatsAppIcon size={14} className="flex-none text-oro" />
                   <span>
                     <span className="block text-[10px] tracking-widest uppercase text-avorio/50">WhatsApp</span>
-                    <span className="font-medium text-avorio">081 571 3888</span>
+                    <span className="font-medium text-avorio">{phoneDisplay(locale)}</span>
                   </span>
                 </a>
               </li>

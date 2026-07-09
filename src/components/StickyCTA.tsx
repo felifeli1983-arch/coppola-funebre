@@ -2,14 +2,15 @@
 
 import { Phone, MessageCircle } from 'lucide-react';
 import { useT } from '@/i18n/LanguageProvider';
+import { phoneTelHref } from '@/i18n/config';
 
 export default function StickyCTA() {
-  const { t } = useT();
+  const { t, locale } = useT();
   return (
     <>
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-avorio border-t border-pietra/10 grid grid-cols-2 shadow-lg">
         <a
-          href="tel:0815713888"
+          href={phoneTelHref(locale)}
           className="flex items-center justify-center gap-2 py-4 bg-bordeaux text-avorio text-xs tracking-widest uppercase font-medium"
         >
           <Phone size={16} />

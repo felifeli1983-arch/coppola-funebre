@@ -5,9 +5,10 @@ import { Phone, Menu, X, MapPin } from 'lucide-react';
 import WhatsAppIcon from './icons/WhatsAppIcon';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useT } from '@/i18n/LanguageProvider';
+import { withItalyPhonePrefix, phoneTelHref } from '@/i18n/config';
 
 export default function Header() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -58,11 +59,11 @@ export default function Header() {
         <div className="flex items-center gap-2 md:gap-4">
           <div className="hidden md:flex flex-col items-end leading-tight">
             <a
-              href="tel:0815713888"
+              href={phoneTelHref(locale)}
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-bordeaux text-avorio text-xs tracking-widest uppercase font-medium hover:bg-bordeaux-dark transition-colors"
             >
               <Phone size={14} />
-              {t.header.phoneCta}
+              {withItalyPhonePrefix(t.header.phoneCta, locale)}
               <WhatsAppIcon size={14} className="text-oro-chiaro" />
             </a>
             <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] tracking-wider uppercase text-pietra-chiaro">
@@ -95,11 +96,11 @@ export default function Header() {
               </a>
             ))}
             <a
-              href="tel:0815713888"
+              href={phoneTelHref(locale)}
               className="mt-2 inline-flex items-center justify-center gap-2 px-5 py-3 bg-bordeaux text-avorio text-xs tracking-widest uppercase"
             >
               <Phone size={14} />
-              {t.header.callCta}
+              {withItalyPhonePrefix(t.header.callCta, locale)}
               <WhatsAppIcon size={14} className="text-oro-chiaro" />
             </a>
             <div className="text-center text-[10px] tracking-wider uppercase text-pietra-chiaro mt-2">

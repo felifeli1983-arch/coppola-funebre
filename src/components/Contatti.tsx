@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Reveal, { RevealWords } from './motion/Reveal';
 import WhatsAppIcon from './icons/WhatsAppIcon';
 import { useT } from '@/i18n/LanguageProvider';
+import { phoneDisplay, phoneTelHref } from '@/i18n/config';
 
 type Contact = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,7 +19,7 @@ type Contact = {
 };
 
 export default function Contatti() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,8 +59,8 @@ export default function Contatti() {
   };
 
   const contacts: Contact[] = [
-    { Icon: Phone, label: t.contatti.phoneLabel, value: '081 571 3888', href: 'tel:0815713888', primary: true },
-    { Icon: WhatsAppIcon, label: t.contatti.whatsappLabel, value: '081 571 3888', href: 'https://wa.me/390815713888', iconBrandColor: '#B8935A' },
+    { Icon: Phone, label: t.contatti.phoneLabel, value: phoneDisplay(locale), href: phoneTelHref(locale), primary: true },
+    { Icon: WhatsAppIcon, label: t.contatti.whatsappLabel, value: phoneDisplay(locale), href: 'https://wa.me/390815713888', iconBrandColor: '#B8935A' },
     { Icon: Mail, label: t.contatti.emailLabel, value: 'info@eredicoppola.com', href: 'mailto:info@eredicoppola.com' },
   ];
 

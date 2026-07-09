@@ -7,9 +7,10 @@ import { useRef } from 'react';
 import Reveal, { RevealWords } from './motion/Reveal';
 import MagneticButton from './motion/MagneticButton';
 import { useT } from '@/i18n/LanguageProvider';
+import { phoneDisplay, phoneTelHref } from '@/i18n/config';
 
 export default function CosaFare() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const steps = t.cosaFare.steps.map((s, i) => ({
     n: String(i + 1).padStart(2, '0'),
     title: s.title,
@@ -93,11 +94,11 @@ export default function CosaFare() {
               </div>
             </div>
             <MagneticButton
-              href="tel:0815713888"
+              href={phoneTelHref(locale)}
               className="relative inline-flex items-center gap-3 bg-avorio text-bordeaux px-8 py-4 tracking-wider uppercase text-sm font-medium hover:bg-oro-chiaro transition-colors"
             >
               <Phone size={18} />
-              081 571 3888
+              {phoneDisplay(locale)}
               <WhatsAppIcon size={18} className="text-oro" />
             </MagneticButton>
           </div>
