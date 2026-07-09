@@ -3,15 +3,11 @@
 import { Check, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Reveal, { RevealImage, RevealWords } from './motion/Reveal';
-
-const benefici = [
-  'Prezzi bloccati al momento della sottoscrizione',
-  'Libertà di scegliere ogni dettaglio in serenità',
-  'Sollevare i propri cari da ogni preoccupazione economica',
-  'Contratto trasparente, senza vincoli nascosti',
-];
+import { useT } from '@/i18n/LanguageProvider';
 
 export default function Previdenza() {
+  const { t } = useT();
+  const benefici = t.previdenza.benefici;
   return (
     <section id="previdenza" className="py-24 md:py-32 bg-avorio-scuro">
       <div className="container-custom grid md:grid-cols-12 gap-10 md:gap-16 items-center">
@@ -19,21 +15,19 @@ export default function Previdenza() {
           <Reveal>
             <div className="flex items-center gap-3 mb-4">
               <span className="divider-line" />
-              <span className="eyebrow">Previdenza funebre</span>
+              <span className="eyebrow">{t.previdenza.eyebrow}</span>
             </div>
           </Reveal>
 
           <h2 className="section-title mb-8">
-            <RevealWords text="Pianificare oggi," />
+            <RevealWords text={t.previdenza.title1} />
             <br />
-            <RevealWords text="per un domani sereno." delay={0.3} wordClassName="italic text-bordeaux" />
+            <RevealWords text={t.previdenza.title2} delay={0.3} wordClassName="italic text-bordeaux" />
           </h2>
 
           <Reveal delay={0.4}>
             <p className="text-lg text-pietra-chiaro font-light leading-relaxed mb-8">
-              Con il nostro Contratto di Previdenza Funebre scegli con lucidità
-              ogni aspetto del servizio, bloccando i prezzi e proteggendo le persone
-              che ami da decisioni difficili nel momento del dolore.
+              {t.previdenza.body}
             </p>
           </Reveal>
 
@@ -55,7 +49,7 @@ export default function Previdenza() {
 
           <Reveal delay={0.8}>
             <a href="#contatti" className="btn-primary group">
-              Richiedi informazioni
+              {t.previdenza.cta}
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </Reveal>
@@ -64,7 +58,7 @@ export default function Previdenza() {
         <div className="md:col-span-7 order-1 md:order-2">
           <RevealImage
             src="/img/locandina-previdenza.jpg"
-            alt="Contratto di Previdenza Onoranze Funebri Coppola"
+            alt={t.previdenza.imgAlt}
             className="w-full shadow-2xl"
           />
         </div>

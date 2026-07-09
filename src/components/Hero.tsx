@@ -6,8 +6,10 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { RevealWords } from './motion/Reveal';
 import MagneticButton from './motion/MagneticButton';
+import { useT } from '@/i18n/LanguageProvider';
 
 export default function Hero() {
+  const { t } = useT();
   const ref = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -53,15 +55,15 @@ export default function Hero() {
               className="block w-16 h-px bg-oro"
             />
             <span className="text-[11px] md:text-xs tracking-[0.25em] uppercase text-oro-chiaro font-medium">
-              Onoranze Funebri Coppola · Operiamo in tutta Italia
+              {t.hero.badge}
             </span>
           </motion.div>
 
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-avorio leading-[1.1] font-light mb-6 md:mb-8">
-            <RevealWords text="Accanto alle famiglie," delay={0.3} />
+            <RevealWords text={t.hero.title1} delay={0.3} />
             <br />
             <RevealWords
-              text="con discrezione."
+              text={t.hero.title2}
               delay={0.9}
               wordClassName="italic text-oro-chiaro"
             />
@@ -73,8 +75,7 @@ export default function Hero() {
             transition={{ duration: 1, delay: 1.6 }}
             className="text-base md:text-lg text-avorio/80 max-w-xl leading-relaxed font-light mb-8"
           >
-            Un servizio esclusivo alla portata di tutti. Disponibili 24 ore su 24,
-            365 giorni l&apos;anno.
+            {t.hero.subtitle}
           </motion.p>
 
           <motion.div
@@ -89,7 +90,7 @@ export default function Hero() {
             >
               <WhatsAppIcon size={16} className="text-avorio md:hidden" />
               <Phone size={16} className="hidden md:inline-block" />
-              Chiama ora · 081 571 3888
+              {t.hero.callCta}
               <WhatsAppIcon size={16} className="text-oro-chiaro hidden md:inline-block" />
             </MagneticButton>
             <MagneticButton
@@ -99,7 +100,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 px-8 py-4 border border-avorio/40 text-avorio tracking-wider uppercase text-sm font-medium hover:bg-avorio hover:text-pietra transition-colors"
             >
               <WhatsAppIcon size={16} />
-              Scrivici su WhatsApp
+              {t.hero.whatsappCta}
             </MagneticButton>
           </motion.div>
         </div>
@@ -110,9 +111,9 @@ export default function Hero() {
           transition={{ duration: 1, delay: 2.5 }}
           className="absolute bottom-10 left-0 right-0 container-custom hidden md:flex items-end justify-between text-avorio/60 text-[10px] md:text-xs tracking-widest uppercase"
         >
-          <span>Servizi funebri · Casa funeraria · Previdenza</span>
+          <span>{t.hero.bottomServices}</span>
           <div className="flex items-center gap-3">
-            <span>Scorri</span>
+            <span>{t.hero.scroll}</span>
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}

@@ -1,3 +1,8 @@
+import { LOCALES } from '@/i18n/config';
+
+const AVAILABLE_LANGUAGES = LOCALES.map((l) => l.englishName);
+const INLANGUAGES = LOCALES.map((l) => l.hreflang);
+
 export default function StructuredData() {
   const orgJsonLd = {
     '@context': 'https://schema.org',
@@ -46,12 +51,13 @@ export default function StructuredData() {
     },
     sameAs: [],
     priceRange: '€€',
+    knowsLanguage: AVAILABLE_LANGUAGES,
     contactPoint: [
       {
         '@type': 'ContactPoint',
         telephone: '+39 081 571 3888',
         contactType: 'customer service',
-        availableLanguage: ['Italian'],
+        availableLanguage: AVAILABLE_LANGUAGES,
         areaServed: 'IT',
         contactOption: 'TollFree',
       },
@@ -65,7 +71,7 @@ export default function StructuredData() {
     url: 'https://www.eredicoppola.com',
     name: 'Onoranze Funebri Coppola',
     publisher: { '@id': 'https://www.eredicoppola.com/#organization' },
-    inLanguage: 'it-IT',
+    inLanguage: INLANGUAGES,
   };
 
   return (

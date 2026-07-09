@@ -2,8 +2,10 @@
 
 import { Phone, MapPin, Mail } from 'lucide-react';
 import WhatsAppIcon from './icons/WhatsAppIcon';
+import { useT } from '@/i18n/LanguageProvider';
 
 export default function Footer() {
+  const { t } = useT();
   return (
     <footer className="bg-pietra text-avorio/80 pt-20 pb-8">
       <div className="container-custom">
@@ -20,18 +22,17 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-sm md:text-base text-avorio/85 leading-relaxed max-w-md font-light mb-6">
-              Un servizio esclusivo alla portata di tutti. Operiamo su tutto il
-              territorio nazionale, con rispetto e discrezione.
+              {t.footer.tagline}
             </p>
 
             <div className="flex items-start gap-3 text-sm text-avorio/85">
               <MapPin size={16} strokeWidth={1.5} className="text-oro flex-none mt-0.5" />
               <div>
-                <div className="font-medium text-avorio">Sede centrale</div>
+                <div className="font-medium text-avorio">{t.footer.sedeLabel}</div>
                 <div className="text-avorio/75 leading-snug">
-                  Via Pietro Nenni 10 (Circumvallazione Esterna)
+                  {t.footer.sedeAddress}
                   <br />
-                  80018 Mugnano di Napoli
+                  {t.footer.sedeCity}
                 </div>
               </div>
             </div>
@@ -39,21 +40,21 @@ export default function Footer() {
 
           <div className="md:col-span-3">
             <div className="text-xs tracking-widest uppercase text-oro mb-4 font-medium">
-              Navigazione
+              {t.footer.navTitle}
             </div>
             <ul className="space-y-2 text-sm">
-              <li><a href="/" className="hover:text-avorio transition-colors">Home</a></li>
-              <li><a href="/#servizi" className="hover:text-avorio transition-colors">Servizi</a></li>
-              <li><a href="/#casa-funeraria" className="hover:text-avorio transition-colors">Sala del Commiato</a></li>
-              <li><a href="/#previdenza" className="hover:text-avorio transition-colors">Previdenza</a></li>
-              <li><a href="/#faq" className="hover:text-avorio transition-colors">FAQ</a></li>
-              <li><a href="/#contatti" className="hover:text-avorio transition-colors">Contatti</a></li>
+              <li><a href="/" className="hover:text-avorio transition-colors">{t.footer.nav.home}</a></li>
+              <li><a href="/#servizi" className="hover:text-avorio transition-colors">{t.footer.nav.servizi}</a></li>
+              <li><a href="/#casa-funeraria" className="hover:text-avorio transition-colors">{t.footer.nav.casaFuneraria}</a></li>
+              <li><a href="/#previdenza" className="hover:text-avorio transition-colors">{t.footer.nav.previdenza}</a></li>
+              <li><a href="/#faq" className="hover:text-avorio transition-colors">{t.footer.nav.faq}</a></li>
+              <li><a href="/#contatti" className="hover:text-avorio transition-colors">{t.footer.nav.contatti}</a></li>
             </ul>
           </div>
 
           <div className="md:col-span-4">
             <div className="text-xs tracking-widest uppercase text-oro mb-4 font-medium">
-              Contatti
+              {t.footer.contattiTitle}
             </div>
             <ul className="space-y-3 text-sm">
               <li>
@@ -92,12 +93,12 @@ export default function Footer() {
 
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-avorio/50">
           <div>
-            © {new Date().getFullYear()} Onoranze Funebri Coppola · Tutti i diritti riservati
+            © {new Date().getFullYear()} {t.footer.copyright}
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <a href="/privacy-policy" className="hover:text-avorio transition-colors">Privacy Policy</a>
-            <a href="/cookie-policy" className="hover:text-avorio transition-colors">Cookie Policy</a>
-            <a href="/codice-etico" className="hover:text-avorio transition-colors">Codice Etico</a>
+            <a href="/privacy-policy" className="hover:text-avorio transition-colors">{t.footer.privacy}</a>
+            <a href="/cookie-policy" className="hover:text-avorio transition-colors">{t.footer.cookie}</a>
+            <a href="/codice-etico" className="hover:text-avorio transition-colors">{t.footer.codiceEtico}</a>
             <button
               type="button"
               onClick={() => {
@@ -106,7 +107,7 @@ export default function Footer() {
               }}
               className="hover:text-avorio transition-colors cursor-pointer"
             >
-              Gestisci cookie
+              {t.footer.manageCookies}
             </button>
           </div>
         </div>

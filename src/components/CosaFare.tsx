@@ -6,31 +6,15 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Reveal, { RevealWords } from './motion/Reveal';
 import MagneticButton from './motion/MagneticButton';
-
-const steps = [
-  {
-    n: '01',
-    title: 'Chiamaci, a qualsiasi ora',
-    text: 'Rispondiamo 24 ore su 24, 365 giorni l\'anno. Ci occuperemo di tutto, a partire da quel momento.',
-  },
-  {
-    n: '02',
-    title: 'Raccogliamo le informazioni',
-    text: 'Un nostro consulente si recherà presso di voi per raccogliere i dettagli necessari con discrezione.',
-  },
-  {
-    n: '03',
-    title: 'Gestiamo ogni pratica',
-    text: 'Denuncia di morte, certificati, necrologi, manifesti: ogni adempimento burocratico è a nostro carico.',
-  },
-  {
-    n: '04',
-    title: 'Il giorno del commiato',
-    text: 'Vi accompagniamo con la nostra flotta, curando ogni aspetto della cerimonia nel rispetto delle vostre volontà.',
-  },
-];
+import { useT } from '@/i18n/LanguageProvider';
 
 export default function CosaFare() {
+  const { t } = useT();
+  const steps = t.cosaFare.steps.map((s, i) => ({
+    n: String(i + 1).padStart(2, '0'),
+    title: s.title,
+    text: s.text,
+  }));
   const timeline = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: timeline,
@@ -45,13 +29,13 @@ export default function CosaFare() {
           <Reveal>
             <div className="flex items-center gap-3 mb-4">
               <span className="divider-line" />
-              <span className="eyebrow">Cosa fare in caso di decesso</span>
+              <span className="eyebrow">{t.cosaFare.eyebrow}</span>
             </div>
           </Reveal>
           <h2 className="section-title">
-            <RevealWords text="Un solo numero," />
+            <RevealWords text={t.cosaFare.title1} />
             <br />
-            <RevealWords text="il resto lo facciamo noi." delay={0.3} wordClassName="italic text-bordeaux" />
+            <RevealWords text={t.cosaFare.title2} delay={0.3} wordClassName="italic text-bordeaux" />
           </h2>
         </div>
 
@@ -102,10 +86,10 @@ export default function CosaFare() {
             />
             <div className="relative">
               <div className="text-xs tracking-widest uppercase text-oro-chiaro mb-2">
-                Servizio reperibilità 24h
+                {t.cosaFare.bannerLabel}
               </div>
               <div className="font-serif text-2xl md:text-3xl">
-                Siamo accanto a voi, subito.
+                {t.cosaFare.bannerTitle}
               </div>
             </div>
             <MagneticButton

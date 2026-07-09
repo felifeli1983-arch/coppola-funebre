@@ -4,62 +4,24 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, MessageCircle } from 'lucide-react';
 import Reveal, { RevealWords } from './motion/Reveal';
-
-const faqs = [
-  {
-    q: 'Cosa fare in caso di decesso? A chi rivolgersi per primo?',
-    a: 'In caso di decesso, la prima cosa da fare è chiamare il numero di reperibilità 24h: 081 571 3888. Risponderemo immediatamente e ci occuperemo di tutto: dal trasferimento della salma alle pratiche burocratiche. Non dovete preoccuparvi di nulla, ci pensiamo noi a coordinare medico, autorità e adempimenti.',
-  },
-  {
-    q: 'Quali documenti servono per organizzare un funerale?',
-    a: 'I documenti necessari sono: documento d\'identità del defunto, codice fiscale, certificato di morte rilasciato dal medico, e il documento d\'identità di chi si occuperà delle pratiche. Se ci sono volontà specifiche scritte (testamento biologico, disposizioni anticipate), portateli con voi. Il resto delle pratiche burocratiche viene gestito interamente dal nostro ufficio.',
-  },
-  {
-    q: 'Quanto costa un funerale? È possibile avere un preventivo?',
-    a: 'Il costo varia in base ai servizi richiesti: tipo di cerimonia, cofano scelto, cremazione o tumulazione, eventuali manifesti, fiori e auto. Offriamo soluzioni per ogni esigenza, sempre con preventivi chiari, dettagliati e privi di costi nascosti. Chiamateci o scriveteci per un preventivo gratuito senza impegno.',
-  },
-  {
-    q: 'Come funziona la cremazione? Posso scegliere io?',
-    a: 'Sì, la cremazione è una scelta libera. Per procedere serve la volontà espressa dal defunto (in vita) o, in mancanza, una dichiarazione dei familiari resa davanti all\'ufficiale di stato civile. Ci occupiamo noi del coordinamento con il forno crematorio, del rito di commiato e della consegna dell\'urna ai familiari, in tempi brevi.',
-  },
-  {
-    q: 'Cos\'è la Casa Funeraria e perché sceglierla?',
-    a: 'La nostra Casa Funeraria è uno spazio dedicato dove le famiglie possono salutare i propri cari in un ambiente curato, riservato e accessibile 24 ore su 24. Comprende Sala del Commiato con zona living, camera ardente personalizzabile e meeting room dedicata. È pensata per offrire dignità e quiete in un momento delicato.',
-  },
-  {
-    q: 'Cos\'è il Contratto di Previdenza Funebre?',
-    a: 'È uno strumento per pianificare in anticipo le proprie esequie, scegliendo ogni dettaglio in piena lucidità e bloccando i prezzi al momento della sottoscrizione. Solleva i propri cari dalla preoccupazione economica e da decisioni difficili nel momento del dolore. Il contratto è trasparente, senza vincoli nascosti, e adattabile nel tempo.',
-  },
-  {
-    q: 'Organizzate funerali laici o di altre religioni?',
-    a: 'Sì, organizziamo cerimonie di ogni tipo: cattoliche, ortodosse, evangeliche, ebraiche, islamiche, buddiste, civili o laiche. Rispettiamo l\'identità culturale e religiosa di ogni famiglia, consentendo diverse forme di commemorazione all\'interno delle nostre strutture o nei luoghi di culto richiesti.',
-  },
-  {
-    q: 'Vi occupate anche di trasporti internazionali e rimpatri?',
-    a: 'Sì, gestiamo trasporti funebri nazionali e internazionali, inclusi i rimpatri da e verso l\'estero. Coordiniamo direttamente con Consolati, Ambasciate e autorità sanitarie per tutte le pratiche necessarie (certificati, permessi, autorizzazioni doganali). Ci occupiamo di ogni dettaglio logistico e documentale.',
-  },
-  {
-    q: 'Posso pubblicare un necrologio o un manifesto?',
-    a: 'Certamente. Ci occupiamo della stampa e affissione di manifesti funebri, della pubblicazione di necrologi sui principali quotidiani locali e nazionali, e della redazione del testo se desiderate. Vi proponiamo modelli diversi tra cui scegliere, oppure realizziamo qualcosa di personalizzato in base alle vostre richieste.',
-  },
-  {
-    q: 'Quanto tempo prima del funerale bisogna contattarvi?',
-    a: 'Prima possibile, anche subito dopo il decesso. Più tempo abbiamo, meglio possiamo organizzare tutto secondo le vostre volontà. Comunque, anche con poche ore di preavviso siamo in grado di gestire l\'intera organizzazione: la nostra reperibilità è 24/7, 365 giorni l\'anno, proprio per garantire un servizio tempestivo in qualsiasi momento.',
-  },
-];
+import { useT } from '@/i18n/LanguageProvider';
+import it from '@/i18n/dictionaries/it';
 
 export default function Faq() {
+  const { t } = useT();
+  const faqs = t.faq.items;
   const [open, setOpen] = useState<number[]>([]);
 
   const toggle = (i: number) => {
     setOpen((prev) => (prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]));
   };
 
-  // Schema.org FAQPage JSON-LD for SEO (Google rich results)
+  // Schema.org FAQPage JSON-LD for SEO — always Italian (the canonical language)
+  // so Google rich results stay consistent regardless of the visitor's locale.
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqs.map((f) => ({
+    mainEntity: it.faq.items.map((f) => ({
       '@type': 'Question',
       name: f.q,
       acceptedAnswer: {
@@ -81,19 +43,17 @@ export default function Faq() {
           <Reveal>
             <div className="flex items-center gap-3 mb-4">
               <span className="divider-line" />
-              <span className="eyebrow">Domande frequenti</span>
+              <span className="eyebrow">{t.faq.eyebrow}</span>
             </div>
           </Reveal>
           <h2 className="section-title mb-6">
-            <RevealWords text="Le risposte" />
+            <RevealWords text={t.faq.title1} />
             <br />
-            <RevealWords text="ai vostri dubbi." delay={0.3} wordClassName="italic text-bordeaux" />
+            <RevealWords text={t.faq.title2} delay={0.3} wordClassName="italic text-bordeaux" />
           </h2>
           <Reveal delay={0.5}>
             <p className="text-base md:text-lg text-pietra-chiaro font-light leading-relaxed mb-8">
-              Abbiamo raccolto le domande che ci vengono poste più spesso. Se non
-              trovate la vostra, contattateci: siamo qui per aiutarvi a chiarire
-              ogni aspetto, in totale tranquillità.
+              {t.faq.intro}
             </p>
           </Reveal>
           <Reveal delay={0.7}>
@@ -102,7 +62,7 @@ export default function Faq() {
               className="btn-primary group"
             >
               <MessageCircle size={16} />
-              Hai un&apos;altra domanda?
+              {t.faq.cta}
             </a>
           </Reveal>
         </div>

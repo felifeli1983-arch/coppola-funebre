@@ -11,17 +11,13 @@ import {
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Reveal, { RevealWords } from './motion/Reveal';
+import { useT } from '@/i18n/LanguageProvider';
 
-const servizi = [
-  { icon: Home, title: 'Casa Funeraria', text: 'Sala del Commiato con zona living e camera ardente personalizzabile, accessibile 24 ore su 24.' },
-  { icon: Car, title: 'Trasporto funebre', text: 'Flotta moderna con autofunebri Maserati. Trasporti in Campania, nazionali e internazionali.' },
-  { icon: Flower2, title: 'Allestimenti e fiori', text: 'Cofani di pregio, urne cinerarie, corone e composizioni floreali per ogni cerimonia.' },
-  { icon: FileText, title: 'Pratiche burocratiche', text: 'Gestione completa: denunce, certificati, necrologi, manifesti e pubblicazioni su quotidiani.' },
-  { icon: Plane, title: 'Rimpatri internazionali', text: 'Coordinamento diretto con Consolati e Ambasciate per trasporti salma da e verso l\'estero.' },
-  { icon: HeartHandshake, title: 'Previdenza funebre', text: 'Pianificazione anticipata con prezzi bloccati, per sollevare i propri cari da ogni onere.' },
-];
+const SERVIZI_ICONS = [Home, Car, Flower2, FileText, Plane, HeartHandshake];
 
-function Card({ s, i }: { s: typeof servizi[0]; i: number }) {
+type ServizioCard = { icon: (typeof SERVIZI_ICONS)[number]; title: string; text: string };
+
+function Card({ s, i }: { s: ServizioCard; i: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-15% 0px' });
   const Icon = s.icon;
@@ -55,6 +51,13 @@ function Card({ s, i }: { s: typeof servizi[0]; i: number }) {
 }
 
 export default function Servizi() {
+  const { t } = useT();
+  const servizi: ServizioCard[] = t.servizi.items.map((item, idx) => ({
+    icon: SERVIZI_ICONS[idx],
+    title: item.title,
+    text: item.text,
+  }));
+
   return (
     <section id="servizi" className="py-24 md:py-32 bg-avorio">
       <div className="container-custom">
@@ -62,25 +65,23 @@ export default function Servizi() {
           <Reveal>
             <div className="flex items-center gap-3 mb-4">
               <span className="divider-line" />
-              <span className="eyebrow">Cosa facciamo</span>
+              <span className="eyebrow">{t.servizi.eyebrow}</span>
             </div>
           </Reveal>
           <h2 className="section-title">
-            <RevealWords text="Un servizio completo," />
+            <RevealWords text={t.servizi.title1} />
             <br />
-            <RevealWords text="curato in ogni dettaglio." delay={0.3} wordClassName="italic text-bordeaux" />
+            <RevealWords text={t.servizi.title2} delay={0.3} wordClassName="italic text-bordeaux" />
           </h2>
           <Reveal delay={0.5}>
             <p className="mt-6 text-lg text-pietra-chiaro font-light leading-relaxed">
-              Dalla prima chiamata al commiato finale, ci occupiamo di ogni aspetto
-              con competenza e sensibilità. Le famiglie hanno bisogno solo di essere
-              presenti ai propri cari.
+              {t.servizi.intro}
             </p>
           </Reveal>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-pietra/10">
-          {servizi.map((s, i) => <Card key={s.title} s={s} i={i} />)}
+          {servizi.map((s, i) => <Card key={i} s={s} i={i} />)}
         </div>
       </div>
     </section>

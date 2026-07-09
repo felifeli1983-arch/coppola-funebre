@@ -5,6 +5,7 @@ import { Phone, Mail, Send, Flower2, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Reveal, { RevealWords } from './motion/Reveal';
 import WhatsAppIcon from './icons/WhatsAppIcon';
+import { useT } from '@/i18n/LanguageProvider';
 
 type Contact = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,6 +18,7 @@ type Contact = {
 };
 
 export default function Contatti() {
+  const { t } = useT();
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -45,20 +47,20 @@ export default function Contatti() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(data.error || 'Errore di invio.');
+        throw new Error(data.error || t.contatti.form.sendError);
       }
       setSent(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Errore di invio. Riprova o chiamaci.');
+    } catch {
+      setError(t.contatti.form.sendError);
     } finally {
       setSending(false);
     }
   };
 
   const contacts: Contact[] = [
-    { Icon: Phone, label: 'Reperibilità 24h · Anche WhatsApp', value: '081 571 3888', href: 'tel:0815713888', primary: true },
-    { Icon: WhatsAppIcon, label: 'WhatsApp', value: '081 571 3888', href: 'https://wa.me/390815713888', iconBrandColor: '#B8935A' },
-    { Icon: Mail, label: 'Email', value: 'info@eredicoppola.com', href: 'mailto:info@eredicoppola.com' },
+    { Icon: Phone, label: t.contatti.phoneLabel, value: '081 571 3888', href: 'tel:0815713888', primary: true },
+    { Icon: WhatsAppIcon, label: t.contatti.whatsappLabel, value: '081 571 3888', href: 'https://wa.me/390815713888', iconBrandColor: '#B8935A' },
+    { Icon: Mail, label: t.contatti.emailLabel, value: 'info@eredicoppola.com', href: 'mailto:info@eredicoppola.com' },
   ];
 
   return (
@@ -68,18 +70,16 @@ export default function Contatti() {
           <Reveal>
             <div className="flex items-center gap-3 mb-4">
               <span className="divider-line" />
-              <span className="eyebrow">Contatti</span>
+              <span className="eyebrow">{t.contatti.eyebrow}</span>
             </div>
           </Reveal>
           <h2 className="section-title mb-8">
-            <RevealWords text="Parliamo" />{' '}
-            <RevealWords text="con calma." delay={0.2} wordClassName="italic text-bordeaux" />
+            <RevealWords text={t.contatti.title1} />{' '}
+            <RevealWords text={t.contatti.title2} delay={0.2} wordClassName="italic text-bordeaux" />
           </h2>
           <Reveal delay={0.4}>
             <p className="text-base md:text-lg text-pietra leading-relaxed mb-10">
-              Per assistenza immediata chiamate il numero 24h. Per informazioni,
-              consulenze sulla previdenza o richieste di preventivo potete
-              scriverci: vi risponderemo al più presto.
+              {t.contatti.intro}
             </p>
           </Reveal>
 
@@ -131,14 +131,14 @@ export default function Contatti() {
               </div>
               <div className="min-w-0">
                 <div className="text-[11px] tracking-widest uppercase text-pietra/70 mb-1 font-medium">
-                  Sede centrale
+                  {t.contatti.sedeLabel}
                 </div>
                 <div className="font-sans text-base text-pietra font-medium leading-snug tracking-tight">
-                  Via Pietro Nenni 10
+                  {t.contatti.sedeStreet}
                   <span className="block text-sm text-pietra/65 font-normal">
-                    (Circumvallazione Esterna)
+                    {t.contatti.sedeArea}
                   </span>
-                  <span className="block">80018 Mugnano di Napoli</span>
+                  <span className="block">{t.contatti.sedeCity}</span>
                 </div>
               </div>
             </motion.div>
@@ -154,9 +154,9 @@ export default function Contatti() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-20 text-center"
                 >
-                  <div className="font-serif text-4xl text-bordeaux mb-4">Grazie.</div>
+                  <div className="font-serif text-4xl text-bordeaux mb-4">{t.contatti.form.thanksTitle}</div>
                   <p className="text-pietra-chiaro">
-                    Abbiamo ricevuto il vostro messaggio. Vi contatteremo al più presto.
+                    {t.contatti.form.thanksBody}
                   </p>
                 </motion.div>
               ) : (
@@ -172,7 +172,7 @@ export default function Contatti() {
                   <div className="grid sm:grid-cols-2 gap-5">
                     <label className="block">
                       <span className="text-xs tracking-widest uppercase text-pietra-chiaro">
-                        Nome e cognome
+                        {t.contatti.form.name}
                       </span>
                       <input
                         required
@@ -184,7 +184,7 @@ export default function Contatti() {
                     </label>
                     <label className="block">
                       <span className="text-xs tracking-widest uppercase text-pietra-chiaro">
-                        Telefono
+                        {t.contatti.form.phone}
                       </span>
                       <input
                         required
@@ -197,7 +197,7 @@ export default function Contatti() {
                   </div>
                   <label className="block mt-5">
                     <span className="text-xs tracking-widest uppercase text-pietra-chiaro">
-                      Email
+                      {t.contatti.form.email}
                     </span>
                     <input
                       required
@@ -209,24 +209,22 @@ export default function Contatti() {
                   </label>
                   <label className="block mt-5">
                     <span className="text-xs tracking-widest uppercase text-pietra-chiaro">
-                      Oggetto
+                      {t.contatti.form.subject}
                     </span>
                     <select
                       name="oggetto"
                       className="mt-2 w-full bg-transparent border-b border-pietra/20 py-3 focus:border-bordeaux outline-none font-sans text-base text-pietra placeholder:text-pietra/40 transition-colors"
                       defaultValue=""
                     >
-                      <option value="" disabled>Scegli un oggetto</option>
-                      <option>Richiesta informazioni</option>
-                      <option>Previdenza funebre</option>
-                      <option>Casa funeraria</option>
-                      <option>Arte sacra / Trigesimi</option>
-                      <option>Altro</option>
+                      <option value="" disabled>{t.contatti.form.subjectPlaceholder}</option>
+                      {t.contatti.form.subjectOptions.map((opt) => (
+                        <option key={opt}>{opt}</option>
+                      ))}
                     </select>
                   </label>
                   <label className="block mt-5">
                     <span className="text-xs tracking-widest uppercase text-pietra-chiaro">
-                      Messaggio
+                      {t.contatti.form.message}
                     </span>
                     <textarea
                       name="messaggio"
@@ -238,8 +236,7 @@ export default function Contatti() {
                   <label className="flex items-start gap-3 mt-6 text-xs text-pietra-chiaro">
                     <input type="checkbox" required className="mt-1 accent-bordeaux" />
                     <span>
-                      Ho letto e accetto l&apos;informativa sulla privacy ai sensi del
-                      GDPR Reg. UE 2016/679.
+                      {t.contatti.form.privacy}
                     </span>
                   </label>
 
@@ -256,7 +253,7 @@ export default function Contatti() {
                     disabled={sending}
                     className="btn-primary mt-8 group disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    {sending ? 'Invio in corso…' : 'Invia messaggio'}
+                    {sending ? t.contatti.form.submitting : t.contatti.form.submit}
                     <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </motion.button>
                 </>

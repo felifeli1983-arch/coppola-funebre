@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Cookie, X, Check, Settings } from 'lucide-react';
+import { useT } from '@/i18n/LanguageProvider';
 
 const STORAGE_KEY = 'coppola-cookie-consent';
 
@@ -14,6 +15,7 @@ type Consent = {
 };
 
 export default function CookieBanner() {
+  const { t } = useT();
   const [visible, setVisible] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [analytics, setAnalytics] = useState(false);
@@ -63,25 +65,22 @@ export default function CookieBanner() {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-serif text-xl md:text-2xl mb-2 text-pietra">
-                      Rispettiamo la tua privacy
+                      {t.cookie.title}
                     </h3>
                     <p className="text-sm md:text-base text-pietra-chiaro font-light leading-relaxed">
-                      Utilizziamo cookie tecnici essenziali per il funzionamento del
-                      sito e, previo consenso, cookie analitici per migliorare la
-                      tua esperienza. Puoi accettare tutti, rifiutare quelli non
-                      essenziali o personalizzare le preferenze.{' '}
+                      {t.cookie.body}{' '}
                       <a
                         href="/cookie-policy"
                         className="text-bordeaux underline decoration-1 underline-offset-2 hover:text-bordeaux-dark"
                       >
-                        Cookie Policy
+                        {t.cookie.policyLink}
                       </a>
                     </p>
                   </div>
                   <button
                     onClick={rejectAll}
                     className="hidden md:block text-pietra/40 hover:text-pietra transition-colors p-1"
-                    aria-label="Chiudi (solo cookie necessari)"
+                    aria-label={t.cookie.closeNecessary}
                   >
                     <X size={20} />
                   </button>
@@ -93,20 +92,20 @@ export default function CookieBanner() {
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-bordeaux text-avorio tracking-widest uppercase text-xs font-medium hover:bg-bordeaux-dark transition-colors order-1 sm:order-3 sm:ml-auto"
                   >
                     <Check size={14} />
-                    Accetta tutti
+                    {t.cookie.acceptAll}
                   </button>
                   <button
                     onClick={rejectAll}
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-pietra/25 text-pietra tracking-widest uppercase text-xs font-medium hover:bg-pietra hover:text-avorio transition-colors order-2"
                   >
-                    Solo necessari
+                    {t.cookie.onlyNecessary}
                   </button>
                   <button
                     onClick={() => setShowSettings(true)}
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 text-pietra tracking-widest uppercase text-xs font-medium hover:text-bordeaux transition-colors order-3 sm:order-1"
                   >
                     <Settings size={14} />
-                    Personalizza
+                    {t.cookie.customize}
                   </button>
                 </div>
               </div>
@@ -114,12 +113,12 @@ export default function CookieBanner() {
               <div className="p-6 md:p-8">
                 <div className="flex items-start justify-between mb-6">
                   <h3 className="font-serif text-xl md:text-2xl text-pietra">
-                    Preferenze cookie
+                    {t.cookie.prefsTitle}
                   </h3>
                   <button
                     onClick={() => setShowSettings(false)}
                     className="text-pietra/40 hover:text-pietra transition-colors p-1"
-                    aria-label="Chiudi"
+                    aria-label={t.cookie.close}
                   >
                     <X size={20} />
                   </button>
@@ -129,26 +128,24 @@ export default function CookieBanner() {
                   <div className="flex items-start justify-between gap-4 pb-5 border-b border-pietra/10">
                     <div className="flex-1">
                       <div className="font-serif text-lg text-pietra mb-1">
-                        Cookie necessari
+                        {t.cookie.necessaryTitle}
                       </div>
                       <p className="text-sm text-pietra-chiaro font-light">
-                        Strettamente necessari al funzionamento del sito.
-                        Sempre attivi.
+                        {t.cookie.necessaryBody}
                       </p>
                     </div>
                     <div className="text-[10px] tracking-widest uppercase text-oro flex-none mt-2">
-                      Sempre attivi
+                      {t.cookie.alwaysOn}
                     </div>
                   </div>
 
                   <label className="flex items-start justify-between gap-4 pb-5 border-b border-pietra/10 cursor-pointer">
                     <div className="flex-1">
                       <div className="font-serif text-lg text-pietra mb-1">
-                        Cookie analitici
+                        {t.cookie.analyticsTitle}
                       </div>
                       <p className="text-sm text-pietra-chiaro font-light">
-                        Ci aiutano a capire come gli utenti usano il sito,
-                        in forma anonima e aggregata.
+                        {t.cookie.analyticsBody}
                       </p>
                     </div>
                     <Switch checked={analytics} onChange={setAnalytics} />
@@ -157,11 +154,10 @@ export default function CookieBanner() {
                   <label className="flex items-start justify-between gap-4 cursor-pointer">
                     <div className="flex-1">
                       <div className="font-serif text-lg text-pietra mb-1">
-                        Cookie di marketing
+                        {t.cookie.marketingTitle}
                       </div>
                       <p className="text-sm text-pietra-chiaro font-light">
-                        Attualmente non utilizzati. Disponibili per future
-                        attività promozionali.
+                        {t.cookie.marketingBody}
                       </p>
                     </div>
                     <Switch checked={marketing} onChange={setMarketing} />
@@ -173,13 +169,13 @@ export default function CookieBanner() {
                     onClick={saveCustom}
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-bordeaux text-avorio tracking-widest uppercase text-xs font-medium hover:bg-bordeaux-dark transition-colors flex-1"
                   >
-                    Salva preferenze
+                    {t.cookie.savePrefs}
                   </button>
                   <button
                     onClick={acceptAll}
                     className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-pietra/25 text-pietra tracking-widest uppercase text-xs font-medium hover:bg-pietra hover:text-avorio transition-colors"
                   >
-                    Accetta tutti
+                    {t.cookie.acceptAll}
                   </button>
                 </div>
               </div>

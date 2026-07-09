@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import Reveal, { RevealWords } from './motion/Reveal';
+import { useT } from '@/i18n/LanguageProvider';
 
 const gallery = [
   '/img/new/interno-7.jpg',
@@ -12,6 +13,7 @@ const gallery = [
 ];
 
 export default function CasaFuneraria() {
+  const { t } = useT();
   const ref = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -42,30 +44,26 @@ export default function CasaFuneraria() {
               <div className="flex items-center gap-3 mb-4">
                 <span className="divider-line bg-oro" />
                 <span className="text-xs tracking-widest uppercase text-oro font-medium">
-                  La Sala del Commiato
+                  {t.casa.eyebrow}
                 </span>
               </div>
             </Reveal>
             <h2 className="section-title text-avorio">
-              <RevealWords text="Uno spazio di" />
+              <RevealWords text={t.casa.title1} />
               <br />
-              <RevealWords text="raccoglimento." delay={0.3} wordClassName="italic text-oro-chiaro" />
+              <RevealWords text={t.casa.title2} delay={0.3} wordClassName="italic text-oro-chiaro" />
             </h2>
           </div>
           <div className="md:col-span-7 md:pt-8">
             <Reveal delay={0.4}>
               <p className="text-lg text-avorio/80 font-light leading-relaxed mb-6">
-                La nostra Sala del Commiato accoglie le famiglie in un ambiente
-                curato e riservato. Pareti in onice illuminate, sedute eleganti,
-                dettagli sacri e zona di raccoglimento: ogni elemento è pensato
-                per offrire un luogo di dignità e quiete in cui salutare i propri
-                cari.
+                {t.casa.body}
               </p>
               <a
                 href="#contatti"
                 className="inline-flex items-center gap-2 text-oro-chiaro hover:text-avorio text-sm tracking-widest uppercase transition-colors group"
               >
-                Prenota una visita{' '}
+                {t.casa.cta}{' '}
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </Reveal>

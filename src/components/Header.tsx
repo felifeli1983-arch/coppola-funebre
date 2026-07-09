@@ -3,17 +3,20 @@
 import { useEffect, useState } from 'react';
 import { Phone, Menu, X, MapPin } from 'lucide-react';
 import WhatsAppIcon from './icons/WhatsAppIcon';
-
-const nav = [
-  { href: '#servizi', label: 'Servizi' },
-  { href: '#casa-funeraria', label: 'Casa Funeraria' },
-  { href: '#cosa-fare', label: 'Cosa Fare' },
-  { href: '#contatti', label: 'Contatti' },
-];
+import LanguageSwitcher from './LanguageSwitcher';
+import { useT } from '@/i18n/LanguageProvider';
 
 export default function Header() {
+  const { t } = useT();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const nav = [
+    { href: '#servizi', label: t.header.nav.servizi },
+    { href: '#casa-funeraria', label: t.header.nav.casaFuneraria },
+    { href: '#cosa-fare', label: t.header.nav.cosaFare },
+    { href: '#contatti', label: t.header.nav.contatti },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -52,21 +55,22 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           <div className="hidden md:flex flex-col items-end leading-tight">
             <a
               href="tel:0815713888"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-bordeaux text-avorio text-xs tracking-widest uppercase font-medium hover:bg-bordeaux-dark transition-colors"
             >
               <Phone size={14} />
-              24h · 081 571 3888
+              {t.header.phoneCta}
               <WhatsAppIcon size={14} className="text-oro-chiaro" />
             </a>
             <span className="mt-1.5 inline-flex items-center gap-1 text-[10px] tracking-wider uppercase text-pietra-chiaro">
               <MapPin size={10} strokeWidth={2} className="text-bordeaux" />
-              Operiamo in tutto il territorio Nazionale
+              {t.header.coverage}
             </span>
           </div>
+          <LanguageSwitcher />
           <button
             onClick={() => setOpen(!open)}
             className="lg:hidden p-2 text-pietra"
@@ -95,11 +99,11 @@ export default function Header() {
               className="mt-2 inline-flex items-center justify-center gap-2 px-5 py-3 bg-bordeaux text-avorio text-xs tracking-widest uppercase"
             >
               <Phone size={14} />
-              Chiama 24h · 081 571 3888
+              {t.header.callCta}
               <WhatsAppIcon size={14} className="text-oro-chiaro" />
             </a>
             <div className="text-center text-[10px] tracking-wider uppercase text-pietra-chiaro mt-2">
-              Operiamo in tutto il territorio Nazionale
+              {t.header.coverage}
             </div>
           </div>
         </div>

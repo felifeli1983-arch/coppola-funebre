@@ -1,8 +1,10 @@
 'use client';
 
 import { Phone, MessageCircle } from 'lucide-react';
+import { useT } from '@/i18n/LanguageProvider';
 
 export default function StickyCTA() {
+  const { t } = useT();
   return (
     <>
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-avorio border-t border-pietra/10 grid grid-cols-2 shadow-lg">
@@ -11,14 +13,14 @@ export default function StickyCTA() {
           className="flex items-center justify-center gap-2 py-4 bg-bordeaux text-avorio text-xs tracking-widest uppercase font-medium"
         >
           <Phone size={16} />
-          Chiama 24h
+          {t.sticky.call}
         </a>
         <a
           href="https://wa.me/390815713888"
           className="flex items-center justify-center gap-2 py-4 text-pietra text-xs tracking-widest uppercase font-medium"
         >
           <MessageCircle size={16} />
-          WhatsApp
+          {t.sticky.whatsapp}
         </a>
       </div>
 
