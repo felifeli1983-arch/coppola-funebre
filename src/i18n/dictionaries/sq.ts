@@ -231,7 +231,7 @@ const sq: Dictionary = {
     analyticsTitle: 'Cookie analitike',
     analyticsBody: 'Na ndihmojnë të kuptojmë se si përdoruesit e përdorin faqen, në formë anonime dhe të agreguar.',
     marketingTitle: 'Cookie marketingu',
-    marketingBody: 'Aktualisht të papërdorura. Të disponueshme për aktivitete promocionale të ardhshme.',
+    marketingBody: 'Përdoren për Google Ads dhe matjen e konversioneve reklamuese. Aktivizohen vetëm me pëlqimin tuaj.',
     savePrefs: 'Ruaj preferencat',
     closeNecessary: 'Mbyll (vetëm cookie të nevojshme)',
     close: 'Mbyll',

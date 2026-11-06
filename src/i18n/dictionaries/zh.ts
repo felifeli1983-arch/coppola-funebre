@@ -231,7 +231,7 @@ const zh: Dictionary = {
     analyticsTitle: '分析性 Cookie',
     analyticsBody: '它们以匿名和汇总的形式，帮助我们了解用户如何使用本网站。',
     marketingTitle: '营销 Cookie',
-    marketingBody: '目前未使用。可供未来的推广活动使用。',
+    marketingBody: '用于 Google Ads 和广告转化衡量。仅在您同意后启用。',
     savePrefs: '保存偏好设置',
     closeNecessary: '关闭（仅必要 Cookie）',
     close: '关闭',

@@ -231,7 +231,7 @@ const de: Dictionary = {
     analyticsTitle: 'Analyse-Cookies',
     analyticsBody: 'Sie helfen uns zu verstehen, wie Nutzer die Website verwenden, anonym und in aggregierter Form.',
     marketingTitle: 'Marketing-Cookies',
-    marketingBody: 'Derzeit nicht verwendet. Verfügbar für künftige Werbeaktivitäten.',
+    marketingBody: 'Werden für Google Ads und die Messung von Werbekonversionen verwendet. Nur mit Ihrer Einwilligung aktiviert.',
     savePrefs: 'Einstellungen speichern',
     closeNecessary: 'Schließen (nur notwendige Cookies)',
     close: 'Schließen',

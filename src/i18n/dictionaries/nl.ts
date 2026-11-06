@@ -231,7 +231,7 @@ const nl: Dictionary = {
     analyticsTitle: 'Analytische cookies',
     analyticsBody: 'Zij helpen ons te begrijpen hoe gebruikers de site gebruiken, anoniem en geaggregeerd.',
     marketingTitle: 'Marketingcookies',
-    marketingBody: 'Momenteel niet in gebruik. Beschikbaar voor toekomstige promotionele activiteiten.',
+    marketingBody: 'Gebruikt voor Google Ads en het meten van advertentieconversies. Alleen geactiveerd met uw toestemming.',
     savePrefs: 'Voorkeuren opslaan',
     closeNecessary: 'Sluiten (alleen noodzakelijke cookies)',
     close: 'Sluiten',

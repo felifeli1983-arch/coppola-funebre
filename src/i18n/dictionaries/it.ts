@@ -229,7 +229,7 @@ const it = {
     analyticsTitle: 'Cookie analitici',
     analyticsBody: 'Ci aiutano a capire come gli utenti usano il sito, in forma anonima e aggregata.',
     marketingTitle: 'Cookie di marketing',
-    marketingBody: 'Attualmente non utilizzati. Disponibili per future attività promozionali.',
+    marketingBody: 'Utilizzati per Google Ads e la misurazione delle conversioni pubblicitarie. Attivati solo con il tuo consenso.',
     savePrefs: 'Salva preferenze',
     closeNecessary: 'Chiudi (solo cookie necessari)',
     close: 'Chiudi',

@@ -231,7 +231,7 @@ const fr: Dictionary = {
     analyticsTitle: 'Cookies analytiques',
     analyticsBody: 'Ils nous aident à comprendre comment les utilisateurs utilisent le site, de manière anonyme et agrégée.',
     marketingTitle: 'Cookies marketing',
-    marketingBody: 'Actuellement non utilisés. Disponibles pour de futures activités promotionnelles.',
+    marketingBody: 'Utilisés pour Google Ads et la mesure des conversions publicitaires. Activés uniquement avec votre consentement.',
     savePrefs: 'Enregistrer les préférences',
     closeNecessary: 'Fermer (uniquement cookies nécessaires)',
     close: 'Fermer',

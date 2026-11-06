@@ -231,7 +231,7 @@ const ro: Dictionary = {
     analyticsTitle: 'Cookie-uri analitice',
     analyticsBody: 'Ne ajută să înțelegem cum utilizează vizitatorii site-ul, în mod anonim și agregat.',
     marketingTitle: 'Cookie-uri de marketing',
-    marketingBody: 'Momentan neutilizate. Disponibile pentru viitoare activități promoționale.',
+    marketingBody: 'Utilizate pentru Google Ads și măsurarea conversiilor publicitare. Activate doar cu consimțământul dumneavoastră.',
     savePrefs: 'Salvați preferințele',
     closeNecessary: 'Închideți (doar cookie-uri necesare)',
     close: 'Închideți',

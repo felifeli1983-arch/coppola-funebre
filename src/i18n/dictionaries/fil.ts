@@ -231,7 +231,7 @@ const fil: Dictionary = {
     analyticsTitle: 'Analytics na cookie',
     analyticsBody: 'Tinutulungan kami nitong maunawaan kung paano ginagamit ng mga user ang site, nang anonymous at pinagsama-sama.',
     marketingTitle: 'Marketing na cookie',
-    marketingBody: 'Kasalukuyang hindi ginagamit. Magagamit para sa mga aktibidad na promosyonal sa hinaharap.',
+    marketingBody: 'Ginagamit para sa Google Ads at pagsukat ng conversion ng advertising. Isinasaaktibo lamang nang may pahintulot mo.',
     savePrefs: 'I-save ang mga kagustuhan',
     closeNecessary: 'Isara (kinakailangang cookie lamang)',
     close: 'Isara',

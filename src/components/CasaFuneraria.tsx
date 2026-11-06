@@ -7,7 +7,7 @@ import Reveal, { RevealWords } from './motion/Reveal';
 import { useT } from '@/i18n/LanguageProvider';
 
 const gallery = [
-  '/img/new/interno-7.jpg',
+  '/img/new/sala-commiato.webp',
   '/img/new/interno-8.jpg',
   '/img/hero-2.jpg',
 ];
@@ -34,7 +34,7 @@ export default function CasaFuneraria() {
         style={{ y: bgY }}
         className="absolute inset-0 opacity-[0.08] pointer-events-none gpu"
       >
-        <div className="absolute inset-0 bg-[url('/img/new/interno-7.jpg')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-[url('/img/new/sala-commiato.webp')] bg-cover bg-center" />
       </motion.div>
 
       <div className="relative container-custom">

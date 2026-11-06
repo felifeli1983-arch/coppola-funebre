@@ -231,7 +231,7 @@ const pl: Dictionary = {
     analyticsTitle: 'Analityczne pliki cookies',
     analyticsBody: 'Pomagają nam zrozumieć, jak użytkownicy korzystają ze strony, w formie anonimowej i zbiorczej.',
     marketingTitle: 'Marketingowe pliki cookies',
-    marketingBody: 'Obecnie nieużywane. Dostępne na potrzeby przyszłych działań promocyjnych.',
+    marketingBody: 'Używane do Google Ads i pomiaru konwersji reklamowych. Aktywowane wyłącznie za Twoją zgodą.',
     savePrefs: 'Zapisz preferencje',
     closeNecessary: 'Zamknij (tylko niezbędne cookies)',
     close: 'Zamknij',
