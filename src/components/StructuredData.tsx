@@ -10,7 +10,7 @@ export default function StructuredData() {
     '@id': 'https://www.eredicoppola.com/#organization',
     name: 'Onoranze Funebri Coppola',
     url: 'https://www.eredicoppola.com',
-    logo: 'https://www.eredicoppola.com/img/new/logo-hd.jpg',
+    logo: 'https://www.eredicoppola.com/img/new/logo-coppola.webp',
     image: 'https://www.eredicoppola.com/img/new/reception.jpg',
     description:
       'Onoranze Funebri Coppola: casa funeraria, sala del commiato, servizi funebri 24h, previdenza funebre. Operiamo in tutta Italia.',

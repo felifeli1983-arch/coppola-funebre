@@ -21,8 +21,12 @@ declare global {
   }
 }
 
+// Google tag ID. Defaults to the Google Ads tag; override via NEXT_PUBLIC_GA_ID
+// (e.g. to point at a GA4 "G-…" property) without touching the code.
+const DEFAULT_TAG_ID = 'AW-18146735150';
+
 export default function Analytics() {
-  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID || DEFAULT_TAG_ID;
   const [consent, setConsent] = useState<Consent | null>(null);
 
   useEffect(() => {
@@ -82,7 +86,7 @@ export default function Analytics() {
       <Script id="gtag-init" strategy="afterInteractive">
         {`
           gtag('js', new Date());
-          gtag('config', '${GA_ID}', { anonymize_ip: true });
+          gtag('config', '${GA_ID}'${GA_ID.startsWith('G-') ? ", { anonymize_ip: true }" : ''});
         `}
       </Script>
     </>

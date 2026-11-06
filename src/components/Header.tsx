@@ -37,7 +37,7 @@ export default function Header() {
       <div className="container-custom flex items-center justify-between py-3">
         <a href="#" className="flex items-center group">
           <img
-            src="/img/new/logo-hd.jpg"
+            src="/img/new/logo-coppola.webp"
             alt="Onoranze Funebri Coppola"
             className="h-12 md:h-14 w-auto transition-transform duration-500 group-hover:scale-[1.03]"
           />

@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-12 gap-10 pb-16 border-b border-avorio/10">
           <div className="md:col-span-5">
             <div className="flex items-center gap-4 mb-6">
-              <img src="/img/new/logo-hd.jpg" alt="Onoranze Funebri Coppola" className="h-20 w-auto" />
+              <img src="/img/new/logo-coppola.webp" alt="Onoranze Funebri Coppola" className="h-20 w-auto" />
               <div>
                 <div className="font-serif text-xl text-avorio leading-tight">
                   Onoranze Funebri
