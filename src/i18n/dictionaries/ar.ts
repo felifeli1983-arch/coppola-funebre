@@ -7,6 +7,7 @@ const ar: Dictionary = {
       servizi: 'الخدمات',
       casaFuneraria: 'دار الجنازة',
       cosaFare: 'ماذا تفعل',
+      negozio: 'Shop',
       contatti: 'اتصل بنا',
     },
     phoneCta: 'على مدار 24 ساعة · 081 571 3888',
@@ -200,6 +201,7 @@ const ar: Dictionary = {
     navTitle: 'التنقل',
     nav: {
       home: 'الرئيسية',
+      negozio: 'Shop',
       servizi: 'الخدمات',
       casaFuneraria: 'قاعة الوداع',
       previdenza: 'التخطيط المسبق',

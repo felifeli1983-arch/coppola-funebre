@@ -7,6 +7,7 @@ const sq: Dictionary = {
       servizi: 'Shërbime',
       casaFuneraria: 'Shtëpia Funerale',
       cosaFare: 'Çfarë të Bëni',
+      negozio: 'Shop',
       contatti: 'Kontakt',
     },
     phoneCta: '24h · 081 571 3888',
@@ -200,6 +201,7 @@ const sq: Dictionary = {
     navTitle: 'Navigimi',
     nav: {
       home: 'Ballina',
+      negozio: 'Shop',
       servizi: 'Shërbime',
       casaFuneraria: 'Salla e Lamtumirës',
       previdenza: 'Parashikim funeral',

@@ -5,6 +5,7 @@ const it = {
       servizi: 'Servizi',
       casaFuneraria: 'Casa Funeraria',
       cosaFare: 'Cosa Fare',
+      negozio: 'Shop',
       contatti: 'Contatti',
     },
     phoneCta: '24h · 081 571 3888',
@@ -198,6 +199,7 @@ const it = {
     navTitle: 'Navigazione',
     nav: {
       home: 'Home',
+      negozio: 'Shop',
       servizi: 'Servizi',
       casaFuneraria: 'Sala del Commiato',
       previdenza: 'Previdenza',

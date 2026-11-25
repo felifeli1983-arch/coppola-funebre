@@ -21,7 +21,7 @@ const items = [
   { href: '/admin/clienti', label: 'Clienti', icon: Users },
 ];
 
-export default function AdminNav() {
+export default function AdminNav({ showHeader = true }: { showHeader?: boolean }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -39,12 +39,17 @@ export default function AdminNav() {
 
   return (
     <nav className="flex h-full flex-col gap-1 p-4">
-      <div className="mb-6 px-2">
-        <div className="text-sm font-semibold tracking-wide text-white">COPPOLA</div>
-        <div className="text-[11px] uppercase tracking-widest text-white/50">
-          Pannello admin
+      {showHeader && (
+        <div className="mb-6 flex items-center gap-3 px-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/img/new/logo-coppola.webp" alt="Coppola" className="h-10 w-auto rounded-sm" />
+          <div className="text-[11px] uppercase tracking-widest text-white/50">
+            Pannello
+            <br />
+            admin
+          </div>
         </div>
-      </div>
+      )}
 
       {items.map(({ href, label, icon: Icon, exact }) => {
         const active = exact ? pathname === href : pathname.startsWith(href);

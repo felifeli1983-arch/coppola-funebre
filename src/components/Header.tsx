@@ -12,11 +12,13 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  // Absolute hrefs (/#…) so the anchors work from any page, incl. /negozio.
   const nav = [
-    { href: '#servizi', label: t.header.nav.servizi },
-    { href: '#casa-funeraria', label: t.header.nav.casaFuneraria },
-    { href: '#cosa-fare', label: t.header.nav.cosaFare },
-    { href: '#contatti', label: t.header.nav.contatti },
+    { href: '/#servizi', label: t.header.nav.servizi },
+    { href: '/#casa-funeraria', label: t.header.nav.casaFuneraria },
+    { href: '/#cosa-fare', label: t.header.nav.cosaFare },
+    { href: '/negozio', label: t.header.nav.negozio },
+    { href: '/#contatti', label: t.header.nav.contatti },
   ];
 
   useEffect(() => {

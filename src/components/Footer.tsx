@@ -45,6 +45,7 @@ export default function Footer() {
             </div>
             <ul className="space-y-2 text-sm">
               <li><a href="/" className="hover:text-avorio transition-colors">{t.footer.nav.home}</a></li>
+              <li><a href="/negozio" className="hover:text-avorio transition-colors">{t.footer.nav.negozio}</a></li>
               <li><a href="/#servizi" className="hover:text-avorio transition-colors">{t.footer.nav.servizi}</a></li>
               <li><a href="/#casa-funeraria" className="hover:text-avorio transition-colors">{t.footer.nav.casaFuneraria}</a></li>
               <li><a href="/#previdenza" className="hover:text-avorio transition-colors">{t.footer.nav.previdenza}</a></li>

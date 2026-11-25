@@ -7,6 +7,7 @@ const pl: Dictionary = {
       servizi: 'Usługi',
       casaFuneraria: 'Dom Pogrzebowy',
       cosaFare: 'Co Zrobić',
+      negozio: 'Shop',
       contatti: 'Kontakt',
     },
     phoneCta: '24h · 081 571 3888',
@@ -200,6 +201,7 @@ const pl: Dictionary = {
     navTitle: 'Nawigacja',
     nav: {
       home: 'Strona główna',
+      negozio: 'Shop',
       servizi: 'Usługi',
       casaFuneraria: 'Sala Pożegnań',
       previdenza: 'Plan pogrzebowy',

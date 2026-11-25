@@ -7,6 +7,7 @@ const bg: Dictionary = {
       servizi: 'Услуги',
       casaFuneraria: 'Погребален дом',
       cosaFare: 'Какво да направите',
+      negozio: 'Shop',
       contatti: 'Контакти',
     },
     phoneCta: '24 ч · 081 571 3888',
@@ -200,6 +201,7 @@ const bg: Dictionary = {
     navTitle: 'Навигация',
     nav: {
       home: 'Начало',
+      negozio: 'Shop',
       servizi: 'Услуги',
       casaFuneraria: 'Зала за сбогуване',
       previdenza: 'Предварително планиране',

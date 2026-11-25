@@ -7,6 +7,7 @@ const ur: Dictionary = {
       servizi: 'خدمات',
       casaFuneraria: 'تدفینی مرکز',
       cosaFare: 'کیا کریں',
+      negozio: 'Shop',
       contatti: 'رابطہ',
     },
     phoneCta: '24 گھنٹے · 081 571 3888',
@@ -200,6 +201,7 @@ const ur: Dictionary = {
     navTitle: 'فہرست',
     nav: {
       home: 'ہوم',
+      negozio: 'Shop',
       servizi: 'خدمات',
       casaFuneraria: 'الوداعی ہال',
       previdenza: 'پیشگی منصوبہ بندی',

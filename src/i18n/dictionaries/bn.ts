@@ -7,6 +7,7 @@ const bn: Dictionary = {
       servizi: 'সেবাসমূহ',
       casaFuneraria: 'অন্ত্যেষ্টি গৃহ',
       cosaFare: 'কী করবেন',
+      negozio: 'Shop',
       contatti: 'যোগাযোগ',
     },
     phoneCta: '২৪ ঘণ্টা · 081 571 3888',
@@ -200,6 +201,7 @@ const bn: Dictionary = {
     navTitle: 'নেভিগেশন',
     nav: {
       home: 'হোম',
+      negozio: 'Shop',
       servizi: 'সেবাসমূহ',
       casaFuneraria: 'বিদায় কক্ষ',
       previdenza: 'অগ্রিম পরিকল্পনা',

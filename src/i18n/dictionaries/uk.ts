@@ -7,6 +7,7 @@ const uk: Dictionary = {
       servizi: 'Послуги',
       casaFuneraria: 'Похоронний дім',
       cosaFare: 'Що робити',
+      negozio: 'Shop',
       contatti: 'Контакти',
     },
     phoneCta: '24 год · 081 571 3888',
@@ -200,6 +201,7 @@ const uk: Dictionary = {
     navTitle: 'Навігація',
     nav: {
       home: 'Головна',
+      negozio: 'Shop',
       servizi: 'Послуги',
       casaFuneraria: 'Зала прощання',
       previdenza: 'Планування',

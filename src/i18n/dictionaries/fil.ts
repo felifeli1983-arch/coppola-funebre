@@ -7,6 +7,7 @@ const fil: Dictionary = {
       servizi: 'Mga Serbisyo',
       casaFuneraria: 'Funeral Home',
       cosaFare: 'Ano ang Gagawin',
+      negozio: 'Shop',
       contatti: 'Kontak',
     },
     phoneCta: '24h · 081 571 3888',
@@ -200,6 +201,7 @@ const fil: Dictionary = {
     navTitle: 'Nabigasyon',
     nav: {
       home: 'Home',
+      negozio: 'Shop',
       servizi: 'Mga Serbisyo',
       casaFuneraria: 'Silid ng Paalam',
       previdenza: 'Paunang Pagpaplano',

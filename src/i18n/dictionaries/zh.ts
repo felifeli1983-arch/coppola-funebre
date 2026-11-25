@@ -7,6 +7,7 @@ const zh: Dictionary = {
       servizi: '服务项目',
       casaFuneraria: '殡仪馆',
       cosaFare: '如何应对',
+      negozio: 'Shop',
       contatti: '联系我们',
     },
     phoneCta: '24小时 · 081 571 3888',
@@ -200,6 +201,7 @@ const zh: Dictionary = {
     navTitle: '导航',
     nav: {
       home: '首页',
+      negozio: 'Shop',
       servizi: '服务项目',
       casaFuneraria: '告别厅',
       previdenza: '生前规划',

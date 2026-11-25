@@ -7,6 +7,7 @@ const nl: Dictionary = {
       servizi: 'Diensten',
       casaFuneraria: 'Uitvaartcentrum',
       cosaFare: 'Wat te doen',
+      negozio: 'Shop',
       contatti: 'Contact',
     },
     phoneCta: '24u · 081 571 3888',
@@ -200,6 +201,7 @@ const nl: Dictionary = {
     navTitle: 'Navigatie',
     nav: {
       home: 'Home',
+      negozio: 'Shop',
       servizi: 'Diensten',
       casaFuneraria: 'Afscheidsruimte',
       previdenza: 'Uitvaartverzekering',

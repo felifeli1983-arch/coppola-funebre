@@ -1,96 +1,83 @@
 import type { Metadata } from 'next';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { getActiveCategorie, getActiveProdotti } from '@/lib/shop/queries';
-import { formatPrice, productImageUrl } from '@/lib/shop/format';
+import { getActiveCategorie, searchProdotti, PER_PAGE, type SortKey } from '@/lib/shop/queries';
+import ProductCard from '@/components/shop/ProductCard';
+import CategorySidebar from '@/components/shop/CategorySidebar';
+import ShopToolbar from '@/components/shop/ShopToolbar';
+import Pagination from '@/components/shop/Pagination';
 
 export const metadata: Metadata = {
-  title: 'Negozio · Onoranze Funebri Coppola',
+  title: 'Shop · Onoranze Funebri Coppola',
   description:
     'Articoli funebri: urne, cornici, articoli commemorativi e composizioni. Acquisto online con spedizione.',
   alternates: { canonical: '/negozio' },
 };
 
-export default async function NegozioPage() {
-  const [categorie, prodotti] = await Promise.all([
+type SP = { cat?: string; q?: string; sort?: string; page?: string };
+
+export default async function NegozioPage({ searchParams }: { searchParams: SP }) {
+  const page = Math.max(1, Number(searchParams.page) || 1);
+  const sort = (searchParams.sort as SortKey) || undefined;
+
+  const [categorie, { items, total }] = await Promise.all([
     getActiveCategorie(),
-    getActiveProdotti(),
+    searchProdotti({ cat: searchParams.cat, q: searchParams.q, sort, page }),
   ]);
 
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+  const activeNome =
+    categorie.find((c) => c.slug === searchParams.cat)?.nome ?? 'Tutti i prodotti';
+
   return (
-    <>
-      <Header />
-      <main className="min-h-[60vh] bg-avorio pt-28 pb-24">
-        <div className="container-custom">
-          <div className="mb-10 max-w-2xl">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="divider-line" />
-              <span className="eyebrow">Negozio</span>
-            </div>
-            <h1 className="section-title">Articoli funebri</h1>
-            <p className="mt-4 text-lg text-pietra-chiaro font-light leading-relaxed">
-              Urne, cornici, articoli commemorativi e composizioni, con spedizione.
-            </p>
+    <div className="container-custom">
+      <div className="mb-8">
+        <div className="mb-3 flex items-center gap-3">
+          <span className="divider-line" />
+          <span className="eyebrow">Shop</span>
+        </div>
+        <h1 className="section-title">{activeNome}</h1>
+      </div>
+
+      <div className="grid gap-8 lg:grid-cols-[230px_1fr]">
+        {/* Desktop sidebar */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-28">
+            <CategorySidebar categorie={categorie} activeCat={searchParams.cat} />
           </div>
+        </aside>
 
-          {categorie.length > 0 && (
-            <div className="mb-10 flex flex-wrap gap-2">
-              {categorie
-                .filter((c) => !c.parent_id)
-                .map((c) => (
-                  <span
-                    key={c.id}
-                    className="rounded-full border border-pietra/20 px-4 py-1.5 text-sm text-pietra"
-                  >
-                    {c.nome}
-                  </span>
-                ))}
-            </div>
-          )}
+        {/* Mobile category toggle */}
+        <details className="rounded-lg border border-pietra/15 bg-white p-4 lg:hidden">
+          <summary className="cursor-pointer text-sm font-medium uppercase tracking-wide text-pietra">
+            Categorie
+          </summary>
+          <div className="mt-3">
+            <CategorySidebar categorie={categorie} activeCat={searchParams.cat} />
+          </div>
+        </details>
 
-          {prodotti.length === 0 ? (
+        <div className="min-w-0">
+          <ShopToolbar total={total} />
+
+          {items.length === 0 ? (
             <div className="rounded-lg border border-dashed border-pietra/20 bg-white/60 p-12 text-center">
-              <p className="font-serif text-xl text-pietra">
-                Il negozio sarà presto disponibile.
-              </p>
-              <p className="mt-2 text-pietra-chiaro">
-                Stiamo preparando il catalogo. Per informazioni, contattateci al
-                081 571 3888.
-              </p>
+              <p className="font-serif text-xl text-pietra">Nessun prodotto trovato.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-              {prodotti.map((p) => {
-                const img = p.immagini?.[0]?.storage_path;
-                return (
-                  <article
-                    key={p.id}
-                    className="group overflow-hidden rounded-lg border border-pietra/10 bg-white"
-                  >
-                    <div className="aspect-square overflow-hidden bg-avorio-scuro">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      {img && (
-                        <img
-                          src={productImageUrl(img)}
-                          alt={p.immagini?.[0]?.alt ?? p.titolo}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-serif text-lg text-pietra">{p.titolo}</h3>
-                      <div className="mt-1 text-bordeaux font-medium">
-                        {formatPrice(p.prezzo_cent, p.valuta)}
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+            <>
+              <div className="grid grid-cols-2 gap-5 md:grid-cols-3">
+                {items.map((p) => (
+                  <ProductCard key={p.id} p={p} />
+                ))}
+              </div>
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                params={{ cat: searchParams.cat, q: searchParams.q, sort: searchParams.sort }}
+              />
+            </>
           )}
         </div>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </div>
   );
 }

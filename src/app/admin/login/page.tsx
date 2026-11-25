@@ -34,9 +34,10 @@ export default function AdminLogin() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-stone-100 p-4">
       <div className="w-full max-w-sm rounded-xl border border-stone-200 bg-white p-8 shadow-sm">
-        <div className="mb-6 text-center">
-          <div className="font-serif text-2xl text-stone-900">COPPOLA</div>
-          <div className="text-[11px] uppercase tracking-widest text-stone-400">
+        <div className="mb-6 flex flex-col items-center text-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/img/new/logo-coppola.webp" alt="Onoranze Funebri Coppola" className="h-20 w-auto" />
+          <div className="mt-3 text-[11px] uppercase tracking-widest text-stone-400">
             Pannello admin
           </div>
         </div>

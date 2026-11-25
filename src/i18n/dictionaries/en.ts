@@ -7,6 +7,7 @@ const en: Dictionary = {
       servizi: 'Services',
       casaFuneraria: 'Funeral Home',
       cosaFare: 'What To Do',
+      negozio: 'Shop',
       contatti: 'Contact',
     },
     phoneCta: '24h · 081 571 3888',
@@ -200,6 +201,7 @@ const en: Dictionary = {
     navTitle: 'Navigation',
     nav: {
       home: 'Home',
+      negozio: 'Shop',
       servizi: 'Services',
       casaFuneraria: 'Farewell Room',
       previdenza: 'Pre-planning',

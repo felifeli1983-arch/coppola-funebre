@@ -7,6 +7,7 @@ const es: Dictionary = {
       servizi: 'Servicios',
       casaFuneraria: 'Casa Funeraria',
       cosaFare: 'Qué Hacer',
+      negozio: 'Shop',
       contatti: 'Contacto',
     },
     phoneCta: '24h · 081 571 3888',
@@ -200,6 +201,7 @@ const es: Dictionary = {
     navTitle: 'Navegación',
     nav: {
       home: 'Inicio',
+      negozio: 'Shop',
       servizi: 'Servicios',
       casaFuneraria: 'Sala de Despedida',
       previdenza: 'Previsión',

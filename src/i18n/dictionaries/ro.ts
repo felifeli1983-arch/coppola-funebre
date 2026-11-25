@@ -7,6 +7,7 @@ const ro: Dictionary = {
       servizi: 'Servicii',
       casaFuneraria: 'Casă Funerară',
       cosaFare: 'Ce Trebuie Făcut',
+      negozio: 'Shop',
       contatti: 'Contact',
     },
     phoneCta: '24h · 081 571 3888',
@@ -200,6 +201,7 @@ const ro: Dictionary = {
     navTitle: 'Navigare',
     nav: {
       home: 'Acasă',
+      negozio: 'Shop',
       servizi: 'Servicii',
       casaFuneraria: 'Sala de Ceremonii',
       previdenza: 'Prevedere funerară',

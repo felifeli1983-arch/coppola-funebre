@@ -7,6 +7,7 @@ const hi: Dictionary = {
       servizi: 'सेवाएँ',
       casaFuneraria: 'अंतिम संस्कार गृह',
       cosaFare: 'क्या करें',
+      negozio: 'Shop',
       contatti: 'संपर्क',
     },
     phoneCta: '24 घंटे · 081 571 3888',
@@ -200,6 +201,7 @@ const hi: Dictionary = {
     navTitle: 'नेविगेशन',
     nav: {
       home: 'होम',
+      negozio: 'Shop',
       servizi: 'सेवाएँ',
       casaFuneraria: 'विदाई कक्ष',
       previdenza: 'अग्रिम योजना',
