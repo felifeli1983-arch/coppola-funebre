@@ -48,6 +48,57 @@ export async function getOrdini(stato?: string): Promise<Ordine[]> {
   return (data ?? []) as Ordine[];
 }
 
+export type DashboardStats = {
+  prodottiTot: number;
+  prodottiAttivi: number;
+  categorie: number;
+  clienti: number;
+  ordiniTot: number;
+  ordiniInAttesa: number;
+  fatturatoCent: number;
+  recenti: Ordine[];
+  esaurimento: { id: string; titolo: string; giacenza: number; slug: string }[];
+};
+
+export async function getDashboardStats(): Promise<DashboardStats | null> {
+  if (!isSupabaseConfigured()) return null;
+  const s = createClient();
+  const head = { count: 'exact' as const, head: true };
+
+  const [pTot, pAtt, cat, cli, oTot, oAtt] = await Promise.all([
+    s.from('prodotti').select('*', head),
+    s.from('prodotti').select('*', head).eq('attivo', true),
+    s.from('categorie').select('*', head),
+    s.from('clienti').select('*', head),
+    s.from('ordini').select('*', head),
+    s.from('ordini').select('*', head).eq('stato', 'in_attesa'),
+  ]);
+
+  const [{ data: pagati }, { data: recenti }, { data: low }] = await Promise.all([
+    s.from('ordini').select('totale_cent').eq('stato', 'pagato'),
+    s.from('ordini').select('*').order('created_at', { ascending: false }).limit(5),
+    s
+      .from('prodotti')
+      .select('id, titolo, giacenza, slug')
+      .eq('attivo', true)
+      .lte('giacenza', 3)
+      .order('giacenza', { ascending: true })
+      .limit(5),
+  ]);
+
+  return {
+    prodottiTot: pTot.count ?? 0,
+    prodottiAttivi: pAtt.count ?? 0,
+    categorie: cat.count ?? 0,
+    clienti: cli.count ?? 0,
+    ordiniTot: oTot.count ?? 0,
+    ordiniInAttesa: oAtt.count ?? 0,
+    fatturatoCent: (pagati ?? []).reduce((n, o) => n + (o.totale_cent ?? 0), 0),
+    recenti: (recenti ?? []) as Ordine[],
+    esaurimento: (low ?? []) as DashboardStats['esaurimento'],
+  };
+}
+
 export async function getClienti(): Promise<Cliente[]> {
   if (!isSupabaseConfigured()) return [];
   const supabase = createClient();
