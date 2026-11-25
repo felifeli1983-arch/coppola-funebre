@@ -84,10 +84,23 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const h = headers();
+
+  // Admin app (admin.* subdomain or /admin path): bare shell, no public chrome
+  // (no i18n provider, analytics, structured data or cookie banner). The admin's
+  // own nested layout provides its interface.
+  if (h.get('x-coppola-admin') === '1') {
+    return (
+      <html lang="it" dir="ltr" className={`${cormorant.variable} ${inter.variable}`}>
+        <body>{children}</body>
+      </html>
+    );
+  }
+
   // The middleware sets this header from a ?lang= URL so the page is server-
   // rendered in the pinned language (correct HTML per hreflang URL). Bare "/"
   // has no header → stays the Italian canonical; the client auto-switches by geo.
-  const headerLang = headers().get(LANG_HEADER);
+  const headerLang = h.get(LANG_HEADER);
   const initialLocale = isLocale(headerLang) ? headerLang : DEFAULT_LOCALE;
   const meta = LOCALE_MAP[initialLocale];
 

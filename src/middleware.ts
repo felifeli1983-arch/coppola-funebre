@@ -7,19 +7,37 @@ import {
   localeFromCountry,
 } from '@/i18n/config';
 
-// Two jobs:
-//  1. If the URL pins a language via ?lang=xx, forward it to the server render
-//     as the `x-coppola-lang` request header so the page is SSR'd in that
-//     language (correct HTML for crawlers at each hreflang URL). Also mirror it
-//     into the persistence cookie.
-//  2. Otherwise, detect the visitor's country from the edge geo headers and
-//     store the best-fit language as a *suggestion* cookie. This does NOT change
-//     the SSR language of "/" (which stays the Italian canonical) — the client
-//     LanguageProvider uses the cookie to auto-switch the experience for real
-//     users, without affecting the indexed HTML.
-export function middleware(req: NextRequest) {
-  const paramLang = req.nextUrl.searchParams.get(LANG_PARAM);
+// Returns true for the admin subdomain (admin.eredicoppola.com, admin.localhost, …).
+function isAdminHost(host: string): boolean {
+  return host.split(':')[0].toLowerCase().startsWith('admin.');
+}
 
+export function middleware(req: NextRequest) {
+  const host = req.headers.get('host') || '';
+
+  // ── Admin subdomain → serve the /admin route group ────────────────
+  // admin.<domain>/<path>  ->  internally /admin/<path>  (URL stays clean).
+  // The admin app has its own auth; i18n/geo logic is skipped here.
+  // The `x-coppola-admin` header lets the root layout skip the public chrome.
+  if (isAdminHost(host)) {
+    const url = req.nextUrl.clone();
+    if (!url.pathname.startsWith('/admin')) {
+      url.pathname = url.pathname === '/' ? '/admin' : `/admin${url.pathname}`;
+    }
+    const headers = new Headers(req.headers);
+    headers.set('x-coppola-admin', '1');
+    return NextResponse.rewrite(url, { request: { headers } });
+  }
+
+  // Direct /admin path (local dev at /admin, or main-host fallback).
+  if (req.nextUrl.pathname.startsWith('/admin')) {
+    const headers = new Headers(req.headers);
+    headers.set('x-coppola-admin', '1');
+    return NextResponse.next({ request: { headers } });
+  }
+
+  // ── Public site: i18n language resolution (unchanged) ─────────────
+  const paramLang = req.nextUrl.searchParams.get(LANG_PARAM);
   const requestHeaders = new Headers(req.headers);
 
   if (isLocale(paramLang)) {
