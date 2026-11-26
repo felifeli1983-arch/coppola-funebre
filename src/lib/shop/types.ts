@@ -89,5 +89,6 @@ export type Cliente = {
   nome: string | null;
   telefono: string | null;
   indirizzo: Indirizzo | null;
+  note: string | null;
   created_at: string;
 };

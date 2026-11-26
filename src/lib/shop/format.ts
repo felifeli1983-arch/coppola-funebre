@@ -12,10 +12,20 @@ export function parsePriceToCents(input: string): number {
   return Number.isFinite(value) ? Math.round(value * 100) : 0;
 }
 
-/** Build a public image URL from a Supabase Storage path (bucket: prodotti). */
-export function productImageUrl(storagePath: string): string {
+/** Build a public URL from a Supabase Storage path for a given bucket. */
+export function storageUrl(bucket: string, storagePath: string): string {
   const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (!base || !storagePath) return '';
   if (storagePath.startsWith('http')) return storagePath;
-  return `${base}/storage/v1/object/public/prodotti/${storagePath}`;
+  return `${base}/storage/v1/object/public/${bucket}/${storagePath}`;
+}
+
+/** Build a public image URL from a Supabase Storage path (bucket: prodotti). */
+export function productImageUrl(storagePath: string): string {
+  return storageUrl('prodotti', storagePath);
+}
+
+/** Build a public URL for an uploaded document (bucket: documenti). */
+export function documentUrl(storagePath: string): string {
+  return storageUrl('documenti', storagePath);
 }

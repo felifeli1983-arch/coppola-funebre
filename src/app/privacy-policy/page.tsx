@@ -1,4 +1,6 @@
 import LegalLayout from '@/components/LegalLayout';
+import { renderLegaleContent } from '@/components/LegalContent';
+import { getLegale } from '@/lib/shop/settings';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -6,7 +8,20 @@ export const metadata: Metadata = {
   description: 'Informativa sul trattamento dei dati personali ai sensi del GDPR Reg. UE 2016/679.',
 };
 
-export default function PrivacyPolicy() {
+export const dynamic = 'force-dynamic';
+
+export default async function PrivacyPolicy() {
+  const custom = await getLegale('privacy');
+  if (custom.trim()) {
+    return (
+      <LegalLayout
+        title="Privacy Policy"
+        subtitle="Informativa sul trattamento dei dati personali ai sensi del Regolamento UE 2016/679 (GDPR)."
+      >
+        {renderLegaleContent(custom)}
+      </LegalLayout>
+    );
+  }
   return (
     <LegalLayout
       title="Privacy Policy"

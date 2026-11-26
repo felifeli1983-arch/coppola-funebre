@@ -71,8 +71,8 @@ export default async function AdminCategorie() {
 function Row({ c, sub = false }: { c: { id: string; nome: string; attivo: boolean }; sub?: boolean }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className={sub ? 'text-sm text-stone-700' : 'font-medium text-stone-900'}>{c.nome}</span>
-      <div className="flex items-center gap-2">
+      <span className={`min-w-0 truncate ${sub ? 'text-sm text-stone-700' : 'font-medium text-stone-900'}`}>{c.nome}</span>
+      <div className="flex flex-none items-center gap-2">
         <form action={toggleCategoria}>
           <input type="hidden" name="id" value={c.id} />
           <input type="hidden" name="attivo" value={String(c.attivo)} />

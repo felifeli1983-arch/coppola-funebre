@@ -28,6 +28,7 @@ export default async function AdminProdotti() {
         {prodotti.length === 0 ? (
           <p className="p-6 text-sm text-stone-500">Nessun prodotto. Aggiungine uno →</p>
         ) : (
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="border-b border-stone-200 bg-stone-50 text-left text-xs uppercase tracking-wide text-stone-500">
               <tr>
@@ -45,7 +46,7 @@ export default async function AdminProdotti() {
                 return (
                   <tr key={p.id} className="hover:bg-stone-50">
                     <td className="p-3">
-                      <div className="flex items-center gap-3">
+                      <div className="flex min-w-0 items-center gap-3">
                         <div className="flex h-10 w-10 flex-none items-center justify-center overflow-hidden rounded bg-stone-100">
                           {img ? (
                             // eslint-disable-next-line @next/next/no-img-element
@@ -54,7 +55,7 @@ export default async function AdminProdotti() {
                             <Package size={16} className="text-stone-300" />
                           )}
                         </div>
-                        <span className="font-medium text-stone-900">{p.titolo}</span>
+                        <span className="min-w-0 max-w-[40vw] truncate font-medium text-stone-900 sm:max-w-xs">{p.titolo}</span>
                       </div>
                     </td>
                     <td className="hidden p-3 text-stone-500 md:table-cell">{p.categoria?.nome ?? '—'}</td>
@@ -91,6 +92,7 @@ export default async function AdminProdotti() {
               })}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

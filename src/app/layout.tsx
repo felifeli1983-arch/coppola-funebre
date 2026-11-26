@@ -5,6 +5,7 @@ import './globals.css';
 import CookieBanner from '@/components/CookieBanner';
 import Analytics from '@/components/Analytics';
 import StructuredData from '@/components/StructuredData';
+import VisitTracker from '@/components/VisitTracker';
 import { LanguageProvider } from '@/i18n/LanguageProvider';
 import {
   LOCALES,
@@ -115,6 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LanguageProvider initialLocale={initialLocale}>
           <StructuredData />
           <Analytics />
+          <VisitTracker />
           {children}
           <CookieBanner />
         </LanguageProvider>

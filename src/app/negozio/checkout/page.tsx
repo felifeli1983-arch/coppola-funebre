@@ -1,14 +1,30 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/components/shop/CartProvider';
 import { formatPrice } from '@/lib/shop/format';
+
+type Spedizione = { costo_cent: number; soglia_gratis_cent: number; attiva: boolean };
 
 export default function CheckoutPage() {
   const { items, totalCent, clear } = useCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sp, setSp] = useState<Spedizione | null>(null);
+
+  useEffect(() => {
+    fetch('/api/negozio/spedizione')
+      .then((r) => r.json())
+      .then((d: Spedizione) => setSp(d))
+      .catch(() => setSp(null));
+  }, []);
+
+  const spedizioneCent = !sp || !sp.attiva
+    ? 0
+    : sp.soglia_gratis_cent > 0 && totalCent >= sp.soglia_gratis_cent
+      ? 0
+      : sp.costo_cent;
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -144,9 +160,19 @@ export default function CheckoutPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 flex justify-between border-t border-pietra/10 pt-4 text-lg font-medium text-pietra">
+          <div className="mt-4 space-y-2 border-t border-pietra/10 pt-4 text-sm text-pietra-chiaro">
+            <div className="flex justify-between">
+              <span>Subtotale</span>
+              <span>{formatPrice(totalCent)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Spedizione</span>
+              <span>{spedizioneCent === 0 ? 'Gratuita' : formatPrice(spedizioneCent)}</span>
+            </div>
+          </div>
+          <div className="mt-3 flex justify-between border-t border-pietra/10 pt-3 text-lg font-medium text-pietra">
             <span>Totale</span>
-            <span>{formatPrice(totalCent)}</span>
+            <span>{formatPrice(totalCent + spedizioneCent)}</span>
           </div>
         </div>
       </div>

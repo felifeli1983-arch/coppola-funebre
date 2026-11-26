@@ -1,4 +1,6 @@
 import LegalLayout from '@/components/LegalLayout';
+import { renderLegaleContent } from '@/components/LegalContent';
+import { getLegale } from '@/lib/shop/settings';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -6,7 +8,20 @@ export const metadata: Metadata = {
   description: 'Informativa estesa sull\'utilizzo dei cookie ai sensi del Provvedimento del Garante e del GDPR.',
 };
 
-export default function CookiePolicy() {
+export const dynamic = 'force-dynamic';
+
+export default async function CookiePolicy() {
+  const custom = await getLegale('cookie');
+  if (custom.trim()) {
+    return (
+      <LegalLayout
+        title="Cookie Policy"
+        subtitle="Informativa estesa sull'utilizzo dei cookie ai sensi del Provvedimento del Garante della Privacy del 10 giugno 2021 e del GDPR."
+      >
+        {renderLegaleContent(custom)}
+      </LegalLayout>
+    );
+  }
   return (
     <LegalLayout
       title="Cookie Policy"

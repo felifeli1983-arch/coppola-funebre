@@ -73,8 +73,8 @@ export default async function AdminDashboard() {
         {stats.map((c) => (
           <Link key={c.label} href={c.href} className="group rounded-xl border border-stone-200 bg-white p-5 transition-shadow hover:shadow-md">
             <c.icon className="text-[#7F1518]" size={22} strokeWidth={1.6} />
-            <div className="mt-3 text-2xl font-semibold text-stone-900">{c.value}</div>
-            <div className="text-sm text-stone-500">{c.label}</div>
+            <div className="mt-3 truncate text-xl font-semibold tabular-nums text-stone-900 lg:text-2xl">{c.value}</div>
+            <div className="truncate text-sm text-stone-500">{c.label}</div>
             {c.sub && (
               <div className="mt-1 inline-block rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-700">
                 {c.sub}
@@ -96,22 +96,24 @@ export default async function AdminDashboard() {
           {!s || s.recenti.length === 0 ? (
             <p className="p-6 text-sm text-stone-500">Nessun ordine ancora.</p>
           ) : (
-            <table className="w-full text-sm">
-              <tbody className="divide-y divide-stone-100">
-                {s.recenti.map((o) => (
-                  <tr key={o.id}>
-                    <td className="p-3 font-medium text-stone-900">#{o.numero}</td>
-                    <td className="p-3 text-stone-500">{o.email}</td>
-                    <td className="p-3 text-stone-700">{formatPrice(o.totale_cent, o.valuta)}</td>
-                    <td className="p-3">
-                      <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[11px] uppercase tracking-wide text-stone-600">
-                        {o.stato.replace('_', ' ')}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <tbody className="divide-y divide-stone-100">
+                  {s.recenti.map((o) => (
+                    <tr key={o.id}>
+                      <td className="p-3 font-medium text-stone-900">#{o.numero}</td>
+                      <td className="max-w-[180px] truncate p-3 text-stone-500">{o.email}</td>
+                      <td className="whitespace-nowrap p-3 text-stone-700">{formatPrice(o.totale_cent, o.valuta)}</td>
+                      <td className="p-3">
+                        <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[11px] uppercase tracking-wide text-stone-600">
+                          {o.stato.replace('_', ' ')}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
 
@@ -126,9 +128,9 @@ export default async function AdminDashboard() {
           ) : (
             <ul className="divide-y divide-stone-100">
               {s.esaurimento.map((p) => (
-                <li key={p.id} className="flex items-center justify-between p-3 text-sm">
-                  <span className="text-stone-700">{p.titolo}</span>
-                  <span className={`font-medium ${p.giacenza === 0 ? 'text-[#7F1518]' : 'text-amber-600'}`}>
+                <li key={p.id} className="flex items-center justify-between gap-3 p-3 text-sm">
+                  <span className="min-w-0 truncate text-stone-700">{p.titolo}</span>
+                  <span className={`flex-none font-medium ${p.giacenza === 0 ? 'text-[#7F1518]' : 'text-amber-600'}`}>
                     {p.giacenza} pz
                   </span>
                 </li>
