@@ -25,7 +25,26 @@ export default function AdminLogin() {
       router.push('/admin');
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Accesso non riuscito.');
+      // A failed fetch (wrong/missing Supabase URL or anon key on the server,
+      // network block, or a paused project) surfaces as a generic TypeError
+      // like "Failed to fetch" / "NetworkError". Turn that into a clear,
+      // actionable message instead of a cryptic "type error".
+      const raw = err instanceof Error ? err.message : '';
+      const isNetwork =
+        err instanceof TypeError ||
+        /failed to fetch|networkerror|load failed|fetch/i.test(raw);
+      if (isNetwork) {
+        setError(
+          'Impossibile contattare il server di autenticazione. ' +
+            'Verifica la connessione Supabase (variabili NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY).',
+        );
+      } else if (/invalid login credentials/i.test(raw)) {
+        setError('Email o password non corretti.');
+      } else if (/email not confirmed/i.test(raw)) {
+        setError('Email non confermata. Conferma l’indirizzo e riprova.');
+      } else {
+        setError(raw || 'Accesso non riuscito.');
+      }
     } finally {
       setLoading(false);
     }
