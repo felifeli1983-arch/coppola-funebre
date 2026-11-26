@@ -213,6 +213,7 @@ const fil: Dictionary = {
     privacy: 'Patakaran sa Privacy',
     cookie: 'Patakaran sa Cookie',
     codiceEtico: 'Kodigo ng Etika',
+    documenti: 'Mga dokumento',
     manageCookies: 'Pamahalaan ang cookies',
   },
   sticky: {

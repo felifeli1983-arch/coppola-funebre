@@ -1,63 +1,65 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { ShieldCheck, Cookie, ExternalLink } from 'lucide-react';
-import { getLegale, type LegaleTipo } from '@/lib/shop/settings';
-import { saveLegale } from '@/lib/admin-actions';
+import type { Metadata } from 'next';
+import { ExternalLink, Info } from 'lucide-react';
+import { dataAggiornamento, getTestoLegale, isLegaleTipo, LEGALE_DEFAULT, LEGALE_META } from '@/lib/legal-defaults';
+import { PageHeader } from '@/components/admin/kit';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import LegaleEditor from '@/components/admin/system/LegaleEditor';
 
 export const dynamic = 'force-dynamic';
 
-const META: Record<LegaleTipo, { title: string; icon: typeof ShieldCheck; publicPath: string; hint: string }> = {
-  privacy: {
-    title: 'Privacy Policy',
-    icon: ShieldCheck,
-    publicPath: '/privacy-policy',
-    hint: 'Informativa sul trattamento dei dati personali (GDPR). Supporta testo semplice; le righe vuote separano i paragrafi.',
-  },
-  cookie: {
-    title: 'Cookie Policy',
-    icon: Cookie,
-    publicPath: '/cookie-policy',
-    hint: 'Informativa sui cookie e sulle tecnologie di tracciamento utilizzate dal sito.',
-  },
-};
+export function generateMetadata({ params }: { params: { tipo: string } }): Metadata {
+  return { title: isLegaleTipo(params.tipo) ? LEGALE_META[params.tipo].titolo : 'Testi legali' };
+}
 
-export default async function LegaleEditor({ params }: { params: { tipo: string } }) {
-  if (params.tipo !== 'privacy' && params.tipo !== 'cookie') notFound();
-  const tipo = params.tipo as LegaleTipo;
-  const meta = META[tipo];
-  const Icon = meta.icon;
-  const contenuto = await getLegale(tipo);
+export default async function LegalePage({ params }: { params: { tipo: string } }) {
+  if (!isLegaleTipo(params.tipo)) notFound();
+  const tipo = params.tipo;
+  const meta = LEGALE_META[tipo];
+  const testo = await getTestoLegale(tipo);
 
   return (
-    <div className="max-w-3xl">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Icon size={22} className="text-[#7F1518]" />
-          <h1 className="font-serif text-3xl text-stone-900">{meta.title}</h1>
-        </div>
-        <Link
-          href={meta.publicPath}
-          target="_blank"
-          className="inline-flex items-center gap-1.5 text-sm text-stone-500 hover:text-[#7F1518]"
-        >
-          Vedi pagina pubblica <ExternalLink size={14} />
-        </Link>
-      </div>
-      <p className="mt-1 text-stone-500">{meta.hint}</p>
+    <div className="grid gap-5">
+      <PageHeader
+        title={meta.titolo}
+        description={meta.sottotitolo}
+        className="mb-0"
+        meta={
+          <>
+            <Badge variant={testo.personalizzato ? 'brand' : 'muted'} dot>
+              {testo.personalizzato ? 'Testo personalizzato' : 'Testo predefinito'}
+            </Badge>
+            <span className="text-xs text-muted-foreground">Ultimo aggiornamento: {dataAggiornamento(testo)}</span>
+          </>
+        }
+        actions={
+          <Button variant="outline" size="sm" asChild>
+            <a href={meta.path} target="_blank" rel="noreferrer">
+              <ExternalLink /> Vedi pagina pubblica
+            </a>
+          </Button>
+        }
+      />
 
-      <form action={saveLegale} className="mt-6 space-y-4">
-        <input type="hidden" name="tipo" value={tipo} />
-        <textarea
-          name="contenuto"
-          defaultValue={contenuto}
-          rows={22}
-          placeholder="Scrivi qui il testo dell'informativa…"
-          className="w-full rounded-xl border border-stone-300 p-4 font-mono text-sm leading-relaxed outline-none focus:border-[#7F1518]"
-        />
-        <button className="rounded-md bg-[#7F1518] px-6 py-2.5 text-sm font-medium text-white hover:bg-[#5A0F12]">
-          Salva {meta.title}
-        </button>
-      </form>
+      <div className="flex items-start gap-2.5 rounded-lg border border-info/20 bg-info/5 px-4 py-3 text-sm">
+        <Info className="mt-0.5 size-4 flex-none text-info" />
+        <div className="min-w-0">
+          <span className="font-medium">Stai modificando il testo attualmente pubblicato.</span>{' '}
+          <span className="text-muted-foreground">
+            Quando salvi, la pagina del sito si aggiorna subito. Formattazione: “## ” per i titoli, “### ” per i
+            sottotitoli, “- ” per gli elenchi, **grassetto**, [testo](link). Lascia una riga vuota tra i paragrafi.
+          </span>
+        </div>
+      </div>
+
+      <LegaleEditor
+        key={testo.aggiornatoIl ?? 'default'}
+        tipo={tipo}
+        initial={testo.contenuto}
+        personalizzato={testo.personalizzato}
+        hasDefaultChanges={testo.personalizzato && testo.contenuto !== LEGALE_DEFAULT[tipo].trim()}
+      />
     </div>
   );
 }

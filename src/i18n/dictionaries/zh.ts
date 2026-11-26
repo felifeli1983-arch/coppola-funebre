@@ -213,6 +213,7 @@ const zh: Dictionary = {
     privacy: '隐私政策',
     cookie: 'Cookie 政策',
     codiceEtico: '道德准则',
+    documenti: '文件',
     manageCookies: '管理 Cookie',
   },
   sticky: {

@@ -25,6 +25,11 @@ type CartContextValue = {
   setQty: (slug: string, qty: number) => void;
   remove: (slug: string) => void;
   clear: () => void;
+  /** Slide-over cart drawer (UI state only, not persisted). */
+  drawerOpen: boolean;
+  setDrawerOpen: (open: boolean) => void;
+  /** True once the cart has been read from localStorage. */
+  hydrated: boolean;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -33,6 +38,7 @@ const STORAGE_KEY = 'coppola-cart';
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -82,8 +88,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<CartContextValue>(() => {
     const count = items.reduce((n, i) => n + i.quantita, 0);
     const totalCent = items.reduce((n, i) => n + i.prezzo_cent * i.quantita, 0);
-    return { items, count, totalCent, add, setQty, remove, clear };
-  }, [items, add, setQty, remove, clear]);
+    return { items, count, totalCent, add, setQty, remove, clear, drawerOpen, setDrawerOpen, hydrated };
+  }, [items, add, setQty, remove, clear, drawerOpen, hydrated]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

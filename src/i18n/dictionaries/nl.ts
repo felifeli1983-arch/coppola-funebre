@@ -213,6 +213,7 @@ const nl: Dictionary = {
     privacy: 'Privacybeleid',
     cookie: 'Cookiebeleid',
     codiceEtico: 'Ethische code',
+    documenti: 'Documenten',
     manageCookies: 'Cookies beheren',
   },
   sticky: {

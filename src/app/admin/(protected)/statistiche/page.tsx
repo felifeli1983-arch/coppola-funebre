@@ -1,103 +1,150 @@
-import { BarChart3, Users2, CalendarDays, Globe } from 'lucide-react';
-import { getVisiteStats } from '@/lib/shop/admin-queries';
+import Link from 'next/link';
+import type { Metadata } from 'next';
+import { CalendarDays, Eye, FileText, Globe2, Link2, Megaphone, MonitorSmartphone, Sun, TrendingUp } from 'lucide-react';
+import { getVisiteData } from '@/lib/admin/dashboard';
+import { cn } from '@/lib/utils';
+import { PageHeader, StatCard } from '@/components/admin/kit';
+import { Card, CardContent, CardHeaderRow } from '@/components/ui/card';
+import { TrendChart } from '@/components/admin/charts';
+import RankList from '@/components/admin/system/RankList';
 
 export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'Visite al sito' };
 
-function Stat({ icon: Icon, label, value }: { icon: typeof BarChart3; label: string; value: number }) {
-  return (
-    <div className="rounded-xl border border-stone-200 bg-white p-5">
-      <div className="flex items-center gap-2 text-stone-500">
-        <Icon size={16} className="text-[#7F1518]" />
-        <span className="truncate text-xs font-medium uppercase tracking-wide">{label}</span>
-      </div>
-      <div className="mt-2 text-3xl font-semibold text-stone-900">{value.toLocaleString('it-IT')}</div>
-    </div>
-  );
+const PERIODI = [7, 30, 90] as const;
+
+const DEVICE_LABEL: Record<string, string> = {
+  desktop: 'Computer',
+  mobile: 'Smartphone',
+  tablet: 'Tablet',
+};
+
+let regionNames: Intl.DisplayNames | null = null;
+try {
+  regionNames = new Intl.DisplayNames(['it'], { type: 'region' });
+} catch {
+  regionNames = null;
 }
-
-function RankList({ title, rows }: { title: string; rows: { label: string; n: number }[] }) {
-  const max = Math.max(1, ...rows.map((r) => r.n));
-  return (
-    <div className="rounded-xl border border-stone-200 bg-white p-5">
-      <h2 className="mb-3 font-medium text-stone-900">{title}</h2>
-      {rows.length === 0 ? (
-        <p className="text-sm text-stone-400">Nessun dato.</p>
-      ) : (
-        <ul className="space-y-2.5">
-          {rows.map((r) => (
-            <li key={r.label}>
-              <div className="flex items-center justify-between gap-3 text-sm">
-                <span className="min-w-0 truncate text-stone-700" title={r.label}>{r.label}</span>
-                <span className="flex-none font-medium text-stone-500">{r.n}</span>
-              </div>
-              <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-stone-100">
-                <div className="h-full rounded-full bg-[#7F1518]/70" style={{ width: `${(r.n / max) * 100}%` }} />
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
-
-export default async function Statistiche() {
-  const v = await getVisiteStats();
-
-  if (!v) {
-    return (
-      <div>
-        <h1 className="font-serif text-3xl text-stone-900">Statistiche visite</h1>
-        <p className="mt-4 text-stone-500">Collega Supabase per vedere le statistiche.</p>
-      </div>
-    );
+function paese(code: string): string {
+  if (!/^[A-Z]{2}$/.test(code)) return code;
+  try {
+    return regionNames?.of(code) ?? code;
+  } catch {
+    return code;
   }
+}
 
-  const maxDay = Math.max(1, ...v.perGiorno.map((d) => d.n));
+export default async function StatistichePage({
+  searchParams,
+}: {
+  searchParams: { giorni?: string };
+}) {
+  const giorni = PERIODI.includes(Number(searchParams.giorni) as (typeof PERIODI)[number])
+    ? Number(searchParams.giorni)
+    : 30;
+  const v = await getVisiteData(giorni);
 
   return (
-    <div className="max-w-5xl">
-      <h1 className="font-serif text-3xl text-stone-900">Statistiche visite</h1>
-      <p className="mt-1 text-stone-500">Ultimi 30 giorni · da dove arrivano i visitatori.</p>
+    <div className="grid gap-5 lg:gap-6">
+      <PageHeader
+        title="Visite al sito"
+        description="Quante persone visitano il sito, da dove arrivano e cosa guardano. Rilevazione anonima, senza cookie."
+        className="mb-0"
+        actions={
+          <div className="inline-flex rounded-lg border bg-muted/40 p-1" role="tablist" aria-label="Periodo">
+            {PERIODI.map((p) => (
+              <Link
+                key={p}
+                href={`/admin/statistiche?giorni=${p}`}
+                role="tab"
+                aria-selected={p === giorni}
+                className={cn(
+                  'rounded-md px-3 py-1 text-sm font-medium transition-colors',
+                  p === giorni
+                    ? 'bg-background text-foreground shadow-sm'
+                    : 'text-muted-foreground hover:text-foreground',
+                )}
+              >
+                {p} giorni
+              </Link>
+            ))}
+          </div>
+        }
+      />
 
-      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-3">
-        <Stat icon={Users2} label="Visite oggi" value={v.oggi} />
-        <Stat icon={CalendarDays} label="Ultimi 7 giorni" value={v.settimana} />
-        <Stat icon={BarChart3} label="Totale 30 giorni" value={v.totale} />
-      </div>
-
-      {/* Per-day bar chart */}
-      <div className="mt-6 rounded-xl border border-stone-200 bg-white p-5">
-        <h2 className="mb-4 font-medium text-stone-900">Andamento ultimi 7 giorni</h2>
-        <div className="flex items-end justify-between gap-2" style={{ height: 140 }}>
-          {v.perGiorno.map((d) => (
-            <div key={d.giorno} className="flex min-w-0 flex-1 flex-col items-center justify-end gap-2">
-              <span className="text-xs font-medium text-stone-500">{d.n}</span>
-              <div
-                className="w-full max-w-[44px] rounded-t bg-[#7F1518]/70"
-                style={{ height: `${Math.max(4, (d.n / maxDay) * 100)}%` }}
-              />
-              <span className="text-[10px] text-stone-400">
-                {new Date(d.giorno).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' })}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <RankList title="Provenienza (referrer)" rows={v.topReferrer.map((r) => ({ label: r.host, n: r.n }))} />
-        <RankList title="Sorgente campagna (utm)" rows={v.topSource.map((r) => ({ label: r.source, n: r.n }))} />
-        <RankList
-          title="Paesi"
-          rows={v.topPaese.map((r) => ({ label: r.paese, n: r.n }))}
+      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4 xl:gap-4">
+        <StatCard label={`Visite · ${giorni} giorni`} value={v.totale.toLocaleString('it-IT')} icon={Eye} tone="brand" />
+        <StatCard label="Oggi" value={v.oggi.toLocaleString('it-IT')} icon={Sun} />
+        <StatCard
+          label="Media giornaliera"
+          value={v.mediaGiornaliera.toLocaleString('it-IT')}
+          icon={TrendingUp}
+          hint="Visite al giorno nel periodo"
         />
-        <RankList title="Pagine più viste" rows={v.topPagine.map((r) => ({ label: r.path, n: r.n }))} />
+        <StatCard
+          label="Pagine diverse viste"
+          value={v.pagineUniche.toLocaleString('it-IT')}
+          icon={FileText}
+        />
       </div>
 
-      <p className="mt-4 flex items-center gap-2 text-xs text-stone-400">
-        <Globe size={13} /> Tracciamento anonimo e aggregato, senza cookie di profilazione.
-      </p>
+      <Card>
+        <CardHeaderRow
+          title="Andamento delle visite"
+          description={`Ultimi ${giorni} giorni`}
+          icon={<CalendarDays />}
+        />
+        <CardContent className="px-2 pb-4 sm:px-4">
+          <TrendChart
+            data={v.perGiorno}
+            series={[{ key: 'visite', label: 'Visite', kind: 'area', color: 1, format: 'int' }]}
+            height={280}
+            emptyTitle="Nessuna visita nel periodo"
+          />
+        </CardContent>
+      </Card>
+
+      <div className="grid gap-5 md:grid-cols-2 lg:gap-6 xl:grid-cols-3">
+        <Card>
+          <CardHeaderRow title="Da dove arrivano" description="Siti di provenienza" icon={<Link2 />} />
+          <CardContent>
+            <RankList items={v.referrer.map((r) => ({ label: r.label, n: r.n }))} total={v.totale} />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeaderRow title="Pagine più viste" icon={<FileText />} />
+          <CardContent>
+            <RankList items={v.pagine} total={v.totale} mono />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeaderRow title="Campagne" description="Link tracciati (UTM)" icon={<Megaphone />} />
+          <CardContent>
+            <RankList items={v.sorgenti} total={v.totale} />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeaderRow title="Paesi" icon={<Globe2 />} />
+          <CardContent>
+            <RankList items={v.paesi.map((p) => ({ label: paese(p.label), n: p.n }))} total={v.totale} />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeaderRow title="Dispositivi" icon={<MonitorSmartphone />} />
+          <CardContent>
+            <RankList
+              items={v.dispositivi.map((d) => ({ label: DEVICE_LABEL[d.label] ?? d.label, n: d.n }))}
+              total={v.totale}
+            />
+          </CardContent>
+        </Card>
+      </div>
+
+      {v.troncato && (
+        <p className="text-xs text-muted-foreground">
+          Il periodo contiene moltissime visite: i dettagli sono calcolati sulle più recenti.
+        </p>
+      )}
     </div>
   );
 }

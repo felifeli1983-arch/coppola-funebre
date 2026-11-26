@@ -39,7 +39,7 @@ export default function LegalLayout({
           <div className="mt-16 pt-10 border-t border-pietra/10">
             <a
               href="/"
-              className="inline-flex items-center gap-2 text-sm tracking-widest uppercase text-bordeaux hover:text-bordeaux-dark transition-colors"
+              className="inline-flex min-h-11 items-center gap-2 text-sm tracking-widest uppercase text-bordeaux hover:text-bordeaux-dark transition-colors"
             >
               ← Torna alla home
             </a>

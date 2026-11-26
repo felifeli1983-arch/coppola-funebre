@@ -213,6 +213,7 @@ const ur: Dictionary = {
     privacy: 'رازداری کی پالیسی',
     cookie: 'کوکی پالیسی',
     codiceEtico: 'ضابطۂ اخلاق',
+    documenti: 'دستاویزات',
     manageCookies: 'کوکیز کا انتظام کریں',
   },
   sticky: {

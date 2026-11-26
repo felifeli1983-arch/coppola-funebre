@@ -8,10 +8,12 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 /**
- * Stripe webhook. Confirms payment, upserts the customer into the CRM, links it
- * to the order, and decrements stock. Requires STRIPE_SECRET_KEY,
- * STRIPE_WEBHOOK_SECRET and SUPABASE_SERVICE_ROLE_KEY (service role bypasses RLS
- * — there is no user session on a webhook call).
+ * Stripe webhook. Confirms payment (idempotently) and decrements stock.
+ * The CRM contact is created/linked by a database trigger when the order is
+ * inserted at checkout, and the status change is logged to the customer's
+ * timeline by another trigger — nothing CRM-related happens here.
+ * Requires STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET and SUPABASE_SERVICE_ROLE_KEY
+ * (service role bypasses RLS — there is no user session on a webhook call).
  */
 export async function POST(req: Request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -39,37 +41,6 @@ export async function POST(req: Request) {
     }
 
     const admin = createAdminClient();
-    let clienteData: Record<string, string> = {};
-    try {
-      clienteData = JSON.parse(session.metadata?.cliente ?? '{}');
-    } catch {
-      /* ignore */
-    }
-
-    // Upsert the customer into the CRM.
-    let clienteId: string | null = null;
-    const email = session.customer_details?.email || clienteData.email || session.customer_email;
-    if (email) {
-      const { data: cli } = await admin
-        .from('clienti')
-        .upsert(
-          {
-            email: email.toLowerCase(),
-            nome: clienteData.nome || session.customer_details?.name || null,
-            telefono: clienteData.telefono || session.customer_details?.phone || null,
-            indirizzo: {
-              via: clienteData.via ?? '',
-              citta: clienteData.citta ?? '',
-              cap: clienteData.cap ?? '',
-              provincia: clienteData.provincia ?? '',
-            },
-          },
-          { onConflict: 'email' },
-        )
-        .select('id')
-        .maybeSingle();
-      clienteId = cli?.id ?? null;
-    }
 
     if (ordineId) {
       // Conditional transition: only rows NOT already paid are updated, and the
@@ -81,7 +52,6 @@ export async function POST(req: Request) {
           stato: 'pagato',
           stripe_payment_intent:
             typeof session.payment_intent === 'string' ? session.payment_intent : null,
-          cliente_id: clienteId,
         })
         .eq('id', ordineId)
         .not('stato', 'in', '("pagato","spedito","consegnato","rimborsato")')

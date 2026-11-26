@@ -1,11 +1,23 @@
 import { notFound } from 'next/navigation';
-import ClienteForm from '@/components/admin/ClienteForm';
-import { getClienteById } from '@/lib/shop/admin-queries';
+import type { Metadata } from 'next';
+import { PageHeader } from '@/components/admin/kit';
+import ContattoForm from '@/components/admin/crm/ContattoForm';
+import { getContatto, nomeContatto } from '@/lib/admin/crm';
 
 export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'Modifica contatto' };
 
-export default async function ModificaCliente({ params }: { params: { id: string } }) {
-  const data = await getClienteById(params.id);
+export default async function ModificaContattoPage({ params }: { params: { id: string } }) {
+  const data = await getContatto(params.id);
   if (!data) notFound();
-  return <ClienteForm cliente={data.cliente} />;
+  const c = data.contatto;
+  return (
+    <>
+      <PageHeader
+        back={{ href: `/admin/clienti/${c.id}`, label: nomeContatto(c) }}
+        title="Modifica contatto"
+      />
+      <ContattoForm contatto={c} />
+    </>
+  );
 }

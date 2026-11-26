@@ -9,8 +9,16 @@ export function formatPrice(cents: number, currency = 'EUR', locale = 'it-IT'): 
 
 /** Parse a user-typed euro amount ("12,50" or "12.50") into integer cents. */
 export function parsePriceToCents(input: string): number {
-  const normalized = String(input).trim().replace(/\./g, '').replace(',', '.');
-  const value = Number(normalized);
+  let s = String(input ?? '').trim().replace(/[€\s]/g, '');
+  if (s.includes(',')) {
+    // Italian format: dots are thousands separators, comma is the decimal mark.
+    s = s.replace(/\./g, '').replace(',', '.');
+  } else if (/^\d{1,3}(\.\d{3})+$/.test(s)) {
+    // "1.250" → thousands separator only.
+    s = s.replace(/\./g, '');
+  }
+  // Otherwise a single dot is the decimal mark ("7.50" → 7,50 €).
+  const value = Number(s);
   return Number.isFinite(value) ? Math.round(value * 100) : 0;
 }
 

@@ -43,7 +43,7 @@
 
 @layer components {
   .eyebrow {
-    @apply text-[10px] md:text-xs tracking-widest uppercase text-bordeaux font-sans font-medium;
+    @apply text-[11px] md:text-xs tracking-widest uppercase text-bordeaux font-sans font-medium;
   }
   .divider-line {
     @apply block w-12 h-px bg-oro;
@@ -60,8 +60,17 @@
   .section-title {
     @apply font-serif text-3xl md:text-4xl lg:text-5xl font-normal leading-tight;
   }
+  /* Page container: wider canvas on large screens (1440px), tighter gutters
+     so content uses the space; long text keeps its own measure (max-w-*ch). */
   .container-custom {
-    @apply max-w-7xl mx-auto px-5 md:px-8 lg:px-12;
+    @apply w-full max-w-[1440px] mx-auto px-5 sm:px-6 lg:px-10 xl:px-12;
+  }
+  .container-narrow {
+    @apply w-full max-w-5xl mx-auto px-5 sm:px-6 lg:px-10;
+  }
+  /* Comfortable reading measure for long paragraphs. */
+  .measure {
+    max-width: 68ch;
   }
 }
 
@@ -129,4 +138,128 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Admin design system (shadcn/ui tokens). Scoped to <body class="admin-root">
+   so Radix portals (rendered into <body>) inherit the tokens too, while the
+   public site is untouched.
+   ───────────────────────────────────────────────────────────────────────── */
+.admin-root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 358 72% 29%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 71% 32%;
+  --success-foreground: 0 0% 98%;
+  --warning: 32 95% 44%;
+  --warning-foreground: 0 0% 98%;
+  --info: 217 91% 50%;
+  --info-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 88%;
+  --ring: 358 72% 29%;
+  --radius: 0.6rem;
+  --sidebar: 0 0% 98.2%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 358 72% 29%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 93.5%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 240 5.9% 90%;
+  --sidebar-ring: 358 72% 29%;
+  --chart-1: 358 68% 38%;
+  --chart-2: 36 40% 54%;
+  --chart-3: 215 25% 45%;
+  --chart-4: 160 40% 38%;
+  --chart-5: 280 22% 52%;
+}
+
+.admin-root.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 8% 6%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 8% 6%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 358 62% 55%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 50%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 60% 45%;
+  --warning: 38 92% 55%;
+  --info: 217 91% 62%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 19%;
+  --ring: 358 62% 55%;
+  --sidebar: 240 6% 6.5%;
+  --sidebar-foreground: 240 4.8% 85%;
+  --sidebar-primary: 358 62% 55%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 3.7% 14%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 240 3.7% 14%;
+  --sidebar-ring: 358 62% 55%;
+  --chart-1: 358 62% 58%;
+  --chart-2: 36 50% 60%;
+  --chart-3: 215 30% 62%;
+  --chart-4: 160 45% 50%;
+  --chart-5: 280 30% 65%;
+  color-scheme: dark;
+}
+
+/* Neutralise public-site base styles inside the admin. */
+body.admin-root {
+  @apply bg-background text-foreground font-sans antialiased;
+  padding-bottom: 0 !important;
+  font-feature-settings: 'cv11', 'ss01';
+}
+.admin-root *,
+.admin-root *::before,
+.admin-root *::after {
+  border-color: hsl(var(--border));
+}
+.admin-root h1,
+.admin-root h2,
+.admin-root h3,
+.admin-root h4 {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  color: inherit;
+  font-feature-settings: normal;
+}
+.admin-root main,
+.admin-root section {
+  contain: none;
+}
+.admin-root section {
+  padding-top: revert-layer !important;
+  padding-bottom: revert-layer !important;
+}
+.admin-root img {
+  transform: none;
+  backface-visibility: visible;
+}
+.admin-root ::selection {
+  background: hsl(var(--primary) / 0.18);
+}
+.admin-root .tabular {
+  font-variant-numeric: tabular-nums;
 }

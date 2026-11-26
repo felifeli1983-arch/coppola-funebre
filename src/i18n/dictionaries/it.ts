@@ -211,6 +211,7 @@ const it = {
     privacy: 'Privacy Policy',
     cookie: 'Cookie Policy',
     codiceEtico: 'Codice Etico',
+    documenti: 'Documenti',
     manageCookies: 'Gestisci cookie',
   },
   sticky: {

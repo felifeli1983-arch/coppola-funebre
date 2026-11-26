@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import './globals.css';
 import CookieBanner from '@/components/CookieBanner';
 import Analytics from '@/components/Analytics';
@@ -91,9 +91,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   // (no i18n provider, analytics, structured data or cookie banner). The admin's
   // own nested layout provides its interface.
   if (h.get('x-coppola-admin') === '1') {
+    const dark = cookies().get('admin_theme')?.value === 'dark';
     return (
       <html lang="it" dir="ltr" className={`${cormorant.variable} ${inter.variable}`}>
-        <body>{children}</body>
+        <body className={`admin-root${dark ? ' dark' : ''}`}>{children}</body>
       </html>
     );
   }

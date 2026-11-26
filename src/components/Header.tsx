@@ -7,7 +7,8 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useT } from '@/i18n/LanguageProvider';
 import { withItalyPhonePrefix, phoneTelHref } from '@/i18n/config';
 
-export default function Header() {
+/** `actions` renders extra header controls (e.g. the shop cart button). */
+export default function Header({ actions }: { actions?: React.ReactNode } = {}) {
   const { t, locale } = useT();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ export default function Header() {
       }`}
     >
       <div className="container-custom flex items-center justify-between py-3">
-        <a href="#" className="flex items-center group">
+        <a href="/" className="flex items-center group" aria-label="Onoranze Funebri Coppola — Home">
           <img
             src="/img/new/logo-coppola.webp"
             alt="Onoranze Funebri Coppola"
@@ -58,7 +59,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-1 md:gap-3">
           <div className="hidden md:flex flex-col items-end leading-tight">
             <a
               href={phoneTelHref(locale)}
@@ -74,9 +75,10 @@ export default function Header() {
             </span>
           </div>
           <LanguageSwitcher />
+          {actions}
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden p-2 text-pietra"
+            className="lg:hidden inline-flex size-11 items-center justify-center text-pietra"
             aria-label="Menu"
           >
             {open ? <X size={24} /> : <Menu size={24} />}

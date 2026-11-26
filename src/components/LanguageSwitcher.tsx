@@ -42,7 +42,7 @@ export default function LanguageSwitcher({
         aria-label={t.header.langLabel}
         className={
           variant === 'header'
-            ? 'inline-flex items-center gap-1.5 px-2.5 py-2 text-pietra hover:text-bordeaux transition-colors'
+            ? 'inline-flex min-h-10 items-center gap-1.5 px-2.5 py-2 text-pietra hover:text-bordeaux transition-colors'
             : 'inline-flex items-center justify-center gap-2 w-full px-5 py-3 border border-pietra/20 text-pietra text-xs tracking-widest uppercase'
         }
       >

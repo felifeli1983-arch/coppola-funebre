@@ -1,100 +1,58 @@
 import Link from 'next/link';
-import { Plus, Pencil, Trash2, Package } from 'lucide-react';
-import { getAllProdotti } from '@/lib/shop/admin-queries';
-import { formatPrice, productImageUrl } from '@/lib/shop/format';
-import { toggleProdotto, deleteProdotto } from '@/lib/admin-actions';
+import type { Metadata } from 'next';
+import { AlertTriangle, Eye, Package, Plus } from 'lucide-react';
+import { PageHeader, StatCard } from '@/components/admin/kit';
+import ProdottiTable from '@/components/admin/shop/ProdottiTable';
+import { Button } from '@/components/ui/button';
+import { getCategorieAdmin, getProdottiAdmin } from '@/lib/admin/shop';
+
+const euroTondo = (c: number) =>
+  new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(c / 100);
 
 export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'Prodotti' };
 
-export default async function AdminProdotti() {
-  const prodotti = await getAllProdotti();
+export default async function ProdottiPage() {
+  const [prodotti, categorie] = await Promise.all([getProdottiAdmin(), getCategorieAdmin()]);
+  const attivi = prodotti.filter((p) => p.attivo).length;
+  const esauriti = prodotti.filter((p) => p.giacenza <= 3).length;
+  const valore = prodotti.reduce((n, p) => n + p.prezzo_cent * Math.max(0, p.giacenza), 0);
+  // Parent › Child labels for the category filter.
+  const byId = new Map(categorie.map((c) => [c.id, c]));
+  const catOptions = categorie
+    .map((c) => ({
+      id: c.id,
+      nome: c.parent_id && byId.get(c.parent_id) ? `${byId.get(c.parent_id)!.nome} › ${c.nome}` : c.nome,
+    }))
+    .sort((a, b) => a.nome.localeCompare(b.nome, 'it'));
 
   return (
-    <div>
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-serif text-3xl text-stone-900">Prodotti</h1>
-          <p className="mt-1 text-stone-500">{prodotti.length} prodotti a catalogo.</p>
-        </div>
-        <Link
-          href="/admin/prodotti/nuovo"
-          className="inline-flex items-center gap-2 rounded-md bg-[#7F1518] px-4 py-2 text-sm font-medium text-white hover:bg-[#5A0F12]"
-        >
-          <Plus size={16} /> Nuovo prodotto
-        </Link>
+    <>
+      <PageHeader
+        title="Prodotti"
+        description="Il catalogo del negozio online: prezzi, foto, disponibilità e visibilità."
+        actions={
+          <Button asChild>
+            <Link href="/admin/prodotti/nuovo">
+              <Plus />
+              Nuovo prodotto
+            </Link>
+          </Button>
+        }
+      />
+      <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <StatCard label="Prodotti" value={prodotti.length} icon={Package} hint={`${categorie.length} categorie`} />
+        <StatCard label="Visibili nel negozio" value={attivi} icon={Eye} tone="success" hint={`${prodotti.length - attivi} nascosti`} />
+        <StatCard
+          label="Scorte basse"
+          value={esauriti}
+          icon={AlertTriangle}
+          tone={esauriti ? 'warning' : 'default'}
+          hint="3 pezzi o meno"
+        />
+        <StatCard label="Valore magazzino" value={euroTondo(valore)} icon={Package} tone="brand" hint="Prezzo × pezzi disponibili" />
       </div>
-
-      <div className="mt-6 overflow-hidden rounded-xl border border-stone-200 bg-white">
-        {prodotti.length === 0 ? (
-          <p className="p-6 text-sm text-stone-500">Nessun prodotto. Aggiungine uno →</p>
-        ) : (
-          <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="border-b border-stone-200 bg-stone-50 text-left text-xs uppercase tracking-wide text-stone-500">
-              <tr>
-                <th className="p-3 font-medium">Prodotto</th>
-                <th className="hidden p-3 font-medium md:table-cell">Categoria</th>
-                <th className="p-3 font-medium">Prezzo</th>
-                <th className="hidden p-3 font-medium sm:table-cell">Giacenza</th>
-                <th className="p-3 font-medium">Stato</th>
-                <th className="p-3 text-right font-medium">Azioni</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-stone-100">
-              {prodotti.map((p) => {
-                const img = p.immagini?.[0]?.storage_path;
-                return (
-                  <tr key={p.id} className="hover:bg-stone-50">
-                    <td className="p-3">
-                      <div className="flex min-w-0 items-center gap-3">
-                        <div className="flex h-10 w-10 flex-none items-center justify-center overflow-hidden rounded bg-stone-100">
-                          {img ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={productImageUrl(img)} alt="" className="h-full w-full object-cover" />
-                          ) : (
-                            <Package size={16} className="text-stone-300" />
-                          )}
-                        </div>
-                        <span className="min-w-0 max-w-[40vw] truncate font-medium text-stone-900 sm:max-w-xs">{p.titolo}</span>
-                      </div>
-                    </td>
-                    <td className="hidden p-3 text-stone-500 md:table-cell">{p.categoria?.nome ?? '—'}</td>
-                    <td className="p-3 text-stone-700">{formatPrice(p.prezzo_cent, p.valuta)}</td>
-                    <td className="hidden p-3 text-stone-700 sm:table-cell">{p.giacenza}</td>
-                    <td className="p-3">
-                      <form action={toggleProdotto}>
-                        <input type="hidden" name="id" value={p.id} />
-                        <input type="hidden" name="attivo" value={String(p.attivo)} />
-                        <button
-                          className={`rounded-full px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide ${
-                            p.attivo ? 'bg-green-100 text-green-700' : 'bg-stone-200 text-stone-500'
-                          }`}
-                        >
-                          {p.attivo ? 'Attivo' : 'Nascosto'}
-                        </button>
-                      </form>
-                    </td>
-                    <td className="p-3">
-                      <div className="flex items-center justify-end gap-2">
-                        <Link href={`/admin/prodotti/${p.id}`} className="text-stone-400 hover:text-[#7F1518]" title="Modifica">
-                          <Pencil size={15} />
-                        </Link>
-                        <form action={deleteProdotto}>
-                          <input type="hidden" name="id" value={p.id} />
-                          <button className="text-stone-400 hover:text-[#7F1518]" title="Elimina">
-                            <Trash2 size={15} />
-                          </button>
-                        </form>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          </div>
-        )}
-      </div>
-    </div>
+      <ProdottiTable data={prodotti} categorie={catOptions} />
+    </>
   );
 }

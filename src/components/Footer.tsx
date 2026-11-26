@@ -43,14 +43,14 @@ export default function Footer() {
             <div className="text-xs tracking-widest uppercase text-oro mb-4 font-medium">
               {t.footer.navTitle}
             </div>
-            <ul className="space-y-2 text-sm">
-              <li><a href="/" className="hover:text-avorio transition-colors">{t.footer.nav.home}</a></li>
-              <li><a href="/negozio" className="hover:text-avorio transition-colors">{t.footer.nav.negozio}</a></li>
-              <li><a href="/#servizi" className="hover:text-avorio transition-colors">{t.footer.nav.servizi}</a></li>
-              <li><a href="/#casa-funeraria" className="hover:text-avorio transition-colors">{t.footer.nav.casaFuneraria}</a></li>
-              <li><a href="/#previdenza" className="hover:text-avorio transition-colors">{t.footer.nav.previdenza}</a></li>
-              <li><a href="/#faq" className="hover:text-avorio transition-colors">{t.footer.nav.faq}</a></li>
-              <li><a href="/#contatti" className="hover:text-avorio transition-colors">{t.footer.nav.contatti}</a></li>
+            <ul className="grid grid-cols-2 gap-x-6 text-sm md:grid-cols-1 md:gap-x-0">
+              <li><a href="/" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors md:min-h-8">{t.footer.nav.home}</a></li>
+              <li><a href="/negozio" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors md:min-h-8">{t.footer.nav.negozio}</a></li>
+              <li><a href="/#servizi" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors md:min-h-8">{t.footer.nav.servizi}</a></li>
+              <li><a href="/#casa-funeraria" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors md:min-h-8">{t.footer.nav.casaFuneraria}</a></li>
+              <li><a href="/#previdenza" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors md:min-h-8">{t.footer.nav.previdenza}</a></li>
+              <li><a href="/#faq" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors md:min-h-8">{t.footer.nav.faq}</a></li>
+              <li><a href="/#contatti" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors md:min-h-8">{t.footer.nav.contatti}</a></li>
             </ul>
           </div>
 
@@ -58,12 +58,12 @@ export default function Footer() {
             <div className="text-xs tracking-widest uppercase text-oro mb-4 font-medium">
               {t.footer.contattiTitle}
             </div>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-1 text-sm">
               <li>
-                <a href={phoneTelHref(locale)} className="flex items-center gap-3 hover:text-avorio transition-colors group">
+                <a href={phoneTelHref(locale)} className="flex min-h-12 items-center gap-3 hover:text-avorio transition-colors group">
                   <Phone size={14} strokeWidth={1.5} className="flex-none text-oro" />
                   <span>
-                    <span className="block text-[10px] tracking-widest uppercase text-avorio/50">24h</span>
+                    <span className="block text-[11px] tracking-widest uppercase text-avorio/55">24h</span>
                     <span className="font-medium text-avorio inline-flex items-center gap-1.5">
                       {phoneDisplay(locale)}
                       <WhatsAppIcon size={12} className="text-oro" />
@@ -72,20 +72,20 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/390815713888" target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-avorio transition-colors">
+                <a href="https://wa.me/390815713888" target="_blank" rel="noopener" className="flex min-h-12 items-center gap-3 hover:text-avorio transition-colors">
                   <WhatsAppIcon size={14} className="flex-none text-oro" />
                   <span>
-                    <span className="block text-[10px] tracking-widest uppercase text-avorio/50">WhatsApp</span>
+                    <span className="block text-[11px] tracking-widest uppercase text-avorio/55">WhatsApp</span>
                     <span className="font-medium text-avorio">{phoneDisplay(locale)}</span>
                   </span>
                 </a>
               </li>
               <li>
-                <a href="mailto:info@eredicoppola.com" className="flex items-center gap-3 hover:text-avorio transition-colors">
+                <a href="mailto:info@eredicoppola.com" className="flex min-h-12 min-w-0 items-center gap-3 hover:text-avorio transition-colors">
                   <Mail size={14} strokeWidth={1.5} className="flex-none text-oro" />
                   <span>
-                    <span className="block text-[10px] tracking-widest uppercase text-avorio/50">Email</span>
-                    <span className="font-medium text-avorio">info@eredicoppola.com</span>
+                    <span className="block text-[11px] tracking-widest uppercase text-avorio/55">Email</span>
+                    <span className="font-medium text-avorio break-all">info@eredicoppola.com</span>
                   </span>
                 </a>
               </li>
@@ -93,21 +93,22 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-avorio/50">
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-4 text-xs text-avorio/55 text-center md:text-left">
           <div>
             © {new Date().getFullYear()} {t.footer.copyright}
           </div>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <a href="/privacy-policy" className="hover:text-avorio transition-colors">{t.footer.privacy}</a>
-            <a href="/cookie-policy" className="hover:text-avorio transition-colors">{t.footer.cookie}</a>
-            <a href="/codice-etico" className="hover:text-avorio transition-colors">{t.footer.codiceEtico}</a>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 md:justify-end">
+            <a href="/privacy-policy" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors">{t.footer.privacy}</a>
+            <a href="/cookie-policy" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors">{t.footer.cookie}</a>
+            <a href="/codice-etico" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors">{t.footer.codiceEtico}</a>
+            <a href="/documenti" className="inline-flex min-h-10 items-center hover:text-avorio transition-colors">{t.footer.documenti}</a>
             <button
               type="button"
               onClick={() => {
                 try { localStorage.removeItem('coppola-cookie-consent'); } catch {}
                 window.location.reload();
               }}
-              className="hover:text-avorio transition-colors cursor-pointer"
+              className="inline-flex min-h-10 items-center hover:text-avorio transition-colors cursor-pointer"
             >
               {t.footer.manageCookies}
             </button>

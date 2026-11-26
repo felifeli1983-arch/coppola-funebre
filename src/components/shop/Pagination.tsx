@@ -24,51 +24,57 @@ export default function Pagination({
 
   // Compact page window around the current page.
   const pages: number[] = [];
-  const from = Math.max(1, page - 2);
-  const to = Math.min(totalPages, page + 2);
+  const from = Math.max(1, page - 1);
+  const to = Math.min(totalPages, page + 1);
   for (let p = from; p <= to; p++) pages.push(p);
 
   const cell =
-    'inline-flex h-9 min-w-9 items-center justify-center border px-2 text-sm transition-colors';
+    'inline-flex size-11 items-center justify-center border text-sm tabular-nums transition-colors';
+  const idle = 'border-pietra/15 bg-white text-pietra hover:border-bordeaux hover:text-bordeaux';
 
   return (
-    <nav className="mt-10 flex items-center justify-center gap-1.5">
-      {page > 1 && (
-        <Link href={href(page - 1)} className={`${cell} border-pietra/20 hover:border-bordeaux`}>
+    <nav aria-label="Paginazione" className="mt-12 flex items-center justify-center gap-1.5">
+      {page > 1 ? (
+        <Link href={href(page - 1)} className={`${cell} ${idle}`} aria-label="Pagina precedente">
           <ChevronLeft size={16} />
         </Link>
+      ) : (
+        <span className={`${cell} border-pietra/10 text-pietra/25`} aria-hidden>
+          <ChevronLeft size={16} />
+        </span>
       )}
       {from > 1 && (
         <>
-          <Link href={href(1)} className={`${cell} border-pietra/20 hover:border-bordeaux`}>1</Link>
-          <span className="px-1 text-pietra/40">…</span>
+          <Link href={href(1)} className={`${cell} ${idle}`}>1</Link>
+          {from > 2 && <span className="px-1 text-pietra/40">…</span>}
         </>
       )}
       {pages.map((p) => (
         <Link
           key={p}
           href={href(p)}
-          className={`${cell} ${
-            p === page
-              ? 'border-bordeaux bg-bordeaux text-avorio'
-              : 'border-pietra/20 hover:border-bordeaux'
-          }`}
+          aria-current={p === page ? 'page' : undefined}
+          className={`${cell} ${p === page ? 'border-bordeaux bg-bordeaux text-avorio' : idle}`}
         >
           {p}
         </Link>
       ))}
       {to < totalPages && (
         <>
-          <span className="px-1 text-pietra/40">…</span>
-          <Link href={href(totalPages)} className={`${cell} border-pietra/20 hover:border-bordeaux`}>
+          {to < totalPages - 1 && <span className="px-1 text-pietra/40">…</span>}
+          <Link href={href(totalPages)} className={`${cell} ${idle}`}>
             {totalPages}
           </Link>
         </>
       )}
-      {page < totalPages && (
-        <Link href={href(page + 1)} className={`${cell} border-pietra/20 hover:border-bordeaux`}>
+      {page < totalPages ? (
+        <Link href={href(page + 1)} className={`${cell} ${idle}`} aria-label="Pagina successiva">
           <ChevronRight size={16} />
         </Link>
+      ) : (
+        <span className={`${cell} border-pietra/10 text-pietra/25`} aria-hidden>
+          <ChevronRight size={16} />
+        </span>
       )}
     </nav>
   );

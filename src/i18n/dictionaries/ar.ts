@@ -213,6 +213,7 @@ const ar: Dictionary = {
     privacy: 'سياسة الخصوصية',
     cookie: 'سياسة ملفات تعريف الارتباط',
     codiceEtico: 'ميثاق الأخلاقيات',
+    documenti: 'المستندات',
     manageCookies: 'إدارة ملفات تعريف الارتباط',
   },
   sticky: {

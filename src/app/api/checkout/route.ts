@@ -174,6 +174,6 @@ export async function POST(req: Request) {
     url: null,
     ordine: ordineId,
     message:
-      'Ordine registrato. Il pagamento online non è ancora attivo: ti contatteremo per completare l’ordine. (Stripe verrà collegato a breve.)',
+      'Ordine ricevuto! Ti contatteremo a breve per confermare e completare il pagamento.',
   });
 }

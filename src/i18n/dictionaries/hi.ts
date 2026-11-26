@@ -213,6 +213,7 @@ const hi: Dictionary = {
     privacy: 'गोपनीयता नीति',
     cookie: 'कुकी नीति',
     codiceEtico: 'नैतिक संहिता',
+    documenti: 'दस्तावेज़',
     manageCookies: 'कुकी प्रबंधित करें',
   },
   sticky: {

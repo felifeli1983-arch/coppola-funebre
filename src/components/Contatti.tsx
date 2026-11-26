@@ -234,8 +234,8 @@ export default function Contatti() {
                     />
                   </label>
 
-                  <label className="flex items-start gap-3 mt-6 text-xs text-pietra-chiaro">
-                    <input type="checkbox" required className="mt-1 accent-bordeaux" />
+                  <label className="flex cursor-pointer items-start gap-3 mt-6 py-1 text-xs leading-relaxed text-pietra-chiaro">
+                    <input type="checkbox" required className="mt-0.5 size-5 flex-none accent-bordeaux" />
                     <span>
                       {t.contatti.form.privacy}
                     </span>

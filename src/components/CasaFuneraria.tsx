@@ -61,7 +61,7 @@ export default function CasaFuneraria() {
               </p>
               <a
                 href="#contatti"
-                className="inline-flex items-center gap-2 text-oro-chiaro hover:text-avorio text-sm tracking-widest uppercase transition-colors group"
+                className="inline-flex min-h-11 items-center gap-2 text-oro-chiaro hover:text-avorio text-sm tracking-widest uppercase transition-colors group"
               >
                 {t.casa.cta}{' '}
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

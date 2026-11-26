@@ -213,6 +213,7 @@ const ru: Dictionary = {
     privacy: 'Политика конфиденциальности',
     cookie: 'Политика cookie',
     codiceEtico: 'Кодекс этики',
+    documenti: 'Документы',
     manageCookies: 'Управление cookie',
   },
   sticky: {

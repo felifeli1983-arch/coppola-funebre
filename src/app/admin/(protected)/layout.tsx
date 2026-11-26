@@ -1,63 +1,42 @@
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 import type { Metadata } from 'next';
-import { Menu } from 'lucide-react';
-import AdminNav from '@/components/admin/AdminNav';
+import AdminShell from '@/components/admin/shell/AdminShell';
 import { createClient } from '@/lib/supabase/server';
-import { isSupabaseConfigured } from '@/lib/supabase/env';
+import { ORDER_OPEN_STATUSES } from '@/lib/admin/meta';
 
 export const metadata: Metadata = {
-  title: 'Admin · Coppola',
+  title: { default: 'Gestionale · Eredi Coppola', template: '%s · Gestionale Coppola' },
   robots: { index: false, follow: false },
 };
 
-export default async function ProtectedAdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const configured = isSupabaseConfigured();
+export default async function ProtectedAdminLayout({ children }: { children: React.ReactNode }) {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect('/admin/login');
 
-  // Once Supabase is connected, require a logged-in admin. Until then, show the
-  // skeleton so the panel is navigable during development.
-  if (configured) {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) redirect('/admin/login');
-  }
+  const endOfToday = new Date();
+  endOfToday.setHours(23, 59, 59, 999);
+
+  const [ordini, promemoria] = await Promise.all([
+    supabase.from('ordini').select('id', { count: 'exact', head: true }).in('stato', ORDER_OPEN_STATUSES),
+    supabase
+      .from('clienti_attivita')
+      .select('id', { count: 'exact', head: true })
+      .eq('completata', false)
+      .not('scadenza', 'is', null)
+      .lte('scadenza', endOfToday.toISOString()),
+  ]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-stone-100 text-stone-800 md:flex-row">
-      {/* Desktop sidebar */}
-      <aside className="hidden w-60 shrink-0 bg-stone-900 md:block">
-        <AdminNav />
-      </aside>
-
-      {/* Mobile top nav */}
-      <details className="bg-stone-900 text-white md:hidden">
-        <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3">
-          <span className="flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/img/new/logo-coppola.webp" alt="Coppola" className="h-8 w-auto rounded-sm" />
-            <span className="text-[11px] uppercase tracking-widest text-white/60">Admin</span>
-          </span>
-          <Menu size={20} />
-        </summary>
-        <div className="border-t border-white/10">
-          <AdminNav showHeader={false} />
-        </div>
-      </details>
-
-      <div className="flex min-w-0 flex-1 flex-col">
-        {!configured && (
-          <div className="bg-amber-100 px-6 py-2 text-sm text-amber-900">
-            ⚠️ Supabase non ancora collegato — il pannello è in modalità anteprima
-            (i dati compariranno dopo la connessione).
-          </div>
-        )}
-        <main className="flex-1 p-6 md:p-8">{children}</main>
-      </div>
-    </div>
+    <AdminShell
+      userEmail={user.email ?? null}
+      defaultCollapsed={cookies().get('admin_sidebar')?.value === 'collapsed'}
+      counters={{ ordiniDaGestire: ordini.count ?? 0, promemoria: promemoria.count ?? 0 }}
+    >
+      {children}
+    </AdminShell>
   );
 }

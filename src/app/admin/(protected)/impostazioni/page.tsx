@@ -1,85 +1,130 @@
 import Link from 'next/link';
-import { Truck, Store, Users, ArrowRight } from 'lucide-react';
-import { getSpedizione, getNegozio } from '@/lib/shop/settings';
-import { saveSpedizione, saveNegozio } from '@/lib/admin-actions';
+import type { Metadata } from 'next';
+import { Building2, Landmark, Mail, MapPin, Truck, UserCog } from 'lucide-react';
+import { createClient } from '@/lib/supabase/server';
+import { DEFAULTS } from '@/lib/shop/settings';
+import { salvaDatiAttivita } from '@/lib/admin/system-actions';
+import { PageHeader } from '@/components/admin/kit';
+import { ActionForm, SubmitButton } from '@/components/admin/actions';
+import { Card, CardContent, CardHeaderRow } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Field } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
 export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'Dati attività' };
 
-const eur = (c: number) => (c / 100).toFixed(2).replace('.', ',');
+type Negozio = Partial<
+  Record<
+    'nome' | 'email' | 'telefono' | 'indirizzo' | 'citta' | 'cap' | 'provincia' | 'partita_iva' | 'codice_fiscale' | 'pec' | 'sito',
+    string
+  >
+>;
 
-export default async function Impostazioni() {
-  const [sp, neg] = await Promise.all([getSpedizione(), getNegozio()]);
-  const label = 'text-xs font-medium uppercase tracking-wide text-stone-500';
-  const field = 'mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm outline-none focus:border-[#7F1518]';
+export default async function DatiAttivitaPage() {
+  const s = createClient();
+  const { data } = await s.from('impostazioni').select('valore').eq('chiave', 'negozio').maybeSingle();
+  const n: Negozio = { ...DEFAULTS.negozio, ...((data?.valore as Negozio | null) ?? {}) };
 
   return (
-    <div className="max-w-3xl">
-      <h1 className="font-serif text-3xl text-stone-900">Impostazioni</h1>
-      <p className="mt-1 text-stone-500">Spedizione, dati del negozio e accessi.</p>
+    <div className="mx-auto grid w-full max-w-5xl gap-5">
+      <PageHeader
+        title="Dati attività"
+        description="Le informazioni dell’impresa usate nel negozio online, nelle conferme d’ordine e nei documenti."
+        className="mb-0"
+      />
 
-      <div className="mt-8 space-y-6">
-        {/* Spedizione */}
-        <section className="rounded-xl border border-stone-200 bg-white p-6">
-          <div className="mb-4 flex items-center gap-2">
-            <Truck size={18} className="text-[#7F1518]" />
-            <h2 className="font-medium text-stone-900">Spedizione</h2>
-          </div>
-          <form action={saveSpedizione} className="grid gap-4 sm:grid-cols-2">
-            <label className="block">
-              <span className={label}>Costo spedizione (€)</span>
-              <input name="costo" defaultValue={eur(sp.costo_cent)} className={field} />
-            </label>
-            <label className="block">
-              <span className={label}>Spedizione gratis sopra (€)</span>
-              <input name="soglia" defaultValue={eur(sp.soglia_gratis_cent)} className={field} />
-              <span className="mt-1 block text-xs text-stone-400">0 = soglia disattivata</span>
-            </label>
-            <label className="flex items-center gap-2 sm:col-span-2">
-              <input type="checkbox" name="attiva" defaultChecked={sp.attiva} className="accent-[#7F1518]" />
-              <span className="text-sm text-stone-700">Spedizione attiva</span>
-            </label>
-            <div className="sm:col-span-2">
-              <button className="rounded-md bg-[#7F1518] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#5A0F12]">Salva spedizione</button>
-            </div>
-          </form>
-        </section>
+      <div className="grid gap-5 lg:grid-cols-[1fr_280px] lg:items-start">
+        <ActionForm action={salvaDatiAttivita} className="grid min-w-0 gap-5">
+          <Card>
+            <CardHeaderRow title="Attività" icon={<Building2 />} />
+            <CardContent className="grid items-start gap-4 sm:grid-cols-2">
+              <Field label="Nome dell’attività" htmlFor="nome" required className="sm:col-span-2">
+                <Input id="nome" name="nome" defaultValue={n.nome} required maxLength={120} />
+              </Field>
+              <Field label="Sito web" htmlFor="sito" className="sm:col-span-2" hint="Es. www.eredicoppola.com">
+                <Input id="sito" name="sito" defaultValue={n.sito} maxLength={120} inputMode="url" />
+              </Field>
+            </CardContent>
+          </Card>
 
-        {/* Negozio */}
-        <section className="rounded-xl border border-stone-200 bg-white p-6">
-          <div className="mb-4 flex items-center gap-2">
-            <Store size={18} className="text-[#7F1518]" />
-            <h2 className="font-medium text-stone-900">Dati del negozio</h2>
-          </div>
-          <form action={saveNegozio} className="grid gap-4 sm:grid-cols-2">
-            <label className="block sm:col-span-2">
-              <span className={label}>Nome</span>
-              <input name="nome" defaultValue={neg.nome} className={field} />
-            </label>
-            <label className="block">
-              <span className={label}>Email</span>
-              <input name="email" defaultValue={neg.email} className={field} />
-            </label>
-            <label className="block">
-              <span className={label}>Telefono</span>
-              <input name="telefono" defaultValue={neg.telefono} className={field} />
-            </label>
-            <div className="sm:col-span-2">
-              <button className="rounded-md bg-[#7F1518] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#5A0F12]">Salva dati</button>
-            </div>
-          </form>
-        </section>
+          <Card>
+            <CardHeaderRow title="Contatti" icon={<Mail />} />
+            <CardContent className="grid items-start gap-4 sm:grid-cols-2">
+              <Field label="Email" htmlFor="email" hint="Mostrata ai clienti per assistenza">
+                <Input id="email" name="email" type="email" defaultValue={n.email} maxLength={120} />
+              </Field>
+              <Field label="Telefono" htmlFor="telefono">
+                <Input id="telefono" name="telefono" type="tel" defaultValue={n.telefono} maxLength={40} />
+              </Field>
+              <Field label="PEC" htmlFor="pec" className="sm:col-span-2">
+                <Input id="pec" name="pec" type="email" defaultValue={n.pec} maxLength={120} />
+              </Field>
+            </CardContent>
+          </Card>
 
-        {/* Admin users */}
-        <Link href="/admin/impostazioni/utenti" className="group flex items-center justify-between rounded-xl border border-stone-200 bg-white p-6 hover:shadow-md">
-          <div className="flex items-center gap-3">
-            <Users size={18} className="text-[#7F1518]" />
-            <div>
-              <div className="font-medium text-stone-900">Utenti admin</div>
-              <div className="text-sm text-stone-500">Gestisci chi può accedere al pannello</div>
-            </div>
+          <Card>
+            <CardHeaderRow title="Sede" icon={<MapPin />} />
+            <CardContent className="grid items-start gap-4 sm:grid-cols-6">
+              <Field label="Indirizzo" htmlFor="indirizzo" className="sm:col-span-6">
+                <Input id="indirizzo" name="indirizzo" defaultValue={n.indirizzo} maxLength={160} />
+              </Field>
+              <Field label="Città" htmlFor="citta" className="sm:col-span-3">
+                <Input id="citta" name="citta" defaultValue={n.citta} maxLength={80} />
+              </Field>
+              <Field label="CAP" htmlFor="cap" className="sm:col-span-1">
+                <Input id="cap" name="cap" defaultValue={n.cap} maxLength={10} inputMode="numeric" />
+              </Field>
+              <Field label="Provincia" htmlFor="provincia" className="sm:col-span-2">
+                <Input id="provincia" name="provincia" defaultValue={n.provincia} maxLength={40} />
+              </Field>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeaderRow title="Dati fiscali" icon={<Landmark />} />
+            <CardContent className="grid items-start gap-4 sm:grid-cols-2">
+              <Field label="Partita IVA" htmlFor="partita_iva">
+                <Input id="partita_iva" name="partita_iva" defaultValue={n.partita_iva} maxLength={20} />
+              </Field>
+              <Field label="Codice fiscale" htmlFor="codice_fiscale">
+                <Input
+                  id="codice_fiscale"
+                  name="codice_fiscale"
+                  defaultValue={n.codice_fiscale}
+                  maxLength={20}
+                  className="uppercase"
+                />
+              </Field>
+            </CardContent>
+          </Card>
+
+          <div className="sticky bottom-0 z-10 -mx-4 flex justify-end gap-2 border-t bg-background/90 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-lg sm:border">
+            <SubmitButton pendingText="Salvataggio…">Salva modifiche</SubmitButton>
           </div>
-          <ArrowRight size={18} className="text-stone-400 transition-transform group-hover:translate-x-1" />
-        </Link>
+        </ActionForm>
+
+        <aside className="grid gap-4">
+          <Card className="p-4">
+            <div className="text-sm font-medium">Altre impostazioni</div>
+            <div className="mt-3 grid gap-1">
+              <Button variant="ghost" size="sm" className="justify-start" asChild>
+                <Link href="/admin/spedizioni">
+                  <Truck /> Spedizioni e costi
+                </Link>
+              </Button>
+              <Button variant="ghost" size="sm" className="justify-start" asChild>
+                <Link href="/admin/impostazioni/utenti">
+                  <UserCog /> Utenti e accesso
+                </Link>
+              </Button>
+            </div>
+          </Card>
+          <p className="px-1 text-xs leading-relaxed text-muted-foreground">
+            Nome, email e telefono compaiono nel negozio online e nelle comunicazioni ai clienti. Tieni questi
+            dati aggiornati.
+          </p>
+        </aside>
       </div>
     </div>
   );

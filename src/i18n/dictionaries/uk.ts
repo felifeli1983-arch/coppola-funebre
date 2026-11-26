@@ -213,6 +213,7 @@ const uk: Dictionary = {
     privacy: 'Політика конфіденційності',
     cookie: 'Політика щодо файлів cookie',
     codiceEtico: 'Кодекс етики',
+    documenti: 'Документи',
     manageCookies: 'Керувати файлами cookie',
   },
   sticky: {

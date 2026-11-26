@@ -1,26 +1,29 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Search } from 'lucide-react';
+import { ArrowUpDown, Search, X } from 'lucide-react';
 
 const SORTS = [
-  { value: 'ordine', label: 'Rilevanza' },
-  { value: 'prezzo-asc', label: 'Prezzo ↑' },
-  { value: 'prezzo-desc', label: 'Prezzo ↓' },
-  { value: 'nome', label: 'Nome A-Z' },
-  { value: 'recenti', label: 'Più recenti' },
+  { value: 'ordine', label: 'In evidenza' },
+  { value: 'prezzo-asc', label: 'Prezzo crescente' },
+  { value: 'prezzo-desc', label: 'Prezzo decrescente' },
+  { value: 'nome', label: 'Nome A–Z' },
+  { value: 'recenti', label: 'Novità' },
 ];
 
 export default function ShopToolbar({ total }: { total: number }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
-  const [q, setQ] = useState(params.get('q') ?? '');
+  const current = params.get('q') ?? '';
+  const [q, setQ] = useState(current);
+  useEffect(() => setQ(current), [current]);
 
   const push = (next: URLSearchParams) => {
     next.delete('page'); // reset to first page on any filter change
-    router.push(`${pathname}?${next.toString()}`);
+    const qs = next.toString();
+    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
 
   const onSearch = (e: FormEvent) => {
@@ -28,6 +31,13 @@ export default function ShopToolbar({ total }: { total: number }) {
     const next = new URLSearchParams(params.toString());
     if (q.trim()) next.set('q', q.trim());
     else next.delete('q');
+    push(next);
+  };
+
+  const clearSearch = () => {
+    setQ('');
+    const next = new URLSearchParams(params.toString());
+    next.delete('q');
     push(next);
   };
 
@@ -39,30 +49,51 @@ export default function ShopToolbar({ total }: { total: number }) {
   };
 
   return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <form onSubmit={onSearch} className="relative w-full sm:max-w-xs">
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-pietra/40" />
+    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <form onSubmit={onSearch} role="search" className="relative w-full md:max-w-sm">
+        <Search size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-pietra/40" />
         <input
+          type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Cerca un prodotto…"
-          className="w-full border border-pietra/20 bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-bordeaux"
+          aria-label="Cerca un prodotto"
+          className="h-11 w-full border border-pietra/15 bg-white pl-10 pr-10 text-base text-pietra outline-none transition-colors placeholder:text-pietra/40 focus:border-bordeaux md:text-sm [&::-webkit-search-cancel-button]:hidden"
         />
+        {q && (
+          <button
+            type="button"
+            onClick={clearSearch}
+            className="absolute right-1 top-1/2 inline-flex size-9 -translate-y-1/2 items-center justify-center text-pietra/40 hover:text-bordeaux"
+            aria-label="Cancella ricerca"
+          >
+            <X size={16} />
+          </button>
+        )}
       </form>
 
-      <div className="flex items-center gap-3">
-        <span className="whitespace-nowrap text-sm text-pietra-chiaro">{total} prodotti</span>
-        <select
-          defaultValue={params.get('sort') ?? 'ordine'}
-          onChange={(e) => onSort(e.target.value)}
-          className="border border-pietra/20 bg-white py-2 pl-3 pr-8 text-sm outline-none focus:border-bordeaux"
-        >
-          {SORTS.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
-        </select>
+      <div className="flex items-center justify-between gap-3 md:justify-end">
+        <span className="whitespace-nowrap text-sm text-pietra-chiaro" aria-live="polite">
+          {total} {total === 1 ? 'prodotto' : 'prodotti'}
+        </span>
+        <label className="relative inline-flex items-center">
+          <span className="sr-only">Ordina per</span>
+          <ArrowUpDown size={14} className="pointer-events-none absolute left-3 text-pietra/50" />
+          <select
+            value={params.get('sort') ?? 'ordine'}
+            onChange={(e) => onSort(e.target.value)}
+            className="h-11 appearance-none border border-pietra/15 bg-white pl-9 pr-8 text-sm text-pietra outline-none focus:border-bordeaux"
+          >
+            {SORTS.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+          <svg className="pointer-events-none absolute right-3 size-3 text-pietra/50" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+            <path d="m3 4.5 3 3 3-3" />
+          </svg>
+        </label>
       </div>
     </div>
   );

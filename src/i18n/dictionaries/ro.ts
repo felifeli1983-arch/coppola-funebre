@@ -213,6 +213,7 @@ const ro: Dictionary = {
     privacy: 'Politica de confidențialitate',
     cookie: 'Politica cookie',
     codiceEtico: 'Cod Etic',
+    documenti: 'Documente',
     manageCookies: 'Gestionați cookie-urile',
   },
   sticky: {

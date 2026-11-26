@@ -213,6 +213,7 @@ const bg: Dictionary = {
     privacy: 'Политика за поверителност',
     cookie: 'Политика за бисквитките',
     codiceEtico: 'Етичен кодекс',
+    documenti: 'Документи',
     manageCookies: 'Управление на бисквитките',
   },
   sticky: {

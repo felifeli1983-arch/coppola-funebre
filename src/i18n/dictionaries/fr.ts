@@ -213,6 +213,7 @@ const fr: Dictionary = {
     privacy: 'Politique de confidentialité',
     cookie: 'Politique des cookies',
     codiceEtico: 'Code éthique',
+    documenti: 'Documents',
     manageCookies: 'Gérer les cookies',
   },
   sticky: {

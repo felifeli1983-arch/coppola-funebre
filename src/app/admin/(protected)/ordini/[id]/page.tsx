@@ -1,98 +1,198 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
-import { getOrdineById } from '@/lib/shop/admin-queries';
-import { updateOrdineStato } from '@/lib/admin-actions';
-import { formatPrice } from '@/lib/shop/format';
+import { ExternalLink, Mail, MapPin, MessageSquareText, Package, Phone, Printer, Receipt, Settings2, User } from 'lucide-react';
+import { PageHeader } from '@/components/admin/kit';
+import { OrderStatusBadge } from '@/components/admin/status';
+import OrderStepper from '@/components/admin/shop/OrderStepper';
+import GestisciOrdine from '@/components/admin/shop/GestisciOrdine';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeaderRow } from '@/components/ui/card';
+import { Separator } from '@/components/ui/primitives';
+import { getOrdineDettaglio } from '@/lib/admin/shop';
+import { formatPrice, productImageUrl } from '@/lib/shop/format';
 import type { Indirizzo } from '@/lib/shop/types';
+import { formatDateTime, timeAgo } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
-const STATI = ['in_attesa', 'pagato', 'spedito', 'consegnato', 'annullato', 'rimborsato'];
-
-function Addr({ a }: { a: Indirizzo | null }) {
-  if (!a) return <span className="text-stone-400">—</span>;
-  return (
-    <div className="text-sm text-stone-700">
-      {a.nome && <div className="font-medium">{a.nome}</div>}
-      <div>{[a.via, a.cap, a.citta, a.provincia].filter(Boolean).join(', ')}</div>
-      {a.telefono && <div>{a.telefono}</div>}
-    </div>
-  );
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const d = await getOrdineDettaglio(params.id);
+  return { title: d ? `Ordine #${d.ordine.numero}` : 'Ordine' };
 }
 
-export default async function OrdineDettaglio({ params }: { params: { id: string } }) {
-  const data = await getOrdineById(params.id);
-  if (!data) notFound();
-  const { ordine: o, righe } = data;
+export default async function OrdineDettaglioPage({ params }: { params: { id: string } }) {
+  const d = await getOrdineDettaglio(params.id);
+  if (!d) notFound();
+  const { ordine: o, righe, subtotale, cliente } = d;
+  const ind = (o.indirizzo_spedizione ?? {}) as Indirizzo;
+  const nome = ind.nome || cliente?.nome || null;
+  const telefono = ind.telefono || cliente?.telefono || null;
+  const indirizzo = [ind.via, [ind.cap, ind.citta].filter(Boolean).join(' '), ind.provincia, ind.paese]
+    .filter(Boolean)
+    .join(', ');
 
   return (
-    <div className="max-w-4xl">
-      <Link href="/admin/ordini" className="mb-4 inline-flex items-center gap-2 text-sm text-stone-500 hover:text-[#7F1518]">
-        <ArrowLeft size={16} /> Ordini
-      </Link>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="font-serif text-3xl text-stone-900">Ordine #{o.numero}</h1>
-        <span className="text-sm text-stone-500">{new Date(o.created_at).toLocaleString('it-IT')}</span>
-      </div>
+    <>
+      <PageHeader
+        back={{ href: '/admin/ordini', label: 'Ordini' }}
+        title={`Ordine #${o.numero}`}
+        meta={
+          <>
+            <OrderStatusBadge stato={o.stato} />
+            <span className="text-sm text-muted-foreground">
+              {formatDateTime(o.created_at)} · {timeAgo(o.created_at)}
+            </span>
+          </>
+        }
+        actions={
+          <Button variant="outline" size="sm" asChild>
+            <Link href={`/admin/ordini/${o.id}/stampa`}>
+              <Printer />
+              Stampa distinta
+            </Link>
+          </Button>
+        }
+      />
 
-      <div className="mt-6 grid gap-6 md:grid-cols-3">
-        <div className="space-y-6 md:col-span-2">
-          {/* Items */}
-          <div className="overflow-hidden rounded-xl border border-stone-200 bg-white">
-            <h2 className="border-b border-stone-100 p-4 font-medium text-stone-900">Articoli</h2>
-            <table className="w-full text-sm">
-              <tbody className="divide-y divide-stone-100">
+      <div className="grid gap-4 lg:grid-cols-3 lg:gap-6">
+        <div className="grid min-w-0 content-start gap-4 lg:col-span-2 lg:gap-6">
+          <Card className="p-5">
+            <OrderStepper stato={o.stato} />
+          </Card>
+
+          <Card>
+            <CardHeaderRow
+              icon={<Package />}
+              title="Articoli"
+              description={`${righe.reduce((n, r) => n + r.quantita, 0)} articoli`}
+            />
+            <CardContent className="p-0">
+              <ul className="divide-y border-t">
                 {righe.map((r) => (
-                  <tr key={r.id}>
-                    <td className="p-3 text-stone-800">{r.titolo}</td>
-                    <td className="p-3 text-stone-500">× {r.quantita}</td>
-                    <td className="p-3 text-right text-stone-700">{formatPrice(r.prezzo_cent * r.quantita)}</td>
-                  </tr>
+                  <li key={r.id} className="flex items-center gap-3 px-5 py-3">
+                    <div className="flex size-12 flex-none items-center justify-center overflow-hidden rounded-md border bg-muted">
+                      {r.cover ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={productImageUrl(r.cover)} alt="" className="size-full object-cover" />
+                      ) : (
+                        <Package className="size-5 text-muted-foreground" />
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      {r.prodotto_id ? (
+                        <Link href={`/admin/prodotti/${r.prodotto_id}`} className="line-clamp-2 break-words font-medium hover:underline">
+                          {r.titolo}
+                        </Link>
+                      ) : (
+                        <div className="line-clamp-2 break-words font-medium">{r.titolo}</div>
+                      )}
+                      <div className="text-sm tabular-nums text-muted-foreground">
+                        {r.quantita} × {formatPrice(r.prezzo_cent, o.valuta)}
+                      </div>
+                    </div>
+                    <div className="flex-none font-medium tabular-nums">
+                      {formatPrice(r.prezzo_cent * r.quantita, o.valuta)}
+                    </div>
+                  </li>
                 ))}
-              </tbody>
-              <tfoot className="border-t border-stone-200">
-                {o.costo_spedizione_cent > 0 && (
-                  <tr><td className="p-3 text-stone-500" colSpan={2}>Spedizione</td><td className="p-3 text-right text-stone-700">{formatPrice(o.costo_spedizione_cent)}</td></tr>
-                )}
-                <tr><td className="p-3 font-medium" colSpan={2}>Totale</td><td className="p-3 text-right font-medium text-stone-900">{formatPrice(o.totale_cent, o.valuta)}</td></tr>
-              </tfoot>
-            </table>
-          </div>
+              </ul>
+              <div className="grid gap-2 border-t bg-muted/30 px-5 py-4 text-sm">
+                <div className="flex justify-between gap-4">
+                  <span className="text-muted-foreground">Subtotale</span>
+                  <span className="tabular-nums">{formatPrice(subtotale, o.valuta)}</span>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <span className="text-muted-foreground">Spedizione</span>
+                  <span className="tabular-nums">
+                    {o.costo_spedizione_cent ? formatPrice(o.costo_spedizione_cent, o.valuta) : 'Gratuita'}
+                  </span>
+                </div>
+                <Separator className="my-1" />
+                <div className="flex justify-between gap-4 text-base font-semibold">
+                  <span>Totale</span>
+                  <span className="tabular-nums">{formatPrice(o.totale_cent, o.valuta)}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* Addresses */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-xl border border-stone-200 bg-white p-4">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">Spedizione</div>
-              <Addr a={o.indirizzo_spedizione} />
-            </div>
-            <div className="rounded-xl border border-stone-200 bg-white p-4">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-stone-500">Contatto</div>
-              <div className="text-sm text-stone-700"><div className="break-all">{o.email}</div></div>
-              {o.stripe_payment_intent && <div className="mt-2 break-all text-xs text-stone-400">Stripe: {o.stripe_payment_intent}</div>}
-            </div>
-          </div>
+          {o.note && (
+            <Card>
+              <CardHeaderRow icon={<MessageSquareText />} title="Nota del cliente" />
+              <CardContent>
+                <p className="whitespace-pre-wrap break-words text-sm">{o.note}</p>
+              </CardContent>
+            </Card>
+          )}
         </div>
 
-        {/* Status management */}
-        <div className="h-fit rounded-xl border border-stone-200 bg-white p-5">
-          <h2 className="font-medium text-stone-900">Gestione</h2>
-          <form action={updateOrdineStato} className="mt-4 space-y-3">
-            <input type="hidden" name="id" value={o.id} />
-            <label className="block">
-              <span className="text-xs font-medium uppercase tracking-wide text-stone-500">Stato</span>
-              <select name="stato" defaultValue={o.stato} className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm outline-none focus:border-[#7F1518]">
-                {STATI.map((s) => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
-              </select>
-            </label>
-            <label className="block">
-              <span className="text-xs font-medium uppercase tracking-wide text-stone-500">Tracking</span>
-              <input name="tracking" defaultValue={o.tracking ?? ''} placeholder="Codice spedizione" className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm outline-none focus:border-[#7F1518]" />
-            </label>
-            <button className="w-full rounded-md bg-[#7F1518] py-2.5 text-sm font-medium text-white hover:bg-[#5A0F12]">Aggiorna ordine</button>
-          </form>
+        <div className="grid min-w-0 content-start gap-4 lg:gap-6">
+          <Card>
+            <CardHeaderRow icon={<Settings2 />} title="Gestisci ordine" />
+            <CardContent>
+              <GestisciOrdine id={o.id} stato={o.stato} tracking={o.tracking} />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeaderRow icon={<User />} title="Cliente" />
+            <CardContent className="grid gap-3 text-sm">
+              <div className="break-words font-medium">{nome || 'Cliente senza nome'}</div>
+              <a href={`mailto:${o.email}`} className="flex min-w-0 items-center gap-2 text-muted-foreground hover:text-foreground">
+                <Mail className="size-4 flex-none" />
+                <span className="truncate">{o.email}</span>
+              </a>
+              {telefono && (
+                <a href={`tel:${telefono.replace(/\s+/g, '')}`} className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
+                  <Phone className="size-4 flex-none" />
+                  <span className="truncate">{telefono}</span>
+                </a>
+              )}
+              {cliente && (
+                <Button variant="outline" size="sm" asChild className="mt-1 w-full">
+                  <Link href={`/admin/clienti/${cliente.id}`}>
+                    <ExternalLink />
+                    Apri scheda cliente
+                  </Link>
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeaderRow icon={<MapPin />} title="Indirizzo di spedizione" />
+            <CardContent className="text-sm">
+              {indirizzo ? (
+                <div className="grid gap-0.5 break-words">
+                  {nome && <div className="font-medium">{nome}</div>}
+                  {ind.via && <div>{ind.via}</div>}
+                  <div>{[ind.cap, ind.citta, ind.provincia && `(${ind.provincia})`].filter(Boolean).join(' ')}</div>
+                  {ind.paese && <div>{ind.paese}</div>}
+                </div>
+              ) : (
+                <span className="text-muted-foreground">Nessun indirizzo indicato.</span>
+              )}
+              {o.tracking && (
+                <div className="mt-3 rounded-md bg-muted px-3 py-2 text-xs">
+                  <span className="text-muted-foreground">Tracciamento: </span>
+                  <span className="break-all font-medium">{o.tracking}</span>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {(o.stripe_payment_intent || o.stripe_session_id) && (
+            <Card>
+              <CardHeaderRow icon={<Receipt />} title="Pagamento" />
+              <CardContent className="grid gap-1 text-sm">
+                <div className="text-muted-foreground">Riferimento pagamento</div>
+                <div className="break-all font-mono text-xs">{o.stripe_payment_intent || o.stripe_session_id}</div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

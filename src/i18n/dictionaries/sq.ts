@@ -213,6 +213,7 @@ const sq: Dictionary = {
     privacy: 'Politika e Privatësisë',
     cookie: 'Politika e Cookie-t',
     codiceEtico: 'Kodi Etik',
+    documenti: 'Dokumente',
     manageCookies: 'Menaxho cookie-t',
   },
   sticky: {
