@@ -1,5 +1,5 @@
 import { Download, FileImage, FileSpreadsheet, FileText, File as FileIcon } from 'lucide-react';
-import { documentUrl } from '@/lib/shop/format';
+import { documentFileUrl } from '@/lib/shop/format';
 import { TIPI_DOCUMENTO, type DocumentoPubblico } from '@/lib/legal-defaults';
 
 // Public, brand-styled list of downloadable documents (site palette, not admin
@@ -23,7 +23,7 @@ const dataFmt = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'long'
 export function DocumentRow({ d }: { d: DocumentoPubblico }) {
   const ext = estensione(d.storage_path);
   const Icon = iconFor(ext);
-  const url = documentUrl(d.storage_path);
+  const url = documentFileUrl(d.id);
   return (
     <div className="flex min-w-0 flex-col gap-4 border-b border-pietra/10 py-5 last:border-b-0 sm:flex-row sm:items-center">
       <div className="flex min-w-0 flex-1 items-start gap-4">

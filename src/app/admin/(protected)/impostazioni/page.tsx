@@ -30,7 +30,7 @@ export default async function DatiAttivitaPage() {
     <div className="mx-auto grid w-full max-w-5xl gap-5">
       <PageHeader
         title="Dati attività"
-        description="Le informazioni dell’impresa usate nel negozio online, nelle conferme d’ordine e nei documenti."
+        description="Le informazioni ufficiali dell’impresa: nome, recapiti, sede e dati fiscali."
         className="mb-0"
       />
 
@@ -121,8 +121,8 @@ export default async function DatiAttivitaPage() {
             </div>
           </Card>
           <p className="px-1 text-xs leading-relaxed text-muted-foreground">
-            Nome, email e telefono compaiono nel negozio online e nelle comunicazioni ai clienti. Tieni questi
-            dati aggiornati.
+            Nome, telefono ed email compaiono nella distinta di spedizione degli ordini. Tieni questi dati
+            aggiornati.
           </p>
         </aside>
       </div>

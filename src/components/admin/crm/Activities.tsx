@@ -87,7 +87,12 @@ export function ActivityComposer({
             <Checkbox checked={withReminder} onCheckedChange={(v) => setWithReminder(!!v)} />
             Imposta un promemoria
           </label>
-          {withReminder && <DateTimeInput name="scadenza" />}
+          {withReminder && (
+            <>
+              <input type="hidden" name="promemoria" value="1" />
+              <DateTimeInput name="scadenza" required />
+            </>
+          )}
         </div>
         <SubmitButton pendingText="Salvataggio…" className="sm:w-auto">
           <BellPlus />
@@ -233,17 +238,39 @@ export function ActivityTimeline({
   items,
   showContact,
   empty,
+  pageSize = 15,
 }: {
   items: (Attivita | AttivitaConCliente)[];
   showContact?: boolean;
   empty?: React.ReactNode;
+  /** Entries shown at first and added by each "Mostra altre" click. */
+  pageSize?: number;
 }) {
+  const [visible, setVisible] = React.useState(pageSize);
   if (!items.length) return <>{empty ?? null}</>;
+  const shown = items.slice(0, visible);
+  const rest = items.length - shown.length;
   return (
-    <ul className="min-w-0">
-      {items.map((a, i) => (
-        <ActivityItem key={a.id} a={a} showContact={showContact} isLast={i === items.length - 1} />
-      ))}
-    </ul>
+    <>
+      <ul className="min-w-0">
+        {shown.map((a, i) => (
+          <ActivityItem key={a.id} a={a} showContact={showContact} isLast={i === shown.length - 1 && rest === 0} />
+        ))}
+      </ul>
+      <ShowMore rest={rest} step={pageSize} onMore={() => setVisible((v) => v + pageSize)} />
+    </>
+  );
+}
+
+/** "Mostra altre" button for long lists (avoids endless pages and nested scroll). */
+export function ShowMore({ rest, step, onMore }: { rest: number; step: number; onMore: () => void }) {
+  if (rest <= 0) return null;
+  return (
+    <div className="flex justify-center pt-3">
+      <Button variant="outline" size="sm" onClick={onMore}>
+        Mostra altre {Math.min(step, rest)}
+        <span className="text-muted-foreground">· ne restano {rest}</span>
+      </Button>
+    </div>
   );
 }

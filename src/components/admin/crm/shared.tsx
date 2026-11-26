@@ -118,11 +118,13 @@ export function DateTimeInput({
   defaultValue,
   className,
   id,
+  required,
 }: {
   name: string;
   defaultValue?: string | null;
   className?: string;
   id?: string;
+  required?: boolean;
 }) {
   const toLocal = (iso?: string | null) => {
     if (!iso) return '';
@@ -138,6 +140,8 @@ export function DateTimeInput({
         id={id}
         type="datetime-local"
         value={local}
+        required={required}
+        aria-label="Data e ora del promemoria"
         onChange={(e) => setLocal(e.target.value)}
         className={cn(
           'flex h-9 w-full min-w-0 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:border-ring',

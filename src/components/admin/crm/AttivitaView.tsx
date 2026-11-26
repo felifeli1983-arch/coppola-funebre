@@ -10,8 +10,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { EmptyState } from '@/components/admin/kit';
 import type { AttivitaConCliente, ContattoLite } from '@/lib/admin/crm';
-import { ActivityComposer, ActivityTimeline } from './Activities';
+import { ActivityComposer, ActivityTimeline, ShowMore } from './Activities';
 import { ContactAvatar, nomeContatto } from './shared';
+
+/** Activities shown per "page" (more via "Mostra altre"). */
+const PAGE = 30;
 
 type TabKey = 'todo' | 'scadute' | 'oggi' | 'settimana' | 'completate' | 'tutte';
 
@@ -51,7 +54,12 @@ export default function AttivitaView({
   openNew: boolean;
 }) {
   const router = useRouter();
-  const [tab, setTab] = React.useState<TabKey>('todo');
+  const [tab, setTabState] = React.useState<TabKey>('todo');
+  const [visible, setVisible] = React.useState(PAGE);
+  const setTab = (t: TabKey) => {
+    setTabState(t);
+    setVisible(PAGE);
+  };
   const [dialog, setDialog] = React.useState(openNew);
   // Time-dependent grouping uses the browser's clock/time zone, so it is
   // computed after mount (avoids server/client mismatches).
@@ -90,8 +98,9 @@ export default function AttivitaView({
     return tab === 'completate' ? t(b) - t(a) : t(a) - t(b);
   });
 
+  const restCount = Math.max(0, current.length - visible);
   const groups: { key: string; label: string; items: AttivitaConCliente[] }[] = [];
-  for (const a of current) {
+  for (const a of current.slice(0, visible)) {
     const d = new Date(byScadenza ? a.scadenza! : a.created_at);
     const k = dayKey(d);
     let g = groups.find((x) => x.key === k);
@@ -109,8 +118,8 @@ export default function AttivitaView({
 
   return (
     <div className="grid min-w-0 gap-5">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="-mx-4 min-w-0 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
           <div className="inline-flex h-9 items-center rounded-lg bg-muted p-1 text-muted-foreground">
             {TABS.map((tb) => {
               const n = lists[tb.key].length;
@@ -196,11 +205,12 @@ export default function AttivitaView({
               </div>
               <Card>
                 <CardContent className="pt-5">
-                  <ActivityTimeline items={g.items} showContact />
+                  <ActivityTimeline items={g.items} showContact pageSize={PAGE} />
                 </CardContent>
               </Card>
             </div>
           ))}
+          <ShowMore rest={restCount} step={PAGE} onMore={() => setVisible((v) => v + PAGE)} />
         </div>
       )}
 

@@ -33,6 +33,8 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
   return (
     <AdminShell
       userEmail={user.email ?? null}
+      userName={(user.user_metadata?.nome as string | undefined) ?? null}
+      tourDone={user.user_metadata?.tour_done === true}
       defaultCollapsed={cookies().get('admin_sidebar')?.value === 'collapsed'}
       counters={{ ordiniDaGestire: ordini.count ?? 0, promemoria: promemoria.count ?? 0 }}
     >

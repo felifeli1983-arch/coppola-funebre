@@ -10,6 +10,16 @@ import { EmptyState } from '@/components/admin/kit';
 import { useAction } from '@/components/admin/actions';
 import { Button } from '@/components/ui/button';
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/dialog';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -30,6 +40,7 @@ const BULK = [
 
 export default function OrdiniTable({ data }: { data: OrdineRow[] }) {
   const { run, pending } = useAction();
+  const [confirmCancel, setConfirmCancel] = React.useState<{ ids: string[]; clear: () => void } | null>(null);
 
   const columns = React.useMemo<ColumnDef<OrdineRow, unknown>[]>(
     () => [
@@ -127,11 +138,12 @@ export default function OrdiniTable({ data }: { data: OrdineRow[] }) {
   }
 
   return (
+    <>
     <DataTable
       columns={columns}
       data={data}
       getRowId={(r) => r.id}
-      searchPlaceholder="Cerca per numero, cliente o email…"
+      searchPlaceholder="Cerca per numero (#12), cliente o email…"
       filters={[
         {
           columnId: 'stato',
@@ -158,7 +170,12 @@ export default function OrdiniTable({ data }: { data: OrdineRow[] }) {
                 key={b.stato}
                 destructive={b.stato === 'annullato'}
                 onSelect={async () => {
-                  const good = await run(aggiornaStatoOrdini, { ids: rows.map((r) => r.id).join(','), stato: b.stato });
+                  const ids = rows.map((r) => r.id);
+                  if (b.stato === 'annullato') {
+                    setConfirmCancel({ ids, clear });
+                    return;
+                  }
+                  const good = await run(aggiornaStatoOrdini, { ids: ids.join(','), stato: b.stato });
                   if (good) clear();
                 }}
               >
@@ -187,5 +204,35 @@ export default function OrdiniTable({ data }: { data: OrdineRow[] }) {
         </div>
       )}
     />
+    <AlertDialog open={!!confirmCancel} onOpenChange={(o) => !o && setConfirmCancel(null)}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            {confirmCancel && confirmCancel.ids.length === 1 ? 'Annullare questo ordine?' : `Annullare ${confirmCancel?.ids.length ?? 0} ordini?`}
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            Gli ordini passeranno allo stato “Annullato” e la modifica comparirà nella cronologia dei clienti. I pezzi non
+            tornano in magazzino da soli e l’eventuale rimborso va gestito a parte. Potrai sempre cambiare di nuovo lo stato.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={pending}>Indietro</AlertDialogCancel>
+          <AlertDialogAction
+            destructive
+            disabled={pending}
+            onClick={async (e) => {
+              e.preventDefault();
+              if (!confirmCancel) return;
+              const good = await run(aggiornaStatoOrdini, { ids: confirmCancel.ids.join(','), stato: 'annullato' });
+              if (good) confirmCancel.clear();
+              setConfirmCancel(null);
+            }}
+          >
+            Annulla ordini
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }

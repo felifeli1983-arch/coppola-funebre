@@ -5,7 +5,9 @@
 @layer base {
   html, body {
     overflow-x: clip;
-    max-width: 100vw;
+    /* 100% (not 100vw): 100vw includes the desktop scrollbar and is wider
+       than the page, which itself causes a horizontal overflow. */
+    max-width: 100%;
   }
   html.lenis, html.lenis body {
     height: auto;
@@ -39,6 +41,34 @@
     @apply font-serif text-pietra;
     font-feature-settings: 'dlig', 'liga';
   }
+}
+
+/* Browsers without `overflow-x: clip` (iOS Safari < 16): the declaration above
+   is dropped, so clip horizontally on <html> only — it propagates to the
+   viewport without turning <body> into a scroll container, so position:sticky
+   (admin sidebar/topbar, shop summary) keeps working. */
+@supports not (overflow-x: clip) {
+  html {
+    overflow-x: hidden;
+  }
+}
+
+/* iOS/Android zoom into any form field whose text is smaller than 16px and
+   leave the page zoomed — it then pans sideways ("la pagina traballa").
+   Force 16px on touch / small screens; desktop keeps the compact sizes. */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='color']):not([type='hidden']),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Full-height hero that doesn't jump when the mobile browser bar collapses:
+   svh = the stable "small" viewport height (fallback 100vh). */
+.h-hero {
+  height: 100vh;
+  height: 100svh;
 }
 
 @layer components {

@@ -13,6 +13,8 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 import { NAV_ITEMS } from '@/lib/admin/nav';
+import { GUIDE_INDEX } from '@/lib/admin/guide/index';
+import { BookOpen } from 'lucide-react';
 import { cercaGlobale, type SearchResults } from '@/lib/admin/search-actions';
 import { formatPrice } from '@/lib/shop/format';
 import { OrderStatusBadge } from '@/components/admin/status';
@@ -74,6 +76,7 @@ export default function CommandMenu({
   const match = (s: string) => !term || s.toLowerCase().includes(term);
   const nav = NAV_ITEMS.filter((i) => match(`${i.label} ${i.keywords ?? ''}`));
   const actions = ACTIONS.filter((a) => match(`${a.label} ${a.keywords}`));
+  const guide = term.length >= 2 ? GUIDE_INDEX.filter((g) => match(`${g.title} guida aiuto come`)).slice(0, 4) : [];
   const hasResults =
     !!results && results.contatti.length + results.ordini.length + results.prodotti.length > 0;
 
@@ -129,6 +132,16 @@ export default function CommandMenu({
               <CommandItem key={a.href} value={a.label} onSelect={() => go(a.href)}>
                 <a.icon />
                 {a.label}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+        {guide.length > 0 && (
+          <CommandGroup heading="Guida all’uso">
+            {guide.map((g) => (
+              <CommandItem key={g.id} value={`g-${g.id}`} onSelect={() => go(`/admin/guida/${g.id}`)}>
+                <BookOpen />
+                Come funziona: {g.title}
               </CommandItem>
             ))}
           </CommandGroup>

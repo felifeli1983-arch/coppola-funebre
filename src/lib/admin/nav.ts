@@ -13,8 +13,10 @@ import {
   FileText,
   Store,
   UserCog,
+  BookOpen,
   type LucideIcon,
 } from 'lucide-react';
+import { GUIDE_INDEX } from './guide/index';
 
 export type NavItem = {
   href: string;
@@ -74,6 +76,13 @@ export const NAV: NavSection[] = [
       { href: '/admin/impostazioni/utenti', label: 'Utenti e accesso', icon: UserCog, keywords: 'amministratori password' },
     ],
   },
+  {
+    id: 'help',
+    label: 'Aiuto',
+    items: [
+      { href: '/admin/guida', label: 'Guida all’uso', icon: BookOpen, keywords: 'aiuto come funziona tutorial manuale istruzioni' },
+    ],
+  },
 ];
 
 export const NAV_ITEMS = NAV.flatMap((s) => s.items);
@@ -105,7 +114,8 @@ export function breadcrumbsFor(pathname: string): { href: string; label: string 
   let acc = match.href;
   for (const seg of rest) {
     acc += '/' + seg;
-    trail.push({ href: acc, label: SEGMENT_LABELS[seg] ?? 'Dettaglio' });
+    const guideTitle = match.href === '/admin/guida' ? GUIDE_INDEX.find((g) => g.id === seg)?.title : undefined;
+    trail.push({ href: acc, label: guideTitle ?? SEGMENT_LABELS[seg] ?? 'Dettaglio' });
   }
   return trail;
 }

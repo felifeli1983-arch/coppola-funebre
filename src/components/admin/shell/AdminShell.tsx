@@ -3,9 +3,13 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { guideTopicForPath } from '@/lib/admin/guide/index';
 import {
+  BookOpen,
+  Sparkles,
   ChevronDown,
   ChevronRight,
+  CircleHelp,
   ExternalLink,
   KeyRound,
   LogOut,
@@ -40,6 +44,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Toaster } from '@/components/ui/sonner';
 import CommandMenu from './CommandMenu';
+import AdminTour, { startAdminTour } from '@/components/admin/guide/Tour';
 
 export type ShellCounters = { ordiniDaGestire: number; promemoria: number };
 
@@ -60,17 +65,31 @@ function setCookie(name: string, value: string) {
   document.cookie = `${name}=${value}; path=/; max-age=31536000; samesite=lax`;
 }
 
+/** "⌘" on Apple devices, "Ctrl+" elsewhere — for shortcut hints. */
+export function useModKey() {
+  const [mod, setMod] = React.useState('⌘');
+  React.useEffect(() => {
+    if (!/Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent)) setMod('Ctrl+');
+  }, []);
+  return mod;
+}
+
 export default function AdminShell({
   userEmail,
+  userName,
+  tourDone,
   counters,
   defaultCollapsed,
   children,
 }: {
   userEmail: string | null;
+  userName?: string | null;
+  tourDone: boolean;
   counters: ShellCounters;
   defaultCollapsed: boolean;
   children: React.ReactNode;
 }) {
+  const mod = useModKey();
   const pathname = usePathname();
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed);
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -117,6 +136,7 @@ export default function AdminShell({
         <div className="flex min-h-dvh w-full">
           {/* Desktop sidebar */}
           <aside
+            data-tour="sidebar"
             className={cn(
               'sticky top-0 hidden h-dvh flex-none flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width] duration-200 ease-out md:flex',
               collapsed ? 'w-[60px]' : 'w-64',
@@ -124,7 +144,7 @@ export default function AdminShell({
           >
             <SidebarBody collapsed={collapsed} counters={counters} pathname={pathname} />
             <div className="border-t border-sidebar-border p-2">
-              <Hint label={collapsed ? 'Espandi menu (⌘B)' : 'Riduci menu (⌘B)'} side="right">
+              <Hint label={collapsed ? `Espandi menu (${mod}B)` : `Riduci menu (${mod}B)`} side="right">
                 <button
                   onClick={toggleCollapsed}
                   className={cn(
@@ -163,6 +183,7 @@ export default function AdminShell({
           </div>
         </div>
         <CommandMenu open={commandOpen} onOpenChange={setCommandOpen} />
+        <AdminTour autoStart={!tourDone} userName={userName || userEmail || ''} />
         <Toaster />
       </TooltipProvider>
     </ShellContext.Provider>
@@ -185,10 +206,15 @@ function SidebarBody({
   return (
     <>
       <div className={cn('flex h-14 flex-none items-center gap-2.5 border-b border-sidebar-border px-3', collapsed && 'justify-center px-0')}>
-        <Link href="/admin" onClick={onNavigate} className="flex min-w-0 items-center gap-2.5">
-          <span className="flex size-8 flex-none items-center justify-center rounded-lg bg-primary font-serif text-lg font-semibold text-primary-foreground shadow-sm">
-            C
-          </span>
+        <Link href="/admin" onClick={onNavigate} className="flex min-w-0 items-center gap-2.5" aria-label="Eredi Coppola – Dashboard">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/img/new/logo-coppola.webp"
+            alt="Onoranze Funebri Coppola"
+            width={34}
+            height={40}
+            className="h-10 w-auto flex-none rounded-[3px] shadow-sm"
+          />
           {!collapsed && (
             <span className="min-w-0 leading-tight">
               <span className="block truncate text-sm font-semibold text-foreground">Eredi Coppola</span>
@@ -306,6 +332,7 @@ function NavLink({
     <Link
       href={item.href}
       onClick={onNavigate}
+      data-tour={item.href === '/admin/ordini' ? 'nav-ordini' : undefined}
       aria-current={active ? 'page' : undefined}
       className={cn(
         'relative flex h-9 items-center gap-3 rounded-md px-2.5 text-sm transition-colors',
@@ -342,6 +369,7 @@ function NavLink({
 function Topbar({ userEmail, pathname }: { userEmail: string | null; pathname: string }) {
   const { collapsed, toggleCollapsed, setMobileOpen, setCommandOpen } = useShell();
   const crumbs = breadcrumbsFor(pathname);
+  const mod = useModKey();
 
   return (
     <header className="sticky top-0 z-30 flex h-14 flex-none items-center gap-2 border-b bg-background/85 px-3 backdrop-blur supports-[backdrop-filter]:bg-background/70 sm:px-4 lg:px-6">
@@ -351,13 +379,15 @@ function Topbar({ userEmail, pathname }: { userEmail: string | null; pathname: s
         className="md:hidden"
         onClick={() => setMobileOpen(true)}
         aria-label="Apri menu"
+        data-tour="mobile-menu"
       >
         <Menu />
       </Button>
-      <Hint label={collapsed ? 'Espandi menu (⌘B)' : 'Riduci menu (⌘B)'}>
+      <Hint label={collapsed ? `Espandi menu (${mod}B)` : `Riduci menu (${mod}B)`}>
         <Button
           variant="ghost"
           size="icon-sm"
+          data-tour="collapse"
           className="hidden md:inline-flex"
           onClick={toggleCollapsed}
           aria-label="Mostra/nascondi menu"
@@ -392,11 +422,12 @@ function Topbar({ userEmail, pathname }: { userEmail: string | null; pathname: s
 
       <button
         onClick={() => setCommandOpen(true)}
+        data-tour="search"
         className="hidden h-8 w-56 items-center gap-2 rounded-md border bg-muted/40 px-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted lg:flex"
       >
         <Search className="size-4" />
         <span className="flex-1 text-left">Cerca…</span>
-        <kbd className="rounded border bg-background px-1.5 font-sans text-[10px] font-medium">⌘K</kbd>
+        <kbd className="rounded border bg-background px-1.5 font-sans text-[10px] font-medium">{mod}K</kbd>
       </button>
       <Button
         variant="ghost"
@@ -404,6 +435,7 @@ function Topbar({ userEmail, pathname }: { userEmail: string | null; pathname: s
         className="lg:hidden"
         onClick={() => setCommandOpen(true)}
         aria-label="Cerca"
+        data-tour="search"
       >
         <Search />
       </Button>
@@ -414,9 +446,25 @@ function Topbar({ userEmail, pathname }: { userEmail: string | null; pathname: s
           </a>
         </Button>
       </Hint>
+      <HelpButton pathname={pathname} />
       <ThemeToggle />
       <UserMenu email={userEmail} />
     </header>
+  );
+}
+
+/** Contextual help: opens the guide article for the current page. */
+function HelpButton({ pathname }: { pathname: string }) {
+  const topic = guideTopicForPath(pathname);
+  const href = topic ? `/admin/guida/${topic.id}` : '/admin/guida';
+  return (
+    <Hint label={topic ? `Come funziona: ${topic.title}` : 'Guida all’uso'}>
+      <Button variant="ghost" size="icon-sm" asChild data-tour="help">
+        <Link href={href} aria-label="Aiuto per questa pagina">
+          <CircleHelp />
+        </Link>
+      </Button>
+    </Hint>
   );
 }
 
@@ -455,6 +503,7 @@ function UserMenu({ email }: { email: string | null }) {
         <button
           className="ml-1 rounded-full outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           aria-label="Menu utente"
+          data-tour="user-menu"
         >
           <Avatar className="size-8">
             <AvatarFallback>{initials(null, email)}</AvatarFallback>
@@ -476,6 +525,15 @@ function UserMenu({ email }: { email: string | null }) {
           <a href="/" target="_blank" rel="noreferrer">
             <ExternalLink /> Apri il sito
           </a>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/admin/guida">
+            <BookOpen /> Guida all’uso
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => setTimeout(startAdminTour, 150)}>
+          <Sparkles /> Rivedi il tour
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem destructive onSelect={logout}>

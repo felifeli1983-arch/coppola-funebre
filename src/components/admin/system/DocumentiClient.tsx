@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/client';
-import { documentUrl } from '@/lib/shop/format';
+import { documentFileUrl } from '@/lib/shop/format';
 import { cn, formatDate } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -353,7 +353,7 @@ function EditDialog({ d }: { d: DocRow }) {
 }
 
 function RowActions({ d }: { d: DocRow }) {
-  const url = documentUrl(d.storage_path);
+  const url = documentFileUrl(d.id);
   return (
     <div className="flex items-center justify-end gap-0.5" data-no-row-click>
       <Hint label="Apri o scarica">
@@ -371,7 +371,7 @@ function RowActions({ d }: { d: DocRow }) {
             aria-label="Copia link"
             onClick={async () => {
               try {
-                await navigator.clipboard.writeText(url);
+                await navigator.clipboard.writeText(new URL(url, window.location.origin).toString());
                 toast.success('Link copiato');
               } catch {
                 toast.error('Impossibile copiare il link');

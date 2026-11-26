@@ -117,7 +117,9 @@ export default function PipelineBoard({ contatti }: { contatti: ContattoConStats
                   {cards.length}
                 </Badge>
               </div>
-              <div className="flex min-h-[120px] flex-1 flex-col gap-2 px-2 pb-2">
+              {/* Fixed-height column with its own scroll: the page never grows
+                  endlessly, however many contacts sit in one stage. */}
+              <div className="flex max-h-[calc(100dvh-17rem)] min-h-[120px] flex-1 flex-col gap-2 overflow-y-auto overscroll-contain px-2 pb-2 [scrollbar-width:thin]">
                 {cards.length === 0 && (
                   <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed px-3 py-6 text-center text-xs text-muted-foreground">
                     {isOver ? 'Rilascia qui' : 'Nessun contatto'}

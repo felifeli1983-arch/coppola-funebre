@@ -233,7 +233,16 @@ export function DataTable<T>({
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: 'includesString',
+    // Case-insensitive "contains" on each column; a leading "#" is ignored so
+    // "#12" finds order number 12.
+    globalFilterFn: (row, columnId, value) => {
+      const q = String(value ?? '').trim().replace(/^#/, '').toLowerCase();
+      if (!q) return true;
+      const v = row.getValue(columnId);
+      if (v == null) return false;
+      const text = Array.isArray(v) ? v.join(' ') : typeof v === 'object' ? '' : String(v);
+      return text.toLowerCase().includes(q);
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),

@@ -35,7 +35,15 @@ export function productImageUrl(storagePath: string): string {
   return storageUrl('prodotti', storagePath);
 }
 
-/** Build a public URL for an uploaded document (bucket: documenti). */
+/**
+ * Site URL that opens a document (works for visitors only if the document is
+ * public; admins can open internal ones). The storage bucket is private.
+ */
+export function documentFileUrl(id: string): string {
+  return `/documenti/file/${id}`;
+}
+
+/** @deprecated The documenti bucket is private: use documentFileUrl(id). */
 export function documentUrl(storagePath: string): string {
   return storageUrl('documenti', storagePath);
 }

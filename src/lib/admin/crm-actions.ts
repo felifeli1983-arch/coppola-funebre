@@ -134,6 +134,9 @@ export async function addAttivita(fd: FormData): Promise<ActionResult> {
     if (Number.isNaN(d.getTime())) return fail('La data del promemoria non è valida.');
     scadenza = d.toISOString();
   }
+  if (str(fd, 'promemoria') === '1' && !scadenza) {
+    return fail('Scegli la data e l’ora del promemoria.');
+  }
 
   const s = createClient();
   const { error } = await s

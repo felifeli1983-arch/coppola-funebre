@@ -28,7 +28,7 @@ export default function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={ref} className="relative h-screen min-h-[680px] w-full overflow-hidden">
+    <section ref={ref} className="h-hero relative min-h-[600px] w-full overflow-hidden md:min-h-[680px]">
       <motion.div style={{ y, scale }} className="absolute inset-0 w-full h-full gpu">
         <img
           src="/img/new/cancello-sede.webp"
