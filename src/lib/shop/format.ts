@@ -1,3 +1,5 @@
+import { SUPABASE_URL } from '@/lib/supabase/env';
+
 /** Format a price given in integer cents as a localized currency string. */
 export function formatPrice(cents: number, currency = 'EUR', locale = 'it-IT'): string {
   return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(
@@ -14,7 +16,7 @@ export function parsePriceToCents(input: string): number {
 
 /** Build a public URL from a Supabase Storage path for a given bucket. */
 export function storageUrl(bucket: string, storagePath: string): string {
-  const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const base = SUPABASE_URL;
   if (!base || !storagePath) return '';
   if (storagePath.startsWith('http')) return storagePath;
   return `${base}/storage/v1/object/public/${bucket}/${storagePath}`;
